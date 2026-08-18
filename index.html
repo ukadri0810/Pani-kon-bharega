@@ -2,266 +2,406 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Water Bottle Duty - Bakra Wheel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bakra Roulette - Premium Hydration Duty</title>
 <style>
   :root {
-    --bg-dark: #090d16;
-    --card-bg: rgba(18, 26, 43, 0.85);
+    --bg: #07090e;
+    --surface: rgba(18, 24, 38, 0.75);
+    --surface-border: rgba(255, 255, 255, 0.08);
     --accent-cyan: #00f2fe;
-    --accent-purple: #9d4edd;
-    --accent-pink: #ff2a85;
+    --accent-violet: #7928ca;
     --accent-gold: #ffb703;
+    --accent-crimson: #ff0055;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
   }
 
-  * { box-sizing: border-box; }
-  
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
   body {
     margin: 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: radial-gradient(circle at 50% 20%, #1a2238 0%, var(--bg-dark) 80%);
-    color: #f1f5f9;
-    padding: 24px 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: radial-gradient(circle at 50% 10%, #151d30 0%, var(--bg) 80%);
+    color: var(--text-primary);
+    padding: 16px;
     overflow-x: hidden;
   }
 
-  .container {
-    width: min(94vw, 560px);
+  .stage {
+    width: min(100%, 540px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 18px;
+    gap: 16px;
     position: relative;
     z-index: 2;
   }
 
-  .header h1 {
-    margin: 0;
-    font-size: clamp(26px, 6vw, 38px);
-    font-weight: 900;
-    text-transform: uppercase;
+  /* Header */
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 99px;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 1.5px;
-    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(24px, 5.5vw, 34px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 10px rgba(0, 242, 254, 0.3));
+    text-align: center;
   }
 
-  .header p {
-    margin: 4px 0 0;
-    color: #94a3b8;
+  /* Roster Manager */
+  .roster-card {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    backdrop-filter: blur(16px);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .roster-input-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .roster-input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    padding: 8px 14px;
     font-size: 14px;
-    font-weight: 500;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
   }
 
-  /* Wheel Styling */
-  .wheel-container {
+  .roster-input:focus {
+    border-color: var(--accent-cyan);
+  }
+
+  .add-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--surface-border);
+    color: #fff;
+    border-radius: 10px;
+    padding: 0 16px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .add-btn:hover {
+    background: var(--accent-cyan);
+    color: #000;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-height: 70px;
+    overflow-y: auto;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    animation: popIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .tag-remove {
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 14px;
+    transition: opacity 0.15s;
+  }
+  .tag-remove:hover { opacity: 1; color: var(--accent-crimson); }
+
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* Wheel Stage */
+  .wheel-viewport {
     position: relative;
-    width: min(86vw, 420px);
+    width: min(86vw, 390px);
     aspect-ratio: 1;
-    margin: 6px auto;
+    margin: 4px 0;
   }
 
-  .wheel-glow {
+  .glow-halo {
     position: absolute;
-    inset: -12px;
+    inset: -16px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.25), transparent 70%);
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.22) 0%, transparent 68%);
+    filter: blur(8px);
     z-index: 1;
-    animation: glowPulse 2.5s infinite alternate ease-in-out;
-  }
-
-  @keyframes glowPulse {
-    from { opacity: 0.4; transform: scale(0.98); }
-    to { opacity: 0.9; transform: scale(1.03); }
+    pointer-events: none;
+    transition: opacity 0.5s ease;
   }
 
   canvas#wheelCanvas {
-    width: 100%;
-    height: 100%;
     position: relative;
     z-index: 2;
-    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.7));
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.65));
   }
 
-  /* Center Pointer */
-  .pointer {
+  /* Mechanical Indicator */
+  .pointer-mech {
     position: absolute;
-    top: -10px;
+    top: -8px;
     left: 50%;
     transform: translateX(-50%);
     width: 32px;
-    height: 44px;
+    height: 48px;
     z-index: 10;
-    transform-origin: 50% 15%;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-    transition: transform 0.07s ease-out;
+    pointer-events: none;
+    transform-origin: 50% 12px;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.6));
+    transition: transform 0.05s ease-out;
   }
 
-  .pointer::before {
+  .pointer-mech svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .pointer-mech.bump {
+    transform: translateX(-50%) rotate(-24deg) scale(1.08);
+  }
+
+  /* Controls */
+  .action-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .spin-master-btn {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #000 250%);
+    color: #040814;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+
+  .spin-master-btn::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, #ff0055, #ff5400);
-    clip-path: polygon(50% 100%, 0 0, 100% 0);
-    border-radius: 4px 4px 0 0;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 4s infinite;
   }
 
-  .pointer.bump {
-    transform: translateX(-50%) rotate(-22deg) scale(1.1);
+  @keyframes shineSweep {
+    20%, 100% { left: 150%; }
   }
 
-  /* Spin Button */
-  .spin-btn {
-    position: relative;
-    border: none;
-    outline: none;
-    padding: 16px 48px;
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #090d16;
-    background: linear-gradient(135deg, var(--accent-gold), #ff5400);
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 25px rgba(255, 183, 3, 0.4), inset 0 2px 2px rgba(255,255,255,0.6);
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  .spin-master-btn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 40px rgba(0, 242, 254, 0.5);
   }
 
-  .spin-btn:hover:not(:disabled) {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 0 35px rgba(255, 84, 0, 0.7);
+  .spin-master-btn:active:not(:disabled) {
+    transform: translateY(2px) scale(0.98);
   }
 
-  .spin-btn:active:not(:disabled) {
-    transform: translateY(1px) scale(0.97);
-  }
-
-  .spin-btn:disabled {
+  .spin-master-btn:disabled {
     filter: grayscale(0.8);
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 
-  /* Taunt Card */
-  .taunt-card {
-    width: 100%;
-    min-height: 125px;
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(14px);
-    border-radius: 20px;
-    padding: 18px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .taunt-card.active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  .victim-tag {
-    font-size: 26px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: var(--accent-gold);
-    text-shadow: 0 0 14px rgba(255, 183, 3, 0.6);
-    animation: bounceVictim 1s infinite alternate cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  @keyframes bounceVictim {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
-  }
-
-  .taunt-body {
-    font-size: 16px;
-    line-height: 1.45;
-    font-weight: 600;
-    color: #e2e8f0;
-  }
-
-  /* Quick Roster & Score Tracker */
-  .dashboard {
-    width: 100%;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 12px 18px;
-  }
-
-  .dash-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #64748b;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-
-  .score-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-  }
-
-  .chip {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 4px 12px;
+  /* Suspense Banner */
+  .suspense-status {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    min-height: 18px;
+  }
+
+  /* Modal / Taunt Sheet */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3, 6, 12, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 100;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .chip-count {
-    background: var(--accent-pink);
-    color: #fff;
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .taunt-card {
+    width: min(100%, 460px);
+    background: linear-gradient(180deg, #182236 0%, #0d1322 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 0, 85, 0.2);
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .modal-overlay.open .taunt-card {
+    transform: scale(1) translateY(0);
+  }
+
+  .victim-avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 10px;
-    display: inline-flex;
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-crimson));
+    display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 0 25px rgba(255, 183, 3, 0.5);
+  }
+
+  .victim-name {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin: 0 0 4px;
+  }
+
+  .victim-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 50px;
+    background: rgba(255, 0, 85, 0.15);
+    border: 1px solid rgba(255, 0, 85, 0.3);
+    color: #ff4d88;
+    font-size: 11px;
     font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
   }
 
-  /* Screen Shake Effect */
-  .screen-shake {
-    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+  .taunt-dialogue {
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 22px;
   }
 
-  @keyframes shake {
-    10%, 90% { transform: translate3d(-1px, 0, 0); }
-    20%, 80% { transform: translate3d(2px, 0, 0); }
-    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-    40%, 60% { transform: translate3d(4px, 0, 0); }
+  .modal-btn-row {
+    display: flex;
+    gap: 10px;
   }
 
+  .btn-modal {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s;
+  }
+
+  .btn-modal:active { transform: scale(0.96); }
+
+  .btn-close {
+    background: #fff;
+    color: #000;
+  }
+
+  .btn-copy {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* FX Canvas */
   canvas#fxCanvas {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 100;
+    z-index: 105;
+  }
+
+  /* Camera Shake */
+  .shake {
+    animation: camShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+
+  @keyframes camShake {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(3px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+    40%, 60% { transform: translate3d(5px, 0, 0); }
   }
 </style>
 </head>
@@ -269,310 +409,362 @@
 
 <canvas id="fxCanvas"></canvas>
 
-<div class="container" id="mainContainer">
-  <div class="header">
-    <h1>💧 Wheel of Bakra</h1>
-    <p>Spin karo aur agla Paani Mantri chuno!</p>
+<div class="stage" id="stage">
+  <div class="brand-badge">💧 Operational Duty Protocol</div>
+  <h1>Wheel of Bakra</h1>
+
+  <!-- Interactive Roster Management -->
+  <div class="roster-card">
+    <div class="roster-input-row">
+      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & hit Enter..." maxlength="14">
+      <button class="add-btn" id="addBtn">+ Add</button>
+    </div>
+    <div class="tags-list" id="tagsList"></div>
   </div>
 
-  <div class="wheel-container">
-    <div class="wheel-glow"></div>
-    <div class="pointer" id="pointer"></div>
+  <!-- Wheel Canvas Area -->
+  <div class="wheel-viewport">
+    <div class="glow-halo"></div>
+    <div class="pointer-mech" id="pointerMech">
+      <svg viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 48L2 12C0 7 4 0 10 0H22C28 0 32 7 30 12L16 48Z" fill="url(#ptrGrad)"/>
+        <circle cx="16" cy="12" r="5" fill="#ffffff" filter="drop-shadow(0 0 4px rgba(255,255,255,0.8))"/>
+        <defs>
+          <linearGradient id="ptrGrad" x1="16" y1="0" x2="16" y2="48" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF3366"/>
+            <stop offset="1" stop-color="#BA0031"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
     <canvas id="wheelCanvas" width="800" height="800"></canvas>
   </div>
 
-  <button class="spin-btn" id="spinBtn">Kismat Aajmao 🎲</button>
-
-  <div class="taunt-card" id="tauntCard">
-    <div class="victim-tag" id="victimName"></div>
-    <div class="taunt-body" id="tauntMsg"></div>
+  <div class="action-wrap">
+    <button class="spin-master-btn" id="spinBtn">FATE DECIDE KARO 🎲</button>
+    <div class="suspense-status" id="suspenseText">Kiski baari aane wali hai?</div>
   </div>
+</div>
 
-  <div class="dashboard">
-    <div class="dash-title">Shame Leaderboard (Today's Refills)</div>
-    <div class="score-chips" id="scoreBoard"></div>
+<!-- Winner / Roast Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="taunt-card">
+    <div class="victim-avatar">🐐</div>
+    <h2 class="victim-name" id="modalVictim">Rohan</h2>
+    <div class="victim-badge">Designated Jal Mantri</div>
+    <div class="taunt-dialogue" id="modalDialogue">Loading roast...</div>
+    <div class="modal-btn-row">
+      <button class="btn-modal btn-copy" id="copyBtn">Roast Copy Karo 📋</button>
+      <button class="btn-modal btn-close" id="closeModalBtn">Main Jaata Hu 🏃‍♂️</button>
+    </div>
   </div>
 </div>
 
 <script>
-const players = [
-  { name: "Pranay", color: "#ff2a85", refills: 0 },
-  { name: "Rohan", color: "#00f2fe", refills: 0 },
-  { name: "Vivek", color: "#ffb703", refills: 0 },
-  { name: "Gaus", color: "#38ef7d", refills: 0 }
-];
+// --- ROSTER & COLOR THEME ENGINE ---
+let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
+const PALETTE = ["#00F2FE", "#FF2A85", "#FFB703", "#7928CA", "#38EF7D", "#FF5400", "#4FACFE"];
 
 const hinglishRoasts = [
-  "Slack pe 'Busy' daal ke hero mat ban, chal chup chaap botal bhar ke la! 🏃‍♂️💨",
-  "Arre chair se fevicol chhoot gaya ho toh purifier ka deedar kar le! 🪑💀",
-  "Badhaai ho! Company ne aaj ka official 'Jal Mantri' tumhe ghoshit kiya hai! 👑🚰",
-  "Keyboard pe ungliya tez chal rahi hain par pair jam gaye kya? UTH AB! ⌨️🚶‍♂️",
-  "Screen pe fake serious expression mat bana, wheel ne teri polling khol di hai! 🕶️😂",
-  "Code ka bug baad me solve karna, pehle poori team ki pyaas bujha! 🐛💧",
-  "Thanda paani laana, aur raaste me kisi se canteen ke gappe mat ladane lag jaana! 🧊🙅‍♂️",
-  "Sabki nazrein tere pe hi hain, ab 'mera meeting hai' bolne ka chance gaya! 📞🚫",
-  "Aankhein band karke soch raha tha bach jaayega? Naseeb me refill hi likha hai! 🎯🔥",
-  "Itna aalsi banega toh water filter bhi tujhe pehchanne se inkaar kar dega! 🚰🥱"
+  "Slack pe 'In a meeting' ka status daalna band kar, chal uth aur botal bhar ke la! 🏃‍♂️💨",
+  "HR ko phone karke bol de: Aaj ka tera appraisal sirf cold water availability pe depend karta hai! 📋🚰",
+  "Code commit baad me karna bhai, pehle gang ka throat dehydrate hone se bacha! 💻💧",
+  "Itna aalsi banega toh RO purifier bhi biometric lagwa ke tera access block kar dega! 🕶️🚫",
+  "Arre chair se fevicol chhoot gaya ho toh purifier ka deedar kar le champion! 🪑💀",
+  "Wheel ne publically beizzati kardi hai. Ab chup chaap thanda paani bhar ke laa! 🧊🙌",
+  "Screen ko aise ghoor raha hai jaise cursor khud chal ke filter tak jayega! UTH BAKRE! 🐐🔥",
+  "Bhai ka naya designation: Chief Hydration Officer (Unpaid Intern). Badhaai ho! 👑💧",
+  "Jitni speed se alt-tab dabata hai, utni speed se botal bhar ke dikha! ⌨️⚡",
+  "Sabki nazrein tere par hi hain... bahanebaazi ke saare raste band ho chuke hain! 🎯😂"
 ];
 
+// --- DOM ELEMENTS ---
 const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
-const pointer = document.getElementById("pointer");
-const spinBtn = document.getElementById("spinBtn");
-const tauntCard = document.getElementById("tauntCard");
-const victimName = document.getElementById("victimName");
-const tauntMsg = document.getElementById("tauntMsg");
-const scoreBoard = document.getElementById("scoreBoard");
-const mainContainer = document.getElementById("mainContainer");
-
 const fxCanvas = document.getElementById("fxCanvas");
 const fxCtx = fxCanvas.getContext("2d");
+const pointerMech = document.getElementById("pointerMech");
+const spinBtn = document.getElementById("spinBtn");
+const suspenseText = document.getElementById("suspenseText");
+const modalOverlay = document.getElementById("modalOverlay");
+const modalVictim = document.getElementById("modalVictim");
+const modalDialogue = document.getElementById("modalDialogue");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const copyBtn = document.getElementById("copyBtn");
+const nameInput = document.getElementById("nameInput");
+const addBtn = document.getElementById("addBtn");
+const tagsList = document.getElementById("tagsList");
+const stage = document.getElementById("stage");
 
-let rotation = 0;
-let isSpinning = false;
+// --- SYNTHETIC AUDIO ENGINE (Web Audio API) ---
 let audioCtx = null;
-let lastSlice = -1;
-let ledFlashAngle = 0;
 
-function initAudioContext() {
+function ensureAudio() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
 }
 
-// Click sound
-function playTick(pitch = 550) {
+function playHapticTick(frequency = 600) {
   if (!audioCtx) return;
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   
   osc.type = "sine";
-  osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.04);
-  
-  gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-  
+  osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.03);
+
+  gain.gain.setValueAtTime(0.22, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+
   osc.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start();
-  osc.stop(audioCtx.currentTime + 0.04);
+  osc.stop(audioCtx.currentTime + 0.03);
 }
 
-// Winning buzzer fanfare
-function playWinFanfare() {
+function playWinStinger() {
   if (!audioCtx) return;
-  const notes = [261.63, 329.63, 392.00, 523.25, 659.25];
-  notes.forEach((freq, i) => {
+  const chords = [329.63, 415.30, 493.88, 659.25]; // E Major shine
+  chords.forEach((freq, idx) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = "triangle";
     osc.frequency.value = freq;
     
-    const start = audioCtx.currentTime + i * 0.08;
-    gain.gain.setValueAtTime(0.3, start);
-    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
-    
+    const start = audioCtx.currentTime + idx * 0.07;
+    gain.gain.setValueAtTime(0.25, start);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.5);
+
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(start);
-    osc.stop(start + 0.4);
+    osc.stop(start + 0.5);
   });
 }
 
-function updateScoreboard() {
-  scoreBoard.innerHTML = "";
-  players.forEach(p => {
-    const chip = document.createElement("div");
-    chip.className = "chip";
-    chip.innerHTML = `${p.name} <span class="chip-count">${p.refills}</span>`;
-    scoreBoard.appendChild(chip);
-  });
+// --- HIGH-DPI CANVAS WHEEL DRAWING ---
+let rotation = 0;
+let isSpinning = false;
+let lastSliceIndex = -1;
+let ledAngleOffset = 0;
+
+function setupCanvasDPI() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = 800 * dpr;
+  canvas.height = 800 * dpr;
+  ctx.scale(dpr, dpr);
 }
 
 function drawWheel() {
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
+  const size = 800;
+  const cx = size / 2;
+  const cy = size / 2;
   const radius = 340;
-  const numSlices = players.length;
+  const numSlices = roster.length;
   const slice = (Math.PI * 2) / numSlices;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, size, size);
 
-  // Draw Slices
+  // 1. Drop Shadow base
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius + 14, 0, Math.PI * 2);
+  ctx.fillStyle = "#0c111d";
+  ctx.fill();
+  ctx.restore();
+
+  // 2. Wheel Slices with 3D Conic Shading
   for (let i = 0; i < numSlices; i++) {
     const startAngle = rotation + i * slice;
     const endAngle = startAngle + slice;
+    const color = PALETTE[i % PALETTE.length];
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, radius, startAngle, endAngle);
     ctx.closePath();
 
-    // Gradient fill for slice
-    const grad = ctx.createRadialGradient(cx, cy, 50, cx, cy, radius);
-    grad.addColorStop(0, players[i].color);
-    grad.addColorStop(1, adjustColorBrightness(players[i].color, -40));
+    const grad = ctx.createRadialGradient(cx, cy, 40, cx, cy, radius);
+    grad.addColorStop(0, color);
+    grad.addColorStop(1, shadeColor(color, -45));
     ctx.fillStyle = grad;
     ctx.fill();
 
-    ctx.strokeStyle = "#090d16";
-    ctx.lineWidth = 6;
+    // Slice Separators
+    ctx.strokeStyle = "rgba(10, 15, 26, 0.85)";
+    ctx.lineWidth = 5;
     ctx.stroke();
 
-    // Slice Name Text
+    // Slice Typography
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(startAngle + slice / 2);
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 40px 'Segoe UI', Arial";
-    ctx.shadowColor = "rgba(0,0,0,0.8)";
+    ctx.font = "900 36px -apple-system, sans-serif";
+    ctx.shadowColor = "rgba(0,0,0,0.7)";
     ctx.shadowBlur = 8;
-    ctx.fillText(players[i].name, radius - 55, 0);
+    ctx.fillText(roster[i], radius - 55, 0);
     ctx.restore();
   }
 
-  // Outer Decorative Rim
+  // 3. Metallic Outer Bezel
   ctx.beginPath();
-  ctx.arc(cx, cy, radius + 8, 0, Math.PI * 2);
-  ctx.lineWidth = 20;
-  ctx.strokeStyle = "#121a2b";
+  ctx.arc(cx, cy, radius + 2, 0, Math.PI * 2);
+  ctx.lineWidth = 18;
+  const ringGrad = ctx.createLinearGradient(0, 0, size, size);
+  ringGrad.addColorStop(0, "#2c3e50");
+  ringGrad.addColorStop(0.5, "#0f172a");
+  ringGrad.addColorStop(1, "#1e293b");
+  ctx.strokeStyle = ringGrad;
   ctx.stroke();
 
-  // Animated Rim LED Bulbs
-  const totalLeds = 24;
-  for (let j = 0; j < totalLeds; j++) {
-    const ledAngle = (j * (Math.PI * 2)) / totalLeds + ledFlashAngle;
-    const lx = cx + (radius + 8) * Math.cos(ledAngle);
-    const ly = cy + (radius + 8) * Math.sin(ledAngle);
+  // 4. Outer Chaser LEDs
+  const leds = 20;
+  for (let j = 0; j < leds; j++) {
+    const angle = (j * (Math.PI * 2)) / leds + ledAngleOffset;
+    const lx = cx + (radius + 2) * Math.cos(angle);
+    const ly = cy + (radius + 2) * Math.sin(angle);
 
     ctx.beginPath();
-    ctx.arc(lx, ly, 5, 0, Math.PI * 2);
-    ctx.fillStyle = (j % 2 === 0) ? "#00f2fe" : "#ffb703";
+    ctx.arc(lx, ly, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = j % 2 === 0 ? "#00f2fe" : "#ffb703";
     ctx.shadowColor = ctx.fillStyle;
     ctx.shadowBlur = 10;
     ctx.fill();
     ctx.shadowBlur = 0;
   }
 
-  // Center Cap Ring
+  // 5. Deluxe Center Hub (Glass Cap)
   ctx.beginPath();
-  ctx.arc(cx, cy, 60, 0, Math.PI * 2);
+  ctx.arc(cx, cy, 64, 0, Math.PI * 2);
   ctx.fillStyle = "#090d16";
   ctx.fill();
-  ctx.lineWidth = 6;
-  ctx.strokeStyle = "#ff2a85";
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
   ctx.stroke();
 
-  // Center Icon
+  ctx.beginPath();
+  ctx.arc(cx, cy, 54, 0, Math.PI * 2);
+  const hubGrad = ctx.createLinearGradient(cx - 50, cy - 50, cx + 50, cy + 50);
+  hubGrad.addColorStop(0, "rgba(255,255,255,0.2)");
+  hubGrad.addColorStop(1, "rgba(0,0,0,0.6)");
+  ctx.fillStyle = hubGrad;
+  ctx.fill();
+
   ctx.font = "32px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("🚰", cx, cy + 3);
+  ctx.fillText("💧", cx, cy + 2);
 }
 
-function adjustColorBrightness(hex, percent) {
-  let num = parseInt(hex.replace("#",""), 16);
+function shadeColor(color, percent) {
+  let num = parseInt(color.replace("#",""), 16);
   let r = (num >> 16) + percent;
   let g = ((num >> 8) & 0x00FF) + percent;
   let b = (num & 0x0000FF) + percent;
-  r = Math.min(255, Math.max(0, r));
-  g = Math.min(255, Math.max(0, g));
-  b = Math.min(255, Math.max(0, b));
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  return `rgb(${Math.min(255, Math.max(0, r))}, ${Math.min(255, Math.max(0, g))}, ${Math.min(255, Math.max(0, b))})`;
 }
 
-// Particle Fireworks / Water Splash FX
+// --- PARTICLE / CONFETTI SYSTEM ---
 let particles = [];
-function triggerCelebration() {
+function fireConfetti() {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
   particles = [];
 
-  for (let i = 0; i < 110; i++) {
+  for (let i = 0; i < 120; i++) {
     particles.push({
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
-      vx: (Math.random() - 0.5) * 22,
-      vy: (Math.random() - 0.7) * 24,
-      size: Math.random() * 9 + 4,
-      color: ["#00f2fe", "#ff2a85", "#ffb703", "#38ef7d", "#ffffff"][Math.floor(Math.random() * 5)],
+      vx: (Math.random() - 0.5) * 26,
+      vy: (Math.random() - 0.8) * 28,
+      size: Math.random() * 8 + 4,
+      color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
       alpha: 1,
-      rotation: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 10
+      rot: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 12
     });
   }
 
-  function renderFx() {
+  function render() {
     fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
     particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.48;
+      p.vy += 0.52; // gravity
       p.alpha -= 0.012;
-      p.rotation += p.rotSpeed;
+      p.rot += p.rotSpeed;
 
       fxCtx.save();
-      fxCtx.globalAlpha = Math.max(p.alpha, 0);
+      fxCtx.globalAlpha = Math.max(0, p.alpha);
       fxCtx.translate(p.x, p.y);
-      fxCtx.rotate((p.rotation * Math.PI) / 180);
+      fxCtx.rotate((p.rot * Math.PI) / 180);
       fxCtx.fillStyle = p.color;
       fxCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
       fxCtx.restore();
     });
 
     particles = particles.filter(p => p.alpha > 0);
-    if (particles.length > 0) requestAnimationFrame(renderFx);
+    if (particles.length > 0) requestAnimationFrame(render);
   }
-  requestAnimationFrame(renderFx);
+  requestAnimationFrame(render);
 }
 
-function spin() {
-  if (isSpinning) return;
-  initAudioContext();
+// --- SPIN ANIMATION PHYSICS ENGINE ---
+function spinWheel() {
+  if (isSpinning || roster.length < 2) return;
+  ensureAudio();
   isSpinning = true;
   spinBtn.disabled = true;
-  tauntCard.classList.remove("active");
 
-  const winnerIndex = Math.floor(Math.random() * players.length);
-  const sliceSize = (Math.PI * 2) / players.length;
+  suspenseText.textContent = "Kismat ghoom rahi hai... 🌀";
 
-  // Align selected slice under top pointer (-PI/2)
+  const winnerIndex = Math.floor(Math.random() * roster.length);
+  const sliceSize = (Math.PI * 2) / roster.length;
+
+  // Align slice cleanly under pointer at top (-PI/2)
   const targetAngle = -Math.PI / 2 - (winnerIndex + 0.5) * sliceSize;
-  const currentNormalized = rotation % (Math.PI * 2);
-  const extraFullRounds = (7 + Math.floor(Math.random() * 3)) * Math.PI * 2;
-  const delta = (targetAngle - currentNormalized) + extraFullRounds + (targetAngle < currentNormalized ? Math.PI * 2 : 0);
+  const currentNorm = rotation % (Math.PI * 2);
+  const totalRounds = (8 + Math.floor(Math.random() * 3)) * Math.PI * 2;
+  const delta = (targetAngle - currentNorm) + totalRounds + (targetAngle < currentNorm ? Math.PI * 2 : 0);
 
   const startRotation = rotation;
   const startTime = performance.now();
-  const spinDuration = 5200; // dramatic build up
+  const duration = 5400; // Ultra suspenseful 5.4s duration
 
   function frame(now) {
     const elapsed = now - startTime;
-    const progress = Math.min(elapsed / spinDuration, 1);
+    const progress = Math.min(elapsed / duration, 1);
 
-    // Custom cubic-bezier deceleration
-    const easeOut = 1 - Math.pow(1 - progress, 4.8);
+    // Exponential Custom Quartic Out Easing
+    const easeOut = 1 - Math.pow(1 - progress, 4.6);
     rotation = startRotation + delta * easeOut;
-    ledFlashAngle += 0.05;
+    ledAngleOffset += 0.04 * (1 - progress * 0.8);
 
     drawWheel();
 
-    // Trigger tick sound & pointer bounce
+    // Pointer Mechanical Hit Detection
     const pointerAngle = (rotation + Math.PI / 2) % (Math.PI * 2);
     const positiveAngle = pointerAngle < 0 ? pointerAngle + Math.PI * 2 : pointerAngle;
     const currentSlice = Math.floor(positiveAngle / sliceSize);
 
-    if (currentSlice !== lastSlice && progress < 0.98) {
-      lastSlice = currentSlice;
-      const soundPitch = 450 + (1 - progress) * 250;
-      playTick(soundPitch);
-      pointer.classList.add("bump");
-      setTimeout(() => pointer.classList.remove("bump"), 50);
+    if (currentSlice !== lastSliceIndex && progress < 0.985) {
+      lastSliceIndex = currentSlice;
+      const speedFactor = 1 - progress;
+      playHapticTick(480 + speedFactor * 300);
+      pointerMech.classList.add("bump");
+      setTimeout(() => pointerMech.classList.remove("bump"), 45);
+
+      if (progress > 0.75) {
+        suspenseText.textContent = `Lagta hai ${roster[currentSlice]} fasne wala hai... 👀`;
+      }
     }
 
     if (progress < 1) {
@@ -580,37 +772,86 @@ function spin() {
     } else {
       isSpinning = false;
       spinBtn.disabled = false;
+      suspenseText.textContent = "Bakra chuna gaya! 🎯";
+
+      // Haptic Shockwave & Fanfare
+      stage.classList.add("shake");
+      setTimeout(() => stage.classList.remove("shake"), 450);
+
+      playWinStinger();
+      fireConfetti();
+
+      // Show Winner Roast Modal
+      const victim = roster[winnerIndex];
+      const roast = hinglishRoasts[Math.floor(Math.random() * hinglishRoasts.length)];
       
-      // Update Refill count
-      players[winnerIndex].refills++;
-      updateScoreboard();
-
-      // Audio + Visual Climax
-      playWinFanfare();
-      triggerCelebration();
-
-      mainContainer.classList.add("screen-shake");
-      setTimeout(() => mainContainer.classList.remove("screen-shake"), 400);
-
-      // Show Hinglish Roast
-      const randomRoast = hinglishRoasts[Math.floor(Math.random() * hinglishRoasts.length)];
-      victimName.textContent = `🚨 ${players[winnerIndex].name} 🚨`;
-      tauntMsg.textContent = randomRoast;
-      tauntCard.classList.add("active");
+      modalVictim.textContent = victim;
+      modalDialogue.textContent = roast;
+      modalOverlay.classList.add("open");
     }
   }
 
   requestAnimationFrame(frame);
 }
 
-spinBtn.addEventListener("click", spin);
+// --- ROSTER MANAGEMENT UI ---
+function renderTags() {
+  tagsList.innerHTML = "";
+  roster.forEach((name, index) => {
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.innerHTML = `<span>${name}</span><span class="tag-remove" data-index="${index}">&times;</span>`;
+    tagsList.appendChild(tag);
+  });
+  drawWheel();
+}
+
+function addName() {
+  const val = nameInput.value.trim();
+  if (val && !roster.includes(val) && roster.length < 12) {
+    roster.push(val);
+    nameInput.value = "";
+    renderTags();
+  }
+}
+
+tagsList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("tag-remove")) {
+    if (roster.length <= 2) {
+      alert("Kam se kam 2 log toh hone chahiye competition ke liye!");
+      return;
+    }
+    const idx = parseInt(e.target.dataset.index, 10);
+    roster.splice(idx, 1);
+    renderTags();
+  }
+});
+
+addBtn.addEventListener("click", addName);
+nameInput.addEventListener("keydown", (e) => { if (e.key === "Enter") addName(); });
+
+spinBtn.addEventListener("click", spinWheel);
+
+closeModalBtn.addEventListener("click", () => {
+  modalOverlay.classList.remove("open");
+});
+
+copyBtn.addEventListener("click", () => {
+  const text = `🚨 *PAANI DUTY ALERT* 🚨\nTarget: ${modalVictim.textContent}\n"${modalDialogue.textContent}"`;
+  navigator.clipboard.writeText(text).then(() => {
+    copyBtn.textContent = "Copied! 😂";
+    setTimeout(() => { copyBtn.textContent = "Roast Copy Karo 📋"; }, 2000);
+  });
+});
+
 window.addEventListener("resize", () => {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
 });
 
-updateScoreboard();
-drawWheel();
+// Init
+setupCanvasDPI();
+renderTags();
 </script>
 </body>
 </html>
