@@ -301,7 +301,7 @@
   }
   .wheel-pointer.bump { transform: translateX(-50%) rotate(-24deg) scale(1.12); }
 
-  /* 🔗 The Missing Link (4 Clues, 1 Link) */
+  /* 🔗 The Missing Link (Procedural + Custom) */
   .clue-badge-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -325,12 +325,32 @@
     color: var(--emerald-400);
     padding: 14px;
     border-radius: 14px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
     display: none;
     width: 100%;
     max-width: 380px;
     line-height: 1.45;
+  }
+  .creator-panel {
+    width: 100%;
+    max-width: 360px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px dashed var(--border-highlight);
+    border-radius: 16px;
+    padding: 12px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .creator-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
   }
 
   /* 🤔 Odd One Out */
@@ -420,7 +440,7 @@
     line-height: 1;
   }
 
-  /* ⚖️ Dilemma Arena (Would You Rather?) */
+  /* ⚖️ Dilemma Arena */
   .dilemma-grid {
     display: flex;
     flex-direction: column;
@@ -439,7 +459,6 @@
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
-    position: relative;
   }
   .dilemma-card:hover {
     border-color: var(--cyan-400);
@@ -451,7 +470,7 @@
     box-shadow: 0 0 16px rgba(14, 165, 233, 0.25);
   }
 
-  /* 🧠 Mind Reader (Consensus) */
+  /* 🧠 Mind Reader */
   .consensus-prompt {
     font-size: 20px;
     font-weight: 800;
@@ -469,6 +488,67 @@
     display: none;
     width: 100%;
     max-width: 360px;
+  }
+
+  /* ⚡ Rapid Panic */
+  .timer-preset-row {
+    display: flex;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+  }
+  .preset-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .preset-chip.active {
+    background: rgba(14, 165, 233, 0.2);
+    color: var(--cyan-400);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+  }
+  .timer-dial-box {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .timer-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+  .timer-ring-bg { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 7; }
+  .timer-ring-bar {
+    fill: none;
+    stroke: var(--cyan-400);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 0;
+  }
+  .timer-text-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .timer-num { font-size: 38px; font-weight: 900; line-height: 1; }
+  .timer-sub { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+  .panic-prompt-card {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #ffffff;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
   }
 
   /* 🕵️ Imposter Flip Box */
@@ -571,6 +651,10 @@
     align-items: center;
     gap: 2px;
   }
+  .score-pill-card.highlight {
+    border-color: var(--cyan-400);
+    box-shadow: 0 0 16px rgba(14, 165, 233, 0.3);
+  }
   .p-score { font-size: 20px; font-weight: 900; color: var(--amber-400); }
 
   /* Modals */
@@ -649,6 +733,7 @@
     <button class="dock-btn" data-game="oracle">🔮 20 Questions</button>
     <button class="dock-btn" data-game="dilemma">⚖️ Dilemma</button>
     <button class="dock-btn" data-game="mind">🧠 Mind Reader</button>
+    <button class="dock-btn" data-game="rapid">⚡ Rapid Panic</button>
     <button class="dock-btn" data-game="imposter">🕵️ Imposter</button>
     <button class="dock-btn" data-game="taboo">🤐 Taboo</button>
     <button class="dock-btn" data-game="emoji">🎭 Emoji</button>
@@ -683,12 +768,28 @@
   <!-- ================= 2. THE MISSING LINK ================= -->
   <section class="game-view" id="view-link">
     <div class="stage-card">
-      <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan-400);">What connects all 4 items?</div>
+      <div style="display:flex; justify-content:space-between; width:100%;">
+        <span style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan-400);" id="linkSourceLabel">What connects all 4 items?</span>
+        <span style="font-size:10px; color:var(--amber-400); font-weight:800;" id="linkModeTag">Procedural Mode ⚡</span>
+      </div>
+
       <div class="clue-badge-grid" id="linkCluesGrid"></div>
       <div class="reveal-answer-card" id="linkAnswerBox"></div>
-      <div style="display: flex; gap: 8px; width: 100%; max-width: 340px;">
+      
+      <div style="display: flex; gap: 8px; width: 100%; max-width: 360px;">
         <button class="btn-secondary" id="revealLinkBtn" style="flex: 1;">REVEAL LINK 👁️</button>
         <button class="btn-primary" id="nextLinkBtn" style="flex: 1.3;">NEXT PUZZLE ➡️</button>
+      </div>
+
+      <button class="btn-secondary" id="toggleCreatorBtn" style="width:100%; max-width:360px; font-size:12px; padding:9px;">
+        ✍️ Add Custom Team Puzzle
+      </button>
+
+      <div class="creator-panel" id="creatorPanel">
+        <div style="font-size:11px; font-weight:800; color:var(--cyan-400);">CREATE CUSTOM CHALLENGE</div>
+        <input type="text" id="customWords" class="creator-input" placeholder="4 Clues: e.g. Chai, Samosa, 4PM, Balcony">
+        <input type="text" id="customAnswer" class="creator-input" placeholder="The Link: e.g. Daily Break Routine">
+        <button class="btn-primary" id="saveCustomBtn" style="padding:10px; font-size:12px;">Save & Play Now 🚀</button>
       </div>
     </div>
   </section>
@@ -744,7 +845,7 @@
     </div>
   </section>
 
-  <!-- ================= 6. DILEMMA ARENA (WOULD YOU RATHER?) ================= -->
+  <!-- ================= 6. DILEMMA ARENA ================= -->
   <section class="game-view" id="view-dilemma">
     <div class="stage-card">
       <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan-400);">Would You Rather? (Pick & Defend)</div>
@@ -757,10 +858,10 @@
     </div>
   </section>
 
-  <!-- ================= 7. MIND READER (CONSENSUS) ================= -->
+  <!-- ================= 7. MIND READER ================= -->
   <section class="game-view" id="view-mind">
     <div class="stage-card">
-      <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber-400);">Shout your answer on 3! Try to match the room:</div>
+      <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber-400);">Shout on 3! Try to match the room:</div>
       <div class="consensus-prompt" id="consensusPrompt">Name the most overrated street food!</div>
       <div class="consensus-answers-box" id="consensusAnswers"></div>
       <div style="display: flex; gap: 8px; width: 100%; max-width: 340px;">
@@ -770,7 +871,38 @@
     </div>
   </section>
 
-  <!-- ================= 8. THE IMPOSTER ================= -->
+  <!-- ================= 8. RAPID PANIC ================= -->
+  <section class="game-view" id="view-rapid">
+    <div class="stage-card">
+      <div class="timer-preset-row">
+        <button class="preset-chip" data-time="5">5s (Insane)</button>
+        <button class="preset-chip active" data-time="10">10s (Standard)</button>
+        <button class="preset-chip" data-time="15">15s (Chill)</button>
+      </div>
+
+      <div class="timer-dial-box">
+        <svg class="timer-svg" viewBox="0 0 100 100">
+          <circle class="timer-ring-bg" cx="50" cy="50" r="45"></circle>
+          <circle class="timer-ring-bar" id="timerRing" cx="50" cy="50" r="45"></circle>
+        </svg>
+        <div class="timer-text-content">
+          <div class="timer-num" id="timerDigits">10</div>
+          <div class="timer-sub" id="timerSubLabel">Seconds</div>
+        </div>
+      </div>
+
+      <div class="panic-prompt-card" id="panicPrompt">Pick a teammate, choose time, and press Start!</div>
+      
+      <button class="btn-primary" id="startPanicBtn">START ROUND ⏱️</button>
+      
+      <div style="display: flex; gap: 8px; width: 100%; max-width: 320px;">
+        <button class="btn-secondary" id="passPanicBtn" style="flex: 1; color: var(--emerald-400);">Passed (+1 Pt) ✅</button>
+        <button class="btn-secondary" id="failPanicBtn" style="flex: 1; color: var(--rose-400);">Failed ❌</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 9. THE IMPOSTER ================= -->
   <section class="game-view" id="view-imposter">
     <div class="stage-card">
       <div style="display: flex; justify-content: space-between; width: 100%; font-size: 11px; font-weight: 800; color: var(--text-secondary);">
@@ -799,7 +931,7 @@
     </div>
   </section>
 
-  <!-- ================= 9. TABOO CLUES ================= -->
+  <!-- ================= 10. TABOO CLUES ================= -->
   <section class="game-view" id="view-taboo">
     <div class="stage-card">
       <div style="font-size: 11px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--rose-400);">Guesser turns away! Don't say:</div>
@@ -809,7 +941,7 @@
     </div>
   </section>
 
-  <!-- ================= 10. EMOJI MYSTERY ================= -->
+  <!-- ================= 11. EMOJI MYSTERY ================= -->
   <section class="game-view" id="view-emoji">
     <div class="stage-card">
       <div style="font-size: 11px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--amber-400);" id="emojiCategory">Category: Bollywood Movie</div>
@@ -869,8 +1001,8 @@
         <div class="rule-title">🔗 The Missing Link (Untimed)</div>
         <ol class="rule-steps">
           <li>Look at all 4 clue cards on screen.</li>
-          <li>Brainstorm and debate as a group: what single theme, word, or fact connects all four?</li>
-          <li>Tap <b>REVEAL LINK</b> once everyone has made their final guesses!</li>
+          <li>Brainstorm as a group: what single theme, word, or fact connects all four?</li>
+          <li>Tap <b>REVEAL LINK</b> once everyone has made their guesses. You can also create your own custom puzzles!</li>
         </ol>
       </div>
 
@@ -887,7 +1019,7 @@
         <div class="rule-title">🧐 Fact or Fiction</div>
         <ol class="rule-steps">
           <li>Read the bizarre real-world fact on screen.</li>
-          <li>Vote whether you think it's 100% <b>FACT</b> or a clever <b>FICTION</b> lie before clicking to reveal the verdict!</li>
+          <li>Vote whether you think it's 100% <b>FACT</b> or a clever <b>FICTION</b> lie before clicking to reveal!</li>
         </ol>
       </div>
 
@@ -912,6 +1044,14 @@
         <ol class="rule-steps">
           <li>Read the open category prompt. On the count of 3, everyone shouts their answer simultaneously!</li>
           <li>The goal is to see who naturally thinks alike and matches answers with the most teammates.</li>
+        </ol>
+      </div>
+
+      <div class="rule-block">
+        <div class="rule-title">⚡ Rapid Panic (5s / 10s / 15s)</div>
+        <ol class="rule-steps">
+          <li>Hot seat player gets a 3-second preparation countdown to read the prompt.</li>
+          <li>Shout 3 valid answers before the timer expires!</li>
         </ol>
       </div>
 
@@ -949,7 +1089,7 @@ const PALETTE = [
   { c1: "#e11d48", c2: "#4c0519" }
 ];
 
-// --- EXTENSIVE CONTENT DATABASES ---
+// Content Databases
 const shayaris = [
   { l1: "Nazar lagi wheel par, dharak raha tha dil,", l2: "Botal uthao dost, aur chup chaap karo fill! 💧🚰" },
   { l1: "Slack par 'In a meeting' ka status hai purana,", l2: "Purifier bula raha hai, botal bhar ke aana! 🏃‍♂️💨" },
@@ -957,13 +1097,45 @@ const shayaris = [
   { l1: "Chair se chipak ke baithe the janaab-e-aali,", l2: "Utho botal bharo jaldi, desk pe hai sab khali! 🪑✨" }
 ];
 
-const missingLinkDecks = [
-  { clues: ["Mercury", "Cricket", "Diamond", "Umbrella"], link: "All of them are famous Indian/British brands or associated with 'Kohinoor' / 'Protection & Polish'!" },
-  { clues: ["Spider", "Bat", "Iron", "Super"], link: "Prefixes for Marvel & DC Comic Superheroes (-man)!" },
-  { clues: ["Taj Mahal", "Pyramids", "Colosseum", "Great Wall"], link: "Wonders of the World!" },
-  { clues: ["Cheetah", "Ferrari", "Bullet Train", "Falcon"], link: "Things known for extreme world-record speed!" },
-  { clues: ["Chai", "Coffee", "Paracetamol", "Sleep"], link: "Universal cures for office headaches!" }
+// --- PROCEDURAL TAGGED MATRIX FOR MISSING LINK ---
+const taggedDictionary = [
+  { word: "Bat", tags: ["flying", "superhero", "night", "mammal", "cricket"] },
+  { word: "Spider", tags: ["superhero", "web", "eight-legs", "bugs"] },
+  { word: "Iron", tags: ["element", "metal", "superhero", "gym", "laundry"] },
+  { word: "Mercury", tags: ["element", "planet", "liquid-metal", "thermometer", "solar-system"] },
+  { word: "Mars", tags: ["planet", "red", "solar-system", "chocolate"] },
+  { word: "Venus", tags: ["planet", "goddess", "solar-system", "tennis"] },
+  { word: "Jupiter", tags: ["planet", "giant", "solar-system", "scooter"] },
+  { word: "Chai", tags: ["beverage", "hot", "office-break", "indian-street", "morning"] },
+  { word: "Coffee", tags: ["beverage", "hot", "office-break", "caffeine", "morning"] },
+  { word: "Samosa", tags: ["indian-street", "triangle", "office-break", "fried", "snack"] },
+  { word: "Pani Puri", tags: ["indian-street", "round", "spicy", "water", "snack"] },
+  { word: "Dosa", tags: ["south-india", "crispy", "snack", "fermented", "breakfast"] },
+  { word: "Idli", tags: ["south-india", "round", "steamed", "breakfast", "white"] },
+  { word: "Cheetah", tags: ["fast", "cat-family", "animal", "spotted", "safari"] },
+  { word: "Falcon", tags: ["fast", "flying", "bird", "predator", "superhero"] },
+  { word: "Bullet Train", tags: ["fast", "transport", "japan", "tracks"] },
+  { word: "Ferrari", tags: ["fast", "car", "red", "luxury", "italian"] },
+  { word: "Apple", tags: ["fruit", "tech", "red", "edible", "healthy"] },
+  { word: "Blackberry", tags: ["fruit", "tech", "edible", "keyboard"] },
+  { word: "Amazon", tags: ["tech", "rainforest", "river", "ecommerce"] },
+  { word: "Twitter (X)", tags: ["tech", "bird", "social-media", "blue"] },
+  { word: "Subway", tags: ["food-chain", "metro-train", "underground", "sandwich"] }
 ];
+
+const categoryDescriptions = {
+  "superhero": "Prefixes or names associated with Comic Superheroes!",
+  "solar-system": "Celestial bodies / Planets in our Solar System!",
+  "office-break": "Classic items found during Indian Office breaks!",
+  "indian-street": "Popular street food items across India!",
+  "fast": "Things world-famous for record-breaking Speed!",
+  "tech": "Major global Technology Brands & Platforms!",
+  "south-india": "Iconic traditional South Indian Delicacies!",
+  "beverage": "Popular hot morning / work beverages!"
+};
+
+let customPuzzles = JSON.parse(localStorage.getItem("custom_breakroom_puzzles") || "[]");
+let seenTags = [];
 
 const oddOneOutDecks = [
   { 
@@ -1031,8 +1203,17 @@ const dilemmaDecks = [
 const consensusDecks = [
   { prompt: "Name the most overrated street food item!", answers: "Top Consensus: Momos with mayonnaise, Extra-cheese street Maggi, Gold-leaf ice cream." },
   { prompt: "What is the very first thing you do after logging out of office?", answers: "Top Consensus: Remove headphones, Lie down on bed, Scroll Instagram reels, Drink chai." },
-  { prompt: "Name the worst excuse people use to avoid answering Slack/WhatsApp calls.", answers: "Top Consensus: 'I was on mute', 'Network glitch', 'Laptop restarted suddenly', 'Was in washroom'." },
+  { prompt: "Name the worst excuse people use to avoid answering calls.", answers: "Top Consensus: 'I was on mute', 'Network glitch', 'Laptop restarted suddenly', 'Was in washroom'." },
   { prompt: "Name the most essential item on an Indian work desk!", answers: "Top Consensus: Water bottle, Phone charger, Sticky notes, Coffee mug." }
+];
+
+const rapidPrompts = [
+  "Name 3 excuses for being late to a standup meeting!",
+  "Name 3 snacks ordered during office tea breaks!",
+  "Name 3 Bollywood movies featuring rain or water!",
+  "Name 3 apps you open as soon as you unlock your phone!",
+  "Name 3 things you always keep on your work desk!",
+  "Name 3 keyboard shortcuts you press every single day!"
 ];
 
 const tabooCards = [
@@ -1244,10 +1425,32 @@ document.getElementById("spinWheelBtn").addEventListener("click", () => {
   requestAnimationFrame(animate);
 });
 
-// --- 2. THE MISSING LINK ---
-let linkIdx = 0;
+// --- 2. PROCEDURAL MISSING LINK ---
+function generateProceduralLink() {
+  const availableTags = Object.keys(categoryDescriptions).filter(t => !seenTags.includes(t));
+  const activeTags = availableTags.length > 0 ? availableTags : Object.keys(categoryDescriptions);
+  if (availableTags.length === 0) seenTags = [];
+
+  const selectedTag = activeTags[Math.floor(Math.random() * activeTags.length)];
+  seenTags.push(selectedTag);
+
+  const matchingWords = taggedDictionary.filter(item => item.tags.includes(selectedTag));
+  const shuffled = [...matchingWords].sort(() => 0.5 - Math.random());
+  const selectedFour = shuffled.slice(0, 4).map(i => i.word);
+
+  return { clues: selectedFour, link: categoryDescriptions[selectedTag], type: "Procedural" };
+}
+
 function loadLinkPuzzle() {
-  const puzzle = missingLinkDecks[linkIdx % missingLinkDecks.length];
+  let puzzle;
+  if (customPuzzles.length > 0 && Math.random() > 0.6) {
+    puzzle = customPuzzles[Math.floor(Math.random() * customPuzzles.length)];
+    document.getElementById("linkModeTag").textContent = "Teammate Custom ✍️";
+  } else {
+    puzzle = generateProceduralLink();
+    document.getElementById("linkModeTag").textContent = "Procedural Combination ⚡";
+  }
+
   const grid = document.getElementById("linkCluesGrid");
   grid.innerHTML = "";
   puzzle.clues.forEach(clue => {
@@ -1260,14 +1463,49 @@ function loadLinkPuzzle() {
   box.style.display = "none";
   box.innerHTML = `<b>🔗 THE CONNECTION:</b><br>${puzzle.link}`;
 }
+
 document.getElementById("revealLinkBtn").addEventListener("click", () => {
   ensureAudio();
   playWinFanfare();
   document.getElementById("linkAnswerBox").style.display = "block";
 });
-document.getElementById("nextLinkBtn").addEventListener("click", () => {
-  linkIdx++;
-  loadLinkPuzzle();
+document.getElementById("nextLinkBtn").addEventListener("click", loadLinkPuzzle);
+
+document.getElementById("toggleCreatorBtn").addEventListener("click", () => {
+  const panel = document.getElementById("creatorPanel");
+  panel.style.display = panel.style.display === "flex" ? "none" : "flex";
+});
+
+document.getElementById("saveCustomBtn").addEventListener("click", () => {
+  const raw = document.getElementById("customWords").value.trim();
+  const ans = document.getElementById("customAnswer").value.trim();
+  const words = raw.split(",").map(w => w.trim()).filter(w => w.length > 0);
+
+  if (words.length !== 4 || ans.length === 0) {
+    alert("Please enter exactly 4 comma-separated clue words and a valid connection answer!");
+    return;
+  }
+
+  const customObj = { clues: words, link: ans, type: "Custom" };
+  customPuzzles.push(customObj);
+  localStorage.setItem("custom_breakroom_puzzles", JSON.stringify(customPuzzles));
+
+  document.getElementById("customWords").value = "";
+  document.getElementById("customAnswer").value = "";
+  document.getElementById("creatorPanel").style.display = "none";
+
+  const grid = document.getElementById("linkCluesGrid");
+  grid.innerHTML = "";
+  words.forEach(clue => {
+    const d = document.createElement("div");
+    d.className = "clue-badge";
+    d.textContent = clue;
+    grid.appendChild(d);
+  });
+  const box = document.getElementById("linkAnswerBox");
+  box.style.display = "none";
+  box.innerHTML = `<b>🔗 THE CONNECTION:</b><br>${ans}`;
+  document.getElementById("linkModeTag").textContent = "Teammate Custom ✍️";
 });
 
 // --- 3. ODD ONE OUT ---
@@ -1402,7 +1640,99 @@ document.getElementById("nextConsensusBtn").addEventListener("click", () => {
   loadMindReader();
 });
 
-// --- 8. THE IMPOSTER ---
+// --- 8. RAPID PANIC (REALISTIC TIMER) ---
+let selectedPanicDuration = 10;
+let panicRAF = null;
+let panicStartTime = null;
+let prepInterval = null;
+
+const timerDigits = document.getElementById("timerDigits");
+const timerSubLabel = document.getElementById("timerSubLabel");
+const timerRing = document.getElementById("timerRing");
+const panicPrompt = document.getElementById("panicPrompt");
+const startPanicBtn = document.getElementById("startPanicBtn");
+
+document.querySelectorAll(".preset-chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".preset-chip").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedPanicDuration = parseInt(btn.dataset.time, 10);
+    timerDigits.textContent = selectedPanicDuration;
+    timerSubLabel.textContent = "Seconds";
+    timerRing.style.strokeDashoffset = "0";
+    timerRing.style.stroke = "var(--cyan-400)";
+  });
+});
+
+startPanicBtn.addEventListener("click", () => {
+  ensureAudio();
+  clearInterval(prepInterval);
+  cancelAnimationFrame(panicRAF);
+
+  panicPrompt.textContent = rapidPrompts[Math.floor(Math.random() * rapidPrompts.length)];
+  startPanicBtn.disabled = true;
+
+  let prepCount = 3;
+  timerSubLabel.textContent = "GET READY...";
+  timerDigits.textContent = prepCount;
+  timerRing.style.stroke = "var(--amber-400)";
+  timerRing.style.strokeDashoffset = "0";
+  playHapticTick(400);
+
+  prepInterval = setInterval(() => {
+    prepCount--;
+    if (prepCount > 0) {
+      timerDigits.textContent = prepCount;
+      playHapticTick(400);
+    } else {
+      clearInterval(prepInterval);
+      startActualTimer();
+    }
+  }, 1000);
+});
+
+function startActualTimer() {
+  timerSubLabel.textContent = "SPEAK NOW!";
+  timerRing.style.stroke = "var(--cyan-400)";
+  panicStartTime = performance.now();
+  const totalMs = selectedPanicDuration * 1000;
+  const circumference = 283;
+  let lastSecondPlayed = -1;
+
+  function loop(now) {
+    const elapsed = now - panicStartTime;
+    const remainingMs = Math.max(0, totalMs - elapsed);
+    const progress = remainingMs / totalMs;
+    const remainingSec = Math.ceil(remainingMs / 1000);
+
+    timerDigits.textContent = remainingSec;
+    timerRing.style.strokeDashoffset = (circumference * (1 - progress));
+
+    if (remainingSec <= 3) timerRing.style.stroke = "var(--rose-400)";
+
+    if (remainingSec !== lastSecondPlayed && remainingSec > 0) {
+      lastSecondPlayed = remainingSec;
+      playHapticTick(remainingSec <= 3 ? 800 : 550);
+    }
+
+    if (remainingMs > 0) {
+      panicRAF = requestAnimationFrame(loop);
+    } else {
+      timerDigits.textContent = "⏰";
+      timerSubLabel.textContent = "TIME UP!";
+      startPanicBtn.disabled = false;
+      playHapticTick(250);
+    }
+  }
+  panicRAF = requestAnimationFrame(loop);
+}
+
+document.getElementById("passPanicBtn").addEventListener("click", () => {
+  playWinFanfare();
+  fireConfetti();
+});
+
+// --- 9. THE IMPOSTER ---
 let currentSecretWord = "";
 let currentCategory = "";
 let imposterIdx = -1;
@@ -1445,7 +1775,7 @@ document.getElementById("nextImposterBtn").addEventListener("click", () => {
 });
 document.getElementById("resetImposterBtn").addEventListener("click", initImposterGame);
 
-// --- 9. TABOO ---
+// --- 10. TABOO ---
 function loadTabooCard() {
   const card = tabooCards[Math.floor(Math.random() * tabooCards.length)];
   document.getElementById("tabooWord").textContent = card.word;
@@ -1464,7 +1794,7 @@ document.getElementById("nextTabooBtn").addEventListener("click", () => {
   loadTabooCard();
 });
 
-// --- 10. EMOJI MYSTERY ---
+// --- 11. EMOJI MYSTERY ---
 let emojiIdx = 0;
 function loadEmojiCard() {
   const card = emojiCards[emojiIdx % emojiCards.length];
@@ -1530,7 +1860,7 @@ document.getElementById("tagsList").addEventListener("click", e => {
   }
 });
 
-// Modal Actions
+// Modals
 document.getElementById("closeShayariBtn").addEventListener("click", () => {
   document.getElementById("shayariModal").classList.remove("open");
 });
@@ -1549,7 +1879,7 @@ document.getElementById("copyShayariBtn").addEventListener("click", () => {
   });
 });
 
-// Init on load
+// Initial boot
 drawWheel();
 renderTags();
 loadLinkPuzzle();
