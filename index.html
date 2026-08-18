@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Bakra Roulette - Premium Hydration Duty</title>
+<title>Bakra Roulette - Water Bottle Duty Edition</title>
 <style>
   :root {
-    --bg: #07090e;
-    --surface: rgba(18, 24, 38, 0.75);
-    --surface-border: rgba(255, 255, 255, 0.08);
+    --bg-dark: #07090e;
+    --card-bg: rgba(18, 24, 38, 0.8);
+    --card-border: rgba(255, 255, 255, 0.08);
     --accent-cyan: #00f2fe;
-    --accent-violet: #7928ca;
+    --accent-pink: #ff2a85;
     --accent-gold: #ffb703;
-    --accent-crimson: #ff0055;
+    --accent-purple: #8a2be2;
+    --accent-green: #38ef7d;
     --text-primary: #f8fafc;
     --text-muted: #94a3b8;
   }
@@ -26,33 +27,33 @@
     align-items: center;
     justify-content: center;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: radial-gradient(circle at 50% 10%, #151d30 0%, var(--bg) 80%);
+    background: radial-gradient(circle at 50% 10%, #172138 0%, var(--bg-dark) 85%);
     color: var(--text-primary);
     padding: 16px;
     overflow-x: hidden;
   }
 
   .stage {
-    width: min(100%, 540px);
+    width: min(100%, 560px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     position: relative;
     z-index: 2;
   }
 
   /* Header */
-  .brand-badge {
+  .brand-tag {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 12px;
+    padding: 4px 14px;
     border-radius: 99px;
     background: rgba(0, 242, 254, 0.08);
-    border: 1px solid rgba(0, 242, 254, 0.2);
+    border: 1px solid rgba(0, 242, 254, 0.25);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--accent-cyan);
@@ -63,23 +64,95 @@
     font-size: clamp(24px, 5.5vw, 34px);
     font-weight: 900;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+    background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
   }
 
+  /* Mode Switcher Tabs */
+  .mode-switch-wrap {
+    display: flex;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--card-border);
+    padding: 4px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 420px;
+    gap: 4px;
+  }
+
+  .mode-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mode-tab.active {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(255, 42, 133, 0.15));
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Series Progress Pill */
+  .series-hud {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .series-hud-pill {
+    background: rgba(255, 183, 3, 0.15);
+    color: var(--accent-gold);
+    border: 1px solid rgba(255, 183, 3, 0.3);
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+
+  .btn-reset {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { color: #fff; border-color: var(--accent-pink); }
+
   /* Roster Manager */
   .roster-card {
     width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--surface-border);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     backdrop-filter: blur(16px);
-    border-radius: 16px;
-    padding: 12px 14px;
+    border-radius: 14px;
+    padding: 10px 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   .roster-input-row {
@@ -90,41 +163,36 @@
   .roster-input {
     flex: 1;
     background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--surface-border);
+    border: 1px solid var(--card-border);
     border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 14px;
+    padding: 8px 12px;
+    font-size: 13px;
     color: #fff;
     outline: none;
     transition: border-color 0.2s;
   }
 
-  .roster-input:focus {
-    border-color: var(--accent-cyan);
-  }
+  .roster-input:focus { border-color: var(--accent-cyan); }
 
   .add-btn {
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--surface-border);
+    border: 1px solid var(--card-border);
     color: #fff;
     border-radius: 10px;
-    padding: 0 16px;
-    font-weight: 700;
+    padding: 0 14px;
+    font-weight: 800;
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
-  .add-btn:hover {
-    background: var(--accent-cyan);
-    color: #000;
-  }
+  .add-btn:hover { background: var(--accent-cyan); color: #000; }
 
   .tags-list {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-height: 70px;
+    max-height: 55px;
     overflow-y: auto;
   }
 
@@ -134,43 +202,35 @@
     gap: 6px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    animation: popIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 11px;
+    font-weight: 700;
   }
 
   .tag-remove {
     cursor: pointer;
     opacity: 0.5;
-    font-size: 14px;
     transition: opacity 0.15s;
   }
-  .tag-remove:hover { opacity: 1; color: var(--accent-crimson); }
-
-  @keyframes popIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
+  .tag-remove:hover { opacity: 1; color: var(--accent-pink); }
 
   /* Wheel Stage */
   .wheel-viewport {
     position: relative;
-    width: min(86vw, 390px);
+    width: min(84vw, 380px);
     aspect-ratio: 1;
-    margin: 4px 0;
+    margin: 2px 0;
   }
 
   .glow-halo {
     position: absolute;
-    inset: -16px;
+    inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.22) 0%, transparent 68%);
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, transparent 70%);
     filter: blur(8px);
     z-index: 1;
     pointer-events: none;
-    transition: opacity 0.5s ease;
   }
 
   canvas#wheelCanvas {
@@ -178,7 +238,7 @@
     z-index: 2;
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.65));
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.7));
   }
 
   /* Mechanical Indicator */
@@ -188,21 +248,18 @@
     left: 50%;
     transform: translateX(-50%);
     width: 32px;
-    height: 48px;
+    height: 46px;
     z-index: 10;
     pointer-events: none;
-    transform-origin: 50% 12px;
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.6));
+    transform-origin: 50% 10px;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6));
     transition: transform 0.05s ease-out;
   }
 
-  .pointer-mech svg {
-    width: 100%;
-    height: 100%;
-  }
+  .pointer-mech svg { width: 100%; height: 100%; }
 
   .pointer-mech.bump {
-    transform: translateX(-50%) rotate(-24deg) scale(1.08);
+    transform: translateX(-50%) rotate(-24deg) scale(1.1);
   }
 
   /* Controls */
@@ -211,17 +268,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
   }
 
   .spin-master-btn {
     position: relative;
     width: 100%;
-    max-width: 340px;
+    max-width: 360px;
     padding: 16px 24px;
     border: none;
     border-radius: 16px;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #000 250%);
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9d4edd 100%);
     color: #040814;
     font-size: 18px;
     font-weight: 900;
@@ -261,14 +318,116 @@
     cursor: not-allowed;
   }
 
-  /* Suspense Banner */
   .suspense-status {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--text-muted);
-    min-height: 18px;
+    min-height: 16px;
+  }
+
+  /* Points Leaderboard Grid */
+  .points-board {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(16px);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+
+  .player-point-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+    gap: 8px;
+  }
+
+  .player-point-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+
+  .player-point-card.highlight {
+    border-color: var(--accent-pink);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 42, 133, 0.4);
+  }
+
+  .p-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .p-score {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent-gold);
+    line-height: 1;
+  }
+
+  .p-bar-bg {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .p-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-pink));
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* Floating Point Animation */
+  .point-float {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-pink);
+    font-weight: 900;
+    font-size: 18px;
+    pointer-events: none;
+    animation: floatUp 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    text-shadow: 0 0 8px rgba(255, 42, 133, 0.8);
+  }
+
+  @keyframes floatUp {
+    0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; }
+    30% { transform: translate(-50%, -15px) scale(1.3); opacity: 1; }
+    100% { transform: translate(-50%, -35px) scale(1); opacity: 0; }
   }
 
   /* Modal / Taunt Sheet */
@@ -297,9 +456,9 @@
     background: linear-gradient(180deg, #182236 0%, #0d1322 100%);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px;
-    padding: 28px 24px;
+    padding: 26px 20px;
     text-align: center;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 0, 85, 0.2);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 42, 133, 0.2);
     transform: scale(0.85) translateY(20px);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -311,9 +470,9 @@
   .victim-avatar {
     width: 64px;
     height: 64px;
-    margin: 0 auto 12px;
+    margin: 0 auto 10px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-crimson));
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -333,18 +492,18 @@
     display: inline-block;
     padding: 4px 12px;
     border-radius: 50px;
-    background: rgba(255, 0, 85, 0.15);
-    border: 1px solid rgba(255, 0, 85, 0.3);
+    background: rgba(255, 42, 133, 0.15);
+    border: 1px solid rgba(255, 42, 133, 0.3);
     color: #ff4d88;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .taunt-dialogue {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.5;
     font-weight: 500;
     color: #e2e8f0;
@@ -352,7 +511,7 @@
     padding: 16px;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    margin-bottom: 22px;
+    margin-bottom: 20px;
   }
 
   .modal-btn-row {
@@ -373,11 +532,7 @@
 
   .btn-modal:active { transform: scale(0.96); }
 
-  .btn-close {
-    background: #fff;
-    color: #000;
-  }
-
+  .btn-close { background: #fff; color: #000; }
   .btn-copy {
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
@@ -403,6 +558,11 @@
     30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
     40%, 60% { transform: translate3d(5px, 0, 0); }
   }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
@@ -410,13 +570,26 @@
 <canvas id="fxCanvas"></canvas>
 
 <div class="stage" id="stage">
-  <div class="brand-badge">💧 Operational Duty Protocol</div>
+  <div class="brand-tag">💧 Water Duty Protocol</div>
   <h1>Wheel of Bakra</h1>
+
+  <!-- Mode Selector -->
+  <div class="mode-switch-wrap">
+    <button class="mode-tab active" id="tabInstant">⚡ Single Spin (Instant)</button>
+    <button class="mode-tab" id="tabSeries">🎯 10-Spins Battle</button>
+  </div>
+
+  <!-- Series HUD (Shown only in 10-Spins Battle mode) -->
+  <div class="series-hud" id="seriesHud" style="display: none;">
+    <div>Round: <span class="series-hud-pill" id="spinCounterPill">0 / 10</span></div>
+    <div style="font-size: 11px; color: var(--text-muted);">Max points = Ultimate Bakra!</div>
+    <button class="btn-reset" id="resetSeriesBtn">↺ Reset Match</button>
+  </div>
 
   <!-- Interactive Roster Management -->
   <div class="roster-card">
     <div class="roster-input-row">
-      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & hit Enter..." maxlength="14">
+      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & press Enter..." maxlength="14">
       <button class="add-btn" id="addBtn">+ Add</button>
     </div>
     <div class="tags-list" id="tagsList"></div>
@@ -440,18 +613,28 @@
     <canvas id="wheelCanvas" width="800" height="800"></canvas>
   </div>
 
+  <!-- Controls -->
   <div class="action-wrap">
     <button class="spin-master-btn" id="spinBtn">FATE DECIDE KARO 🎲</button>
-    <div class="suspense-status" id="suspenseText">Kiski baari aane wali hai?</div>
+    <div class="suspense-status" id="suspenseText">Kiski kismat phootne wali hai?</div>
+  </div>
+
+  <!-- Live Points Leaderboard (Optional Battle Tracker) -->
+  <div class="points-board">
+    <div class="board-header">
+      <span id="boardTitle">Live Duty Counter</span>
+      <span style="font-size: 10px; color: var(--accent-cyan);">+1 Pt per Spin Hit</span>
+    </div>
+    <div class="player-point-list" id="pointGrid"></div>
   </div>
 </div>
 
 <!-- Winner / Roast Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="taunt-card">
-    <div class="victim-avatar">🐐</div>
+    <div class="victim-avatar" id="modalAvatar">🐐</div>
     <h2 class="victim-name" id="modalVictim">Rohan</h2>
-    <div class="victim-badge">Designated Jal Mantri</div>
+    <div class="victim-badge" id="modalBadge">Designated Jal Mantri</div>
     <div class="taunt-dialogue" id="modalDialogue">Loading roast...</div>
     <div class="modal-btn-row">
       <button class="btn-modal btn-copy" id="copyBtn">Roast Copy Karo 📋</button>
@@ -463,19 +646,36 @@
 <script>
 // --- ROSTER & COLOR THEME ENGINE ---
 let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
+let scores = { "Pranay": 0, "Rohan": 0, "Vivek": 0, "Gaus": 0 };
+
 const PALETTE = ["#00F2FE", "#FF2A85", "#FFB703", "#7928CA", "#38EF7D", "#FF5400", "#4FACFE"];
 
-const hinglishRoasts = [
-  "Slack pe 'In a meeting' ka status daalna band kar, chal uth aur botal bhar ke la! 🏃‍♂️💨",
-  "HR ko phone karke bol de: Aaj ka tera appraisal sirf cold water availability pe depend karta hai! 📋🚰",
-  "Code commit baad me karna bhai, pehle gang ka throat dehydrate hone se bacha! 💻💧",
-  "Itna aalsi banega toh RO purifier bhi biometric lagwa ke tera access block kar dega! 🕶️🚫",
+// --- GAME STATE ---
+let currentMode = "instant"; // 'instant' | 'series'
+const SERIES_MAX_SPINS = 10;
+let currentSpinCount = 0;
+
+// Hinglish Roasts: Instant Mode
+const instantRoasts = [
+  "Slack pe 'Busy' daal ke hero mat ban, chal chup chaap botal bhar ke la! 🏃‍♂️💨",
   "Arre chair se fevicol chhoot gaya ho toh purifier ka deedar kar le champion! 🪑💀",
-  "Wheel ne publically beizzati kardi hai. Ab chup chaap thanda paani bhar ke laa! 🧊🙌",
-  "Screen ko aise ghoor raha hai jaise cursor khud chal ke filter tak jayega! UTH BAKRE! 🐐🔥",
-  "Bhai ka naya designation: Chief Hydration Officer (Unpaid Intern). Badhaai ho! 👑💧",
-  "Jitni speed se alt-tab dabata hai, utni speed se botal bhar ke dikha! ⌨️⚡",
-  "Sabki nazrein tere par hi hain... bahanebaazi ke saare raste band ho chuke hain! 🎯😂"
+  "Badhaai ho! Board of Directors ne unanimous voting se tumhe aaj ka 'Chief Hydration Officer' chuna hai! 👑🚰",
+  "Keyboard pe ungliya tez chal rahi hain par pair jam gaye kya? UTH AB! ⌨️🚶‍♂️",
+  "Screen pe fake serious expression mat bana, wheel ne teri polling khol di hai! 🕶️😂",
+  "Code ka bug baad me solve karna, pehle poori team ki pyaas bujha! 🐛💧",
+  "Thanda paani laana, aur raaste me kisi se pantry ke gappe mat ladane lag jaana! 🧊🙅‍♂️",
+  "Sabki nazrein tere pe hi hain, ab 'meri meeting hai' bolne ka chance gaya! 📞🚫",
+  "Aankhein band karke soch raha tha bach jaayega? Naseeb me refill hi likha hai! 🎯🔥",
+  "Itna aalsi banega toh water filter bhi tujhe biometric se block kar dega! 🚰🥱"
+];
+
+// Hinglish Roasts: Tournament / Grand Finale (Max Points after 10 spins)
+const finaleRoasts = [
+  "🏆 MAHA-BAKRA CROWNED! 10 rounds ke mahayudh me sabse zyada points score karke record tod diya! Ab poora cooler refill kar! 👑🚰",
+  "Kismat itni legendary kharab hai ki 10 spins me bhi bach nahi paya! Chal ab botal bharne ki permanent shift teri! 💀🔥",
+  "Points table pe top karne ka shauk yahan le dooba! Jal Mantri ji, VIP Paani Seva shuru kijiye! 🚶‍♂️💨",
+  "Pure office ka unanimous champion of dehydration! Chup chaap jao aur RO filter ka aashirwaad leke aao! 🧊🙌",
+  "10 rounds of high voltage drama and you emerged as the supreme Hydration Slave! Proud of you! 🚰🐐"
 ];
 
 // --- DOM ELEMENTS ---
@@ -488,15 +688,23 @@ const spinBtn = document.getElementById("spinBtn");
 const suspenseText = document.getElementById("suspenseText");
 const modalOverlay = document.getElementById("modalOverlay");
 const modalVictim = document.getElementById("modalVictim");
+const modalBadge = document.getElementById("modalBadge");
 const modalDialogue = document.getElementById("modalDialogue");
+const modalAvatar = document.getElementById("modalAvatar");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const copyBtn = document.getElementById("copyBtn");
 const nameInput = document.getElementById("nameInput");
 const addBtn = document.getElementById("addBtn");
 const tagsList = document.getElementById("tagsList");
+const pointGrid = document.getElementById("pointGrid");
 const stage = document.getElementById("stage");
+const tabInstant = document.getElementById("tabInstant");
+const tabSeries = document.getElementById("tabSeries");
+const seriesHud = document.getElementById("seriesHud");
+const spinCounterPill = document.getElementById("spinCounterPill");
+const resetSeriesBtn = document.getElementById("resetSeriesBtn");
 
-// --- SYNTHETIC AUDIO ENGINE (Web Audio API) ---
+// --- SYNTHETIC AUDIO ENGINE ---
 let audioCtx = null;
 
 function ensureAudio() {
@@ -508,16 +716,15 @@ function ensureAudio() {
   }
 }
 
-function playHapticTick(frequency = 600) {
+function playHapticTick(frequency = 580) {
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  
   osc.type = "sine";
   osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.03);
 
-  gain.gain.setValueAtTime(0.22, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
 
   osc.connect(gain);
@@ -526,27 +733,27 @@ function playHapticTick(frequency = 600) {
   osc.stop(audioCtx.currentTime + 0.03);
 }
 
-function playWinStinger() {
+function playWinStinger(isGrand = false) {
   if (!audioCtx) return;
-  const chords = [329.63, 415.30, 493.88, 659.25]; // E Major shine
+  const chords = isGrand ? [261.63, 329.63, 392.00, 523.25, 659.25, 783.99] : [329.63, 415.30, 493.88, 659.25];
   chords.forEach((freq, idx) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = "triangle";
+    osc.type = isGrand ? "sawtooth" : "triangle";
     osc.frequency.value = freq;
     
     const start = audioCtx.currentTime + idx * 0.07;
     gain.gain.setValueAtTime(0.25, start);
-    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.5);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + (isGrand ? 0.8 : 0.45));
 
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(start);
-    osc.stop(start + 0.5);
+    osc.stop(start + (isGrand ? 0.8 : 0.45));
   });
 }
 
-// --- HIGH-DPI CANVAS WHEEL DRAWING ---
+// --- CANVAS WHEEL DRAWING ENGINE ---
 let rotation = 0;
 let isSpinning = false;
 let lastSliceIndex = -1;
@@ -554,7 +761,6 @@ let ledAngleOffset = 0;
 
 function setupCanvasDPI() {
   const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
   canvas.width = 800 * dpr;
   canvas.height = 800 * dpr;
   ctx.scale(dpr, dpr);
@@ -570,7 +776,7 @@ function drawWheel() {
 
   ctx.clearRect(0, 0, size, size);
 
-  // 1. Drop Shadow base
+  // 1. Shadow Base
   ctx.save();
   ctx.beginPath();
   ctx.arc(cx, cy, radius + 14, 0, Math.PI * 2);
@@ -578,7 +784,7 @@ function drawWheel() {
   ctx.fill();
   ctx.restore();
 
-  // 2. Wheel Slices with 3D Conic Shading
+  // 2. Wheel Slices
   for (let i = 0; i < numSlices; i++) {
     const startAngle = rotation + i * slice;
     const endAngle = startAngle + slice;
@@ -595,7 +801,6 @@ function drawWheel() {
     ctx.fillStyle = grad;
     ctx.fill();
 
-    // Slice Separators
     ctx.strokeStyle = "rgba(10, 15, 26, 0.85)";
     ctx.lineWidth = 5;
     ctx.stroke();
@@ -625,7 +830,7 @@ function drawWheel() {
   ctx.strokeStyle = ringGrad;
   ctx.stroke();
 
-  // 4. Outer Chaser LEDs
+  // 4. LED Bulbs
   const leds = 20;
   for (let j = 0; j < leds; j++) {
     const angle = (j * (Math.PI * 2)) / leds + ledAngleOffset;
@@ -641,7 +846,7 @@ function drawWheel() {
     ctx.shadowBlur = 0;
   }
 
-  // 5. Deluxe Center Hub (Glass Cap)
+  // 5. Deluxe Center Hub
   ctx.beginPath();
   ctx.arc(cx, cy, 64, 0, Math.PI * 2);
   ctx.fillStyle = "#090d16";
@@ -661,7 +866,7 @@ function drawWheel() {
   ctx.font = "32px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("💧", cx, cy + 2);
+  ctx.fillText("🚰", cx, cy + 2);
 }
 
 function shadeColor(color, percent) {
@@ -672,24 +877,25 @@ function shadeColor(color, percent) {
   return `rgb(${Math.min(255, Math.max(0, r))}, ${Math.min(255, Math.max(0, g))}, ${Math.min(255, Math.max(0, b))})`;
 }
 
-// --- PARTICLE / CONFETTI SYSTEM ---
+// --- PARTICLE / CELEBRATION SYSTEM ---
 let particles = [];
-function fireConfetti() {
+function fireConfetti(isGrand = false) {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
   particles = [];
+  const count = isGrand ? 180 : 110;
 
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < count; i++) {
     particles.push({
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
-      vx: (Math.random() - 0.5) * 26,
-      vy: (Math.random() - 0.8) * 28,
+      vx: (Math.random() - 0.5) * (isGrand ? 32 : 24),
+      vy: (Math.random() - 0.8) * (isGrand ? 34 : 26),
       size: Math.random() * 8 + 4,
       color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
       alpha: 1,
       rot: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 12
+      rotSpeed: (Math.random() - 0.5) * 14
     });
   }
 
@@ -698,8 +904,8 @@ function fireConfetti() {
     particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.52; // gravity
-      p.alpha -= 0.012;
+      p.vy += 0.5;
+      p.alpha -= isGrand ? 0.009 : 0.012;
       p.rot += p.rotSpeed;
 
       fxCtx.save();
@@ -717,7 +923,42 @@ function fireConfetti() {
   requestAnimationFrame(render);
 }
 
-// --- SPIN ANIMATION PHYSICS ENGINE ---
+// --- LEADERBOARD & POINTS ENGINE ---
+function renderLeaderboard(highlightWinner = null) {
+  pointGrid.innerHTML = "";
+  const maxScore = Math.max(...Object.values(scores), 1);
+
+  roster.forEach(name => {
+    const card = document.createElement("div");
+    card.className = "player-point-card" + (name === highlightWinner ? " highlight" : "");
+    card.id = `card-${name}`;
+
+    const score = scores[name] || 0;
+    const fillPercent = currentMode === 'series' ? (score / SERIES_MAX_SPINS) * 100 : (score / maxScore) * 100;
+
+    card.innerHTML = `
+      <div class="p-name">${name}</div>
+      <div class="p-score">${score}</div>
+      <div class="p-bar-bg">
+        <div class="p-bar-fill" style="width: ${Math.min(fillPercent, 100)}%;"></div>
+      </div>
+    `;
+    pointGrid.appendChild(card);
+  });
+}
+
+function showFloatingPoint(victim) {
+  const card = document.getElementById(`card-${victim}`);
+  if (card) {
+    const floater = document.createElement("div");
+    floater.className = "point-float";
+    floater.textContent = "+1 Pt 🎯";
+    card.appendChild(floater);
+    setTimeout(() => floater.remove(), 800);
+  }
+}
+
+// --- SPIN ANIMATION PHYSICS ---
 function spinWheel() {
   if (isSpinning || roster.length < 2) return;
   ensureAudio();
@@ -729,7 +970,6 @@ function spinWheel() {
   const winnerIndex = Math.floor(Math.random() * roster.length);
   const sliceSize = (Math.PI * 2) / roster.length;
 
-  // Align slice cleanly under pointer at top (-PI/2)
   const targetAngle = -Math.PI / 2 - (winnerIndex + 0.5) * sliceSize;
   const currentNorm = rotation % (Math.PI * 2);
   const totalRounds = (8 + Math.floor(Math.random() * 3)) * Math.PI * 2;
@@ -737,20 +977,17 @@ function spinWheel() {
 
   const startRotation = rotation;
   const startTime = performance.now();
-  const duration = 5400; // Ultra suspenseful 5.4s duration
+  const duration = 5200;
 
   function frame(now) {
     const elapsed = now - startTime;
     const progress = Math.min(elapsed / duration, 1);
-
-    // Exponential Custom Quartic Out Easing
     const easeOut = 1 - Math.pow(1 - progress, 4.6);
     rotation = startRotation + delta * easeOut;
     ledAngleOffset += 0.04 * (1 - progress * 0.8);
 
     drawWheel();
 
-    // Pointer Mechanical Hit Detection
     const pointerAngle = (rotation + Math.PI / 2) % (Math.PI * 2);
     const positiveAngle = pointerAngle < 0 ? pointerAngle + Math.PI * 2 : pointerAngle;
     const currentSlice = Math.floor(positiveAngle / sliceSize);
@@ -772,22 +1009,68 @@ function spinWheel() {
     } else {
       isSpinning = false;
       spinBtn.disabled = false;
-      suspenseText.textContent = "Bakra chuna gaya! 🎯";
+      const victim = roster[winnerIndex];
 
-      // Haptic Shockwave & Fanfare
+      // Update Points
+      scores[victim] = (scores[victim] || 0) + 1;
+      renderLeaderboard(victim);
+      showFloatingPoint(victim);
+
+      // Camera Shake
       stage.classList.add("shake");
       setTimeout(() => stage.classList.remove("shake"), 450);
 
-      playWinStinger();
-      fireConfetti();
+      if (currentMode === "instant") {
+        // Instant Mode Outcome
+        suspenseText.textContent = "Bakra mil gaya! 🎯";
+        playWinStinger(false);
+        fireConfetti(false);
 
-      // Show Winner Roast Modal
-      const victim = roster[winnerIndex];
-      const roast = hinglishRoasts[Math.floor(Math.random() * hinglishRoasts.length)];
-      
-      modalVictim.textContent = victim;
-      modalDialogue.textContent = roast;
-      modalOverlay.classList.add("open");
+        const roast = instantRoasts[Math.floor(Math.random() * instantRoasts.length)];
+        modalAvatar.textContent = "🐐";
+        modalVictim.textContent = victim;
+        modalBadge.textContent = "Designated Jal Mantri";
+        modalDialogue.textContent = roast;
+        modalOverlay.classList.add("open");
+      } else {
+        // 10-Spins Battle Mode Outcome
+        currentSpinCount++;
+        spinCounterPill.textContent = `${currentSpinCount} / ${SERIES_MAX_SPINS}`;
+
+        if (currentSpinCount >= SERIES_MAX_SPINS) {
+          // Find tournament ultimate loser (highest points)
+          let highestScore = -1;
+          let tournamentLosers = [];
+
+          for (const [pName, pScore] of Object.entries(scores)) {
+            if (pScore > highestScore) {
+              highestScore = pScore;
+              tournamentLosers = [pName];
+            } else if (pScore === highestScore) {
+              tournamentLosers.push(pName);
+            }
+          }
+
+          const grandLoser = tournamentLosers[Math.floor(Math.random() * tournamentLosers.length)];
+          suspenseText.textContent = "Tournament Khatam! Ultimate Bakra mil gaya! 🏆";
+
+          playWinStinger(true);
+          fireConfetti(true);
+
+          const grandRoast = finaleRoasts[Math.floor(Math.random() * finaleRoasts.length)];
+          modalAvatar.textContent = "👑";
+          modalVictim.textContent = grandLoser;
+          modalBadge.textContent = `Grand Tournament Loser (${highestScore} Points)`;
+          modalDialogue.textContent = grandRoast;
+          modalOverlay.classList.add("open");
+
+          // Reset count for next game
+          currentSpinCount = 0;
+        } else {
+          suspenseText.textContent = `Round ${currentSpinCount} Done! ${victim} got +1 Pt! Agla spin karo!`;
+          playWinStinger(false);
+        }
+      }
     }
   }
 
@@ -804,12 +1087,14 @@ function renderTags() {
     tagsList.appendChild(tag);
   });
   drawWheel();
+  renderLeaderboard();
 }
 
 function addName() {
   const val = nameInput.value.trim();
   if (val && !roster.includes(val) && roster.length < 12) {
     roster.push(val);
+    scores[val] = 0;
     nameInput.value = "";
     renderTags();
   }
@@ -818,18 +1103,19 @@ function addName() {
 tagsList.addEventListener("click", (e) => {
   if (e.target.classList.contains("tag-remove")) {
     if (roster.length <= 2) {
-      alert("Kam se kam 2 log toh hone chahiye competition ke liye!");
+      alert("Kam se kam 2 log toh hone chahiye duty ke liye!");
       return;
     }
     const idx = parseInt(e.target.dataset.index, 10);
+    const removedName = roster[idx];
     roster.splice(idx, 1);
+    delete scores[removedName];
     renderTags();
   }
 });
 
 addBtn.addEventListener("click", addName);
 nameInput.addEventListener("keydown", (e) => { if (e.key === "Enter") addName(); });
-
 spinBtn.addEventListener("click", spinWheel);
 
 closeModalBtn.addEventListener("click", () => {
@@ -837,12 +1123,42 @@ closeModalBtn.addEventListener("click", () => {
 });
 
 copyBtn.addEventListener("click", () => {
-  const text = `🚨 *PAANI DUTY ALERT* 🚨\nTarget: ${modalVictim.textContent}\n"${modalDialogue.textContent}"`;
+  const text = `🚨 *PAANI DUTY ALERT* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n"${modalDialogue.textContent}"`;
   navigator.clipboard.writeText(text).then(() => {
     copyBtn.textContent = "Copied! 😂";
     setTimeout(() => { copyBtn.textContent = "Roast Copy Karo 📋"; }, 2000);
   });
 });
+
+// Mode Switching Handlers
+tabInstant.addEventListener("click", () => {
+  if (isSpinning) return;
+  currentMode = "instant";
+  tabInstant.classList.add("active");
+  tabSeries.classList.remove("active");
+  seriesHud.style.display = "none";
+  document.getElementById("boardTitle").textContent = "Live Duty Counter";
+});
+
+tabSeries.addEventListener("click", () => {
+  if (isSpinning) return;
+  currentMode = "series";
+  tabSeries.classList.add("active");
+  tabInstant.classList.remove("active");
+  seriesHud.style.display = "flex";
+  document.getElementById("boardTitle").textContent = "10-Spins Battle Leaderboard";
+  resetSeries();
+});
+
+function resetSeries() {
+  currentSpinCount = 0;
+  spinCounterPill.textContent = `0 / ${SERIES_MAX_SPINS}`;
+  roster.forEach(n => scores[n] = 0);
+  renderLeaderboard();
+  suspenseText.textContent = "Match Reset! Spin karo!";
+}
+
+resetSeriesBtn.addEventListener("click", resetSeries);
 
 window.addEventListener("resize", () => {
   fxCanvas.width = window.innerWidth;
