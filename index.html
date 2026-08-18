@@ -3,9 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Water Bottle Duty - Spin of Shame</title>
+<title>Water Bottle Duty - Bakra Wheel</title>
 <style>
+  :root {
+    --bg-dark: #090d16;
+    --card-bg: rgba(18, 26, 43, 0.85);
+    --accent-cyan: #00f2fe;
+    --accent-purple: #9d4edd;
+    --accent-pink: #ff2a85;
+    --accent-gold: #ffb703;
+  }
+
   * { box-sizing: border-box; }
+  
   body {
     margin: 0;
     min-height: 100vh;
@@ -13,194 +23,325 @@
     align-items: center;
     justify-content: center;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: radial-gradient(circle at top, #1e293b, #0f172a);
-    color: #f8fafc;
-    padding: 20px 0;
+    background: radial-gradient(circle at 50% 20%, #1a2238 0%, var(--bg-dark) 80%);
+    color: #f1f5f9;
+    padding: 24px 12px;
     overflow-x: hidden;
   }
-  .app {
-    width: min(92vw, 560px);
-    text-align: center;
-    position: relative;
-  }
-  h1 { 
-    margin: 0 0 6px; 
-    font-size: clamp(24px, 5vw, 36px); 
-    font-weight: 900;
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  p.subtitle { 
-    margin: 0 0 20px; 
-    color: #94a3b8; 
-    font-size: 15px; 
-  }
-  .wheel-wrap {
-    position: relative;
-    width: min(85vw, 420px);
-    aspect-ratio: 1;
-    margin: auto;
-  }
-  canvas#wheel {
-    width: 100%;
-    height: 100%;
-    display: block;
-    filter: drop-shadow(0 16px 28px rgba(0,0,0,.45));
-    transition: transform 0.1s ease-out;
-  }
-  canvas#confetti {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 99;
-  }
-  .pointer {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-top: 40px solid #ef4444;
-    z-index: 5;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,.4));
-    transform-origin: 50% 15%;
-    transition: transform 0.08s ease-out;
-  }
-  .pointer.hit {
-    transform: translateX(-50%) rotate(-18deg);
-  }
-  .spin-btn {
-    margin-top: 24px;
-    border: 0;
-    border-radius: 50px;
-    padding: 16px 42px;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    color: #0f172a;
-    background: linear-gradient(135deg, #38bdf8, #22d3ee);
-    cursor: pointer;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .spin-btn:hover:not(:disabled) {
-    transform: scale(1.06) translateY(-2px);
-    box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
-  }
-  .spin-btn:active:not(:disabled) {
-    transform: scale(0.96);
-  }
-  .spin-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    filter: grayscale(0.6);
-  }
-  .taunt-card {
-    min-height: 110px;
-    margin-top: 22px;
-    padding: 18px 22px;
-    border-radius: 16px;
-    background: rgba(30, 41, 59, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
+
+  .container {
+    width: min(94vw, 560px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    opacity: 0;
-    transform: translateY(15px) scale(0.96);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    gap: 18px;
+    position: relative;
+    z-index: 2;
   }
-  .taunt-card.show {
+
+  .header h1 {
+    margin: 0;
+    font-size: clamp(26px, 6vw, 38px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 10px rgba(0, 242, 254, 0.3));
+  }
+
+  .header p {
+    margin: 4px 0 0;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* Wheel Styling */
+  .wheel-container {
+    position: relative;
+    width: min(86vw, 420px);
+    aspect-ratio: 1;
+    margin: 6px auto;
+  }
+
+  .wheel-glow {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.25), transparent 70%);
+    z-index: 1;
+    animation: glowPulse 2.5s infinite alternate ease-in-out;
+  }
+
+  @keyframes glowPulse {
+    from { opacity: 0.4; transform: scale(0.98); }
+    to { opacity: 0.9; transform: scale(1.03); }
+  }
+
+  canvas#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.7));
+  }
+
+  /* Center Pointer */
+  .pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 44px;
+    z-index: 10;
+    transform-origin: 50% 15%;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    transition: transform 0.07s ease-out;
+  }
+
+  .pointer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #ff0055, #ff5400);
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+    border-radius: 4px 4px 0 0;
+  }
+
+  .pointer.bump {
+    transform: translateX(-50%) rotate(-22deg) scale(1.1);
+  }
+
+  /* Spin Button */
+  .spin-btn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 16px 48px;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #090d16;
+    background: linear-gradient(135deg, var(--accent-gold), #ff5400);
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 183, 3, 0.4), inset 0 2px 2px rgba(255,255,255,0.6);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .spin-btn:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 84, 0, 0.7);
+  }
+
+  .spin-btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.97);
+  }
+
+  .spin-btn:disabled {
+    filter: grayscale(0.8);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Taunt Card */
+  .taunt-card {
+    width: 100%;
+    min-height: 125px;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    padding: 18px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .taunt-card.active {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-  .target-name {
-    font-size: 24px;
+
+  .victim-tag {
+    font-size: 26px;
     font-weight: 900;
-    color: #f87171;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    text-shadow: 0 0 14px rgba(255, 183, 3, 0.6);
+    animation: bounceVictim 1s infinite alternate cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes bounceVictim {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+
+  .taunt-body {
+    font-size: 16px;
+    line-height: 1.45;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  /* Quick Roster & Score Tracker */
+  .dashboard {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 12px 18px;
+  }
+
+  .dash-title {
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    animation: pulseName 1s infinite alternate;
+    color: #64748b;
+    margin-bottom: 8px;
+    font-weight: 700;
   }
-  .taunt-msg {
-    font-size: 16px;
-    color: #cbd5e1;
-    font-weight: 500;
-    line-height: 1.4;
+
+  .score-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
   }
-  @keyframes pulseName {
-    from { transform: scale(1); filter: drop-shadow(0 0 2px rgba(248,113,113,0.3)); }
-    to { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(248,113,113,0.8)); }
+
+  .chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .chip-count {
+    background: var(--accent-pink);
+    color: #fff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+
+  /* Screen Shake Effect */
+  .screen-shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+  }
+
+  @keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+  }
+
+  canvas#fxCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
   }
 </style>
 </head>
 <body>
 
-<canvas id="confetti"></canvas>
+<canvas id="fxCanvas"></canvas>
 
-<div class="app">
-  <h1>💧 WHEEL OF REFILL</h1>
-  <p class="subtitle">Spin to find today's designated hydration slave.</p>
-
-  <div class="wheel-wrap">
-    <div class="pointer" id="pointer"></div>
-    <canvas id="wheel" width="700" height="700"></canvas>
+<div class="container" id="mainContainer">
+  <div class="header">
+    <h1>💧 Wheel of Bakra</h1>
+    <p>Spin karo aur agla Paani Mantri chuno!</p>
   </div>
 
-  <button class="spin-btn" id="spinBtn">SACRIFICE SOMEONE 🎲</button>
-  
+  <div class="wheel-container">
+    <div class="wheel-glow"></div>
+    <div class="pointer" id="pointer"></div>
+    <canvas id="wheelCanvas" width="800" height="800"></canvas>
+  </div>
+
+  <button class="spin-btn" id="spinBtn">Kismat Aajmao 🎲</button>
+
   <div class="taunt-card" id="tauntCard">
-    <div class="target-name" id="targetName"></div>
-    <div class="taunt-msg" id="tauntMsg"></div>
+    <div class="victim-tag" id="victimName"></div>
+    <div class="taunt-body" id="tauntMsg"></div>
+  </div>
+
+  <div class="dashboard">
+    <div class="dash-title">Shame Leaderboard (Today's Refills)</div>
+    <div class="score-chips" id="scoreBoard"></div>
   </div>
 </div>
 
 <script>
-const names = ["Pranay", "Rohan", "Vivek", "Gaus"];
-const colors = ["#f87171", "#fbbf24", "#34d399", "#60a5fa"];
-
-const taunts = [
-  "Stop pretending to type aggressively on Slack. Get up and walk! 🏃‍♂️",
-  "Don't fake an urgent call now. The water purifier is calling your name! 📞❌",
-  "Your chair has suffered enough of your weight today. Go hydrate the squad! 🪑",
-  "Congratulations! You won an all-inclusive VIP trip to the RO filter! 🏆🚰",
-  "We can all see you staring at the screen in pure denial. MOVE! 💀",
-  "Hydration Butler of the Hour™ — don't forget to fill it with cold water! 🧊",
-  "Stop looking around for volunteers. Fate pointed right at you, champion! 🫵",
-  "Zero excuses. Your legs still work, go do your office duty! 🚶‍♂️💨"
+const players = [
+  { name: "Pranay", color: "#ff2a85", refills: 0 },
+  { name: "Rohan", color: "#00f2fe", refills: 0 },
+  { name: "Vivek", color: "#ffb703", refills: 0 },
+  { name: "Gaus", color: "#38ef7d", refills: 0 }
 ];
 
-const canvas = document.getElementById("wheel");
+const hinglishRoasts = [
+  "Slack pe 'Busy' daal ke hero mat ban, chal chup chaap botal bhar ke la! 🏃‍♂️💨",
+  "Arre chair se fevicol chhoot gaya ho toh purifier ka deedar kar le! 🪑💀",
+  "Badhaai ho! Company ne aaj ka official 'Jal Mantri' tumhe ghoshit kiya hai! 👑🚰",
+  "Keyboard pe ungliya tez chal rahi hain par pair jam gaye kya? UTH AB! ⌨️🚶‍♂️",
+  "Screen pe fake serious expression mat bana, wheel ne teri polling khol di hai! 🕶️😂",
+  "Code ka bug baad me solve karna, pehle poori team ki pyaas bujha! 🐛💧",
+  "Thanda paani laana, aur raaste me kisi se canteen ke gappe mat ladane lag jaana! 🧊🙅‍♂️",
+  "Sabki nazrein tere pe hi hain, ab 'mera meeting hai' bolne ka chance gaya! 📞🚫",
+  "Aankhein band karke soch raha tha bach jaayega? Naseeb me refill hi likha hai! 🎯🔥",
+  "Itna aalsi banega toh water filter bhi tujhe pehchanne se inkaar kar dega! 🚰🥱"
+];
+
+const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
-const btn = document.getElementById("spinBtn");
 const pointer = document.getElementById("pointer");
+const spinBtn = document.getElementById("spinBtn");
 const tauntCard = document.getElementById("tauntCard");
-const targetName = document.getElementById("targetName");
+const victimName = document.getElementById("victimName");
 const tauntMsg = document.getElementById("tauntMsg");
-const confettiCanvas = document.getElementById("confetti");
-const confettiCtx = confettiCanvas.getContext("2d");
+const scoreBoard = document.getElementById("scoreBoard");
+const mainContainer = document.getElementById("mainContainer");
+
+const fxCanvas = document.getElementById("fxCanvas");
+const fxCtx = fxCanvas.getContext("2d");
 
 let rotation = 0;
-let spinning = false;
+let isSpinning = false;
 let audioCtx = null;
-let lastTickIndex = -1;
+let lastSlice = -1;
+let ledFlashAngle = 0;
 
-function initAudio() {
+function initAudioContext() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
 }
 
-function playTickSound() {
+// Click sound
+function playTick(pitch = 550) {
   if (!audioCtx) return;
   if (audioCtx.state === 'suspended') audioCtx.resume();
   
@@ -208,210 +349,267 @@ function playTickSound() {
   const gain = audioCtx.createGain();
   
   osc.type = "sine";
-  osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.035);
+  osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.04);
   
   gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.035);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
   
   osc.connect(gain);
   gain.connect(audioCtx.destination);
-  
   osc.start();
-  osc.stop(audioCtx.currentTime + 0.035);
+  osc.stop(audioCtx.currentTime + 0.04);
 }
 
-function playVictoryFanfare() {
+// Winning buzzer fanfare
+function playWinFanfare() {
   if (!audioCtx) return;
-  const notes = [261.63, 329.63, 392.00, 523.25];
+  const notes = [261.63, 329.63, 392.00, 523.25, 659.25];
   notes.forEach((freq, i) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = "triangle";
     osc.frequency.value = freq;
     
-    const start = audioCtx.currentTime + i * 0.09;
+    const start = audioCtx.currentTime + i * 0.08;
     gain.gain.setValueAtTime(0.3, start);
-    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
     
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(start);
-    osc.stop(start + 0.35);
+    osc.stop(start + 0.4);
+  });
+}
+
+function updateScoreboard() {
+  scoreBoard.innerHTML = "";
+  players.forEach(p => {
+    const chip = document.createElement("div");
+    chip.className = "chip";
+    chip.innerHTML = `${p.name} <span class="chip-count">${p.refills}</span>`;
+    scoreBoard.appendChild(chip);
   });
 }
 
 function drawWheel() {
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
-  const radius = 315;
-  const slice = (Math.PI * 2) / names.length;
+  const radius = 340;
+  const numSlices = players.length;
+  const slice = (Math.PI * 2) / numSlices;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  for (let i = 0; i < names.length; i++) {
-    const start = rotation + i * slice;
-    const end = start + slice;
+  // Draw Slices
+  for (let i = 0; i < numSlices; i++) {
+    const startAngle = rotation + i * slice;
+    const endAngle = startAngle + slice;
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, radius, start, end);
+    ctx.arc(cx, cy, radius, startAngle, endAngle);
     ctx.closePath();
-    ctx.fillStyle = colors[i % colors.length];
+
+    // Gradient fill for slice
+    const grad = ctx.createRadialGradient(cx, cy, 50, cx, cy, radius);
+    grad.addColorStop(0, players[i].color);
+    grad.addColorStop(1, adjustColorBrightness(players[i].color, -40));
+    ctx.fillStyle = grad;
     ctx.fill();
-    ctx.strokeStyle = "#0f172a";
-    ctx.lineWidth = 8;
+
+    ctx.strokeStyle = "#090d16";
+    ctx.lineWidth = 6;
     ctx.stroke();
 
+    // Slice Name Text
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(start + slice / 2);
+    ctx.rotate(startAngle + slice / 2);
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#0f172a";
-    ctx.font = "900 44px 'Segoe UI', Arial, sans-serif";
-    ctx.shadowColor = "rgba(255,255,255,0.4)";
-    ctx.shadowBlur = 4;
-    ctx.fillText(names[i], radius - 45, 0);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "900 40px 'Segoe UI', Arial";
+    ctx.shadowColor = "rgba(0,0,0,0.8)";
+    ctx.shadowBlur = 8;
+    ctx.fillText(players[i].name, radius - 55, 0);
     ctx.restore();
   }
 
-  // Outer border ring
+  // Outer Decorative Rim
   ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.lineWidth = 14;
-  ctx.strokeStyle = "#1e293b";
+  ctx.arc(cx, cy, radius + 8, 0, Math.PI * 2);
+  ctx.lineWidth = 20;
+  ctx.strokeStyle = "#121a2b";
   ctx.stroke();
 
-  // Center hub
+  // Animated Rim LED Bulbs
+  const totalLeds = 24;
+  for (let j = 0; j < totalLeds; j++) {
+    const ledAngle = (j * (Math.PI * 2)) / totalLeds + ledFlashAngle;
+    const lx = cx + (radius + 8) * Math.cos(ledAngle);
+    const ly = cy + (radius + 8) * Math.sin(ledAngle);
+
+    ctx.beginPath();
+    ctx.arc(lx, ly, 5, 0, Math.PI * 2);
+    ctx.fillStyle = (j % 2 === 0) ? "#00f2fe" : "#ffb703";
+    ctx.shadowColor = ctx.fillStyle;
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Center Cap Ring
   ctx.beginPath();
-  ctx.arc(cx, cy, 52, 0, Math.PI * 2);
-  ctx.fillStyle = "#0f172a";
+  ctx.arc(cx, cy, 60, 0, Math.PI * 2);
+  ctx.fillStyle = "#090d16";
   ctx.fill();
   ctx.lineWidth = 6;
-  ctx.strokeStyle = "#38bdf8";
+  ctx.strokeStyle = "#ff2a85";
   ctx.stroke();
 
-  ctx.fillStyle = "#38bdf8";
-  ctx.font = "bold 28px sans-serif";
+  // Center Icon
+  ctx.font = "32px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("💧", cx, cy + 2);
+  ctx.fillText("🚰", cx, cy + 3);
 }
 
-// Confetti Particle System
+function adjustColorBrightness(hex, percent) {
+  let num = parseInt(hex.replace("#",""), 16);
+  let r = (num >> 16) + percent;
+  let g = ((num >> 8) & 0x00FF) + percent;
+  let b = (num & 0x0000FF) + percent;
+  r = Math.min(255, Math.max(0, r));
+  g = Math.min(255, Math.max(0, g));
+  b = Math.min(255, Math.max(0, b));
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+}
+
+// Particle Fireworks / Water Splash FX
 let particles = [];
-function fireConfetti() {
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
+function triggerCelebration() {
+  fxCanvas.width = window.innerWidth;
+  fxCanvas.height = window.innerHeight;
   particles = [];
-  
-  for (let i = 0; i < 90; i++) {
+
+  for (let i = 0; i < 110; i++) {
     particles.push({
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
-      vx: (Math.random() - 0.5) * 18,
-      vy: (Math.random() - 0.7) * 20,
-      size: Math.random() * 8 + 4,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 22,
+      vy: (Math.random() - 0.7) * 24,
+      size: Math.random() * 9 + 4,
+      color: ["#00f2fe", "#ff2a85", "#ffb703", "#38ef7d", "#ffffff"][Math.floor(Math.random() * 5)],
       alpha: 1,
       rotation: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 12
+      rotSpeed: (Math.random() - 0.5) * 10
     });
   }
 
-  function renderConfetti() {
-    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-    particles.forEach((p) => {
+  function renderFx() {
+    fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.45;
+      p.vy += 0.48;
       p.alpha -= 0.012;
       p.rotation += p.rotSpeed;
 
-      confettiCtx.save();
-      confettiCtx.globalAlpha = Math.max(p.alpha, 0);
-      confettiCtx.translate(p.x, p.y);
-      confettiCtx.rotate((p.rotation * Math.PI) / 180);
-      confettiCtx.fillStyle = p.color;
-      confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-      confettiCtx.restore();
+      fxCtx.save();
+      fxCtx.globalAlpha = Math.max(p.alpha, 0);
+      fxCtx.translate(p.x, p.y);
+      fxCtx.rotate((p.rotation * Math.PI) / 180);
+      fxCtx.fillStyle = p.color;
+      fxCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      fxCtx.restore();
     });
 
     particles = particles.filter(p => p.alpha > 0);
-    if (particles.length > 0) {
-      requestAnimationFrame(renderConfetti);
-    } else {
-      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-    }
+    if (particles.length > 0) requestAnimationFrame(renderFx);
   }
-  requestAnimationFrame(renderConfetti);
+  requestAnimationFrame(renderFx);
 }
 
 function spin() {
-  if (spinning) return;
-  initAudio();
-  spinning = true;
-  btn.disabled = true;
-  tauntCard.classList.remove("show");
+  if (isSpinning) return;
+  initAudioContext();
+  isSpinning = true;
+  spinBtn.disabled = true;
+  tauntCard.classList.remove("active");
 
-  const winner = Math.floor(Math.random() * names.length);
-  const slice = (Math.PI * 2) / names.length;
+  const winnerIndex = Math.floor(Math.random() * players.length);
+  const sliceSize = (Math.PI * 2) / players.length;
 
-  const targetAngle = -Math.PI / 2 - (winner + 0.5) * slice;
-  const current = rotation % (Math.PI * 2);
-  const extraSpins = (6 + Math.floor(Math.random() * 3)) * Math.PI * 2;
-  const totalChange = (targetAngle - current) + extraSpins + (targetAngle < current ? Math.PI * 2 : 0);
+  // Align selected slice under top pointer (-PI/2)
+  const targetAngle = -Math.PI / 2 - (winnerIndex + 0.5) * sliceSize;
+  const currentNormalized = rotation % (Math.PI * 2);
+  const extraFullRounds = (7 + Math.floor(Math.random() * 3)) * Math.PI * 2;
+  const delta = (targetAngle - currentNormalized) + extraFullRounds + (targetAngle < currentNormalized ? Math.PI * 2 : 0);
 
-  const startRot = rotation;
+  const startRotation = rotation;
   const startTime = performance.now();
-  const duration = 4600;
+  const spinDuration = 5200; // dramatic build up
 
-  function animate(now) {
+  function frame(now) {
     const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    
+    const progress = Math.min(elapsed / spinDuration, 1);
+
     // Custom cubic-bezier deceleration
-    const easeOut = 1 - Math.pow(1 - progress, 4.5);
-    rotation = startRot + totalChange * easeOut;
+    const easeOut = 1 - Math.pow(1 - progress, 4.8);
+    rotation = startRotation + delta * easeOut;
+    ledFlashAngle += 0.05;
+
     drawWheel();
 
-    // Trigger tick sound & pointer bounce on slice boundary
-    const normalizedRot = (rotation + Math.PI / 2) % (Math.PI * 2);
-    const positiveAngle = normalizedRot < 0 ? normalizedRot + Math.PI * 2 : normalizedRot;
-    const currentSlice = Math.floor(positiveAngle / slice);
+    // Trigger tick sound & pointer bounce
+    const pointerAngle = (rotation + Math.PI / 2) % (Math.PI * 2);
+    const positiveAngle = pointerAngle < 0 ? pointerAngle + Math.PI * 2 : pointerAngle;
+    const currentSlice = Math.floor(positiveAngle / sliceSize);
 
-    if (currentSlice !== lastTickIndex && progress < 0.98) {
-      lastTickIndex = currentSlice;
-      playTickSound();
-      pointer.classList.add("hit");
-      setTimeout(() => pointer.classList.remove("hit"), 60);
+    if (currentSlice !== lastSlice && progress < 0.98) {
+      lastSlice = currentSlice;
+      const soundPitch = 450 + (1 - progress) * 250;
+      playTick(soundPitch);
+      pointer.classList.add("bump");
+      setTimeout(() => pointer.classList.remove("bump"), 50);
     }
 
     if (progress < 1) {
-      requestAnimationFrame(animate);
+      requestAnimationFrame(frame);
     } else {
-      spinning = false;
-      btn.disabled = false;
-      playVictoryFanfare();
-      fireConfetti();
+      isSpinning = false;
+      spinBtn.disabled = false;
+      
+      // Update Refill count
+      players[winnerIndex].refills++;
+      updateScoreboard();
 
-      // Show funny taunt message
-      const randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-      targetName.textContent = `🚨 ${names[winner]} 🚨`;
-      tauntMsg.textContent = randomTaunt;
-      tauntCard.classList.add("show");
+      // Audio + Visual Climax
+      playWinFanfare();
+      triggerCelebration();
+
+      mainContainer.classList.add("screen-shake");
+      setTimeout(() => mainContainer.classList.remove("screen-shake"), 400);
+
+      // Show Hinglish Roast
+      const randomRoast = hinglishRoasts[Math.floor(Math.random() * hinglishRoasts.length)];
+      victimName.textContent = `🚨 ${players[winnerIndex].name} 🚨`;
+      tauntMsg.textContent = randomRoast;
+      tauntCard.classList.add("active");
     }
   }
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(frame);
 }
 
-btn.addEventListener("click", spin);
+spinBtn.addEventListener("click", spin);
 window.addEventListener("resize", () => {
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
+  fxCanvas.width = window.innerWidth;
+  fxCanvas.height = window.innerHeight;
 });
+
+updateScoreboard();
 drawWheel();
 </script>
 </body>
