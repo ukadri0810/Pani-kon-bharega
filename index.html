@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Royal Hydration Roulette - Luxury Edition</title>
+<title>HydraSpin - Office Hydration Roulette</title>
 <style>
   :root {
-    --bg-main: #06080e;
-    --gold-primary: #e5b869;
-    --gold-bright: #ffd98a;
-    --gold-dark: #8a6524;
-    --gold-gradient: linear-gradient(135deg, #ffd98a 0%, #d4a04e 50%, #916828 100%);
-    --surface-glass: rgba(16, 21, 33, 0.72);
-    --surface-border: rgba(229, 184, 105, 0.22);
-    --text-pure: #ffffff;
-    --text-muted: #9ba3b5;
-    --accent-red: #ff3366;
+    --bg-base: #080d1a;
+    --surface-glass: rgba(18, 28, 51, 0.75);
+    --surface-border: rgba(99, 140, 255, 0.2);
+    --neon-cyan: #00f0ff;
+    --neon-purple: #9d4edd;
+    --neon-coral: #ff3b6c;
+    --neon-mint: #05ffa1;
+    --neon-amber: #ffbe0b;
+    --text-main: #f8fafc;
+    --text-dim: #8fa0c2;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -26,10 +26,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(circle at 50% 15%, #182035 0%, #080b13 60%, var(--bg-main) 100%);
-    color: var(--text-pure);
-    padding: 20px 14px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at 50% 10%, #152244 0%, #0c1427 45%, var(--bg-base) 100%);
+    color: var(--text-main);
+    padding: 16px;
     overflow-x: hidden;
   }
 
@@ -44,20 +44,20 @@
   }
 
   /* Header */
-  .brand-badge {
+  .brand-pill {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     padding: 5px 16px;
     border-radius: 99px;
-    background: rgba(229, 184, 105, 0.08);
-    border: 1px solid var(--surface-border);
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.25);
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
-    color: var(--gold-bright);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
   }
 
   h1 {
@@ -65,21 +65,21 @@
     font-size: clamp(26px, 6vw, 36px);
     font-weight: 900;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 30%, #ffd98a 100%);
+    background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
   }
 
-  /* Mode Switcher */
-  .mode-switch-wrap {
+  /* Mode Segmented Control */
+  .mode-switch {
     display: flex;
-    background: rgba(8, 12, 20, 0.85);
+    background: rgba(10, 16, 31, 0.9);
     border: 1px solid var(--surface-border);
     padding: 4px;
-    border-radius: 14px;
+    border-radius: 16px;
     width: 100%;
-    max-width: 400px;
+    max-width: 410px;
     gap: 4px;
     backdrop-filter: blur(12px);
   }
@@ -88,23 +88,24 @@
     flex: 1;
     border: none;
     background: transparent;
-    color: var(--text-muted);
+    color: var(--text-dim);
     padding: 9px 12px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 12px;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .mode-tab.active {
-    background: var(--gold-gradient);
-    color: #0d1117;
-    box-shadow: 0 4px 14px rgba(229, 184, 105, 0.3);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(157, 78, 221, 0.25));
+    border: 1px solid var(--neon-cyan);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
   }
 
-  /* Series HUD */
+  /* Series Tracker Bar */
   .series-hud {
     width: 100%;
     display: flex;
@@ -113,39 +114,39 @@
     background: var(--surface-glass);
     border: 1px solid var(--surface-border);
     padding: 10px 16px;
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 12px;
     font-weight: 700;
   }
 
   .series-pill {
-    background: rgba(229, 184, 105, 0.15);
-    color: var(--gold-bright);
-    border: 1px solid var(--surface-border);
-    padding: 3px 10px;
+    background: rgba(255, 190, 11, 0.15);
+    color: var(--neon-amber);
+    border: 1px solid rgba(255, 190, 11, 0.3);
+    padding: 3px 12px;
     border-radius: 20px;
   }
 
   .btn-reset {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-muted);
-    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-dim);
+    padding: 5px 12px;
     border-radius: 8px;
     font-size: 11px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
   }
-  .btn-reset:hover { color: #fff; border-color: var(--gold-bright); }
+  .btn-reset:hover { color: #fff; border-color: var(--neon-coral); }
 
-  /* Roster Bar */
+  /* Player Input Box */
   .roster-card {
     width: 100%;
     background: var(--surface-glass);
     border: 1px solid var(--surface-border);
     backdrop-filter: blur(16px);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 10px 12px;
     display: flex;
     flex-direction: column;
@@ -159,24 +160,24 @@
 
   .roster-input {
     flex: 1;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(8, 13, 26, 0.7);
     border: 1px solid var(--surface-border);
-    border-radius: 10px;
-    padding: 8px 14px;
+    border-radius: 12px;
+    padding: 9px 14px;
     font-size: 13px;
     color: #fff;
     outline: none;
     transition: border-color 0.2s;
   }
 
-  .roster-input:focus { border-color: var(--gold-primary); }
+  .roster-input:focus { border-color: var(--neon-cyan); }
 
   .add-btn {
-    background: var(--gold-gradient);
+    background: linear-gradient(135deg, var(--neon-cyan), #00a6fb);
     border: none;
-    color: #0a0e17;
-    border-radius: 10px;
-    padding: 0 16px;
+    color: #040914;
+    border-radius: 12px;
+    padding: 0 18px;
     font-weight: 900;
     font-size: 13px;
     cursor: pointer;
@@ -196,9 +197,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(229, 184, 105, 0.08);
-    border: 1px solid var(--surface-border);
-    padding: 3px 9px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 4px 10px;
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
@@ -210,9 +211,9 @@
     opacity: 0.5;
     transition: opacity 0.15s;
   }
-  .tag-remove:hover { opacity: 1; color: var(--accent-red); }
+  .tag-remove:hover { opacity: 1; color: var(--neon-coral); }
 
-  /* Wheel Frame */
+  /* Wheel Viewport */
   .wheel-viewport {
     position: relative;
     width: min(84vw, 385px);
@@ -224,8 +225,8 @@
     position: absolute;
     inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(229, 184, 105, 0.2) 0%, transparent 72%);
-    filter: blur(10px);
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.18) 0%, rgba(157, 78, 221, 0.12) 45%, transparent 72%);
+    filter: blur(12px);
     z-index: 1;
     pointer-events: none;
   }
@@ -235,21 +236,21 @@
     z-index: 2;
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85));
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
   }
 
-  /* Precision Indicator */
+  /* Pointer Mech */
   .pointer-mech {
     position: absolute;
     top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 32px;
+    width: 34px;
     height: 48px;
     z-index: 10;
     pointer-events: none;
     transform-origin: 50% 10px;
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 8px 14px rgba(0,0,0,0.8));
     transition: transform 0.05s ease-out;
   }
 
@@ -266,62 +267,62 @@
     gap: 8px;
   }
 
-  .spin-master-btn {
+  .spin-btn {
     position: relative;
     width: 100%;
-    max-width: 350px;
+    max-width: 360px;
     padding: 16px 24px;
     border: none;
     border-radius: 16px;
-    background: var(--gold-gradient);
-    color: #090c14;
+    background: linear-gradient(135deg, var(--neon-cyan) 0%, #0096c7 50%, var(--neon-purple) 100%);
+    color: #ffffff;
     font-size: 17px;
     font-weight: 900;
     letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(229, 184, 105, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.5);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
   }
 
-  .spin-master-btn::after {
+  .spin-btn::after {
     content: '';
     position: absolute;
     top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
     transform: skewX(-20deg);
-    animation: shineSweep 3.5s infinite;
+    animation: shine 3.5s infinite;
   }
 
-  @keyframes shineSweep {
-    18%, 100% { left: 160%; }
+  @keyframes shine {
+    20%, 100% { left: 160%; }
   }
 
-  .spin-master-btn:hover:not(:disabled) {
+  .spin-btn:hover:not(:disabled) {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 14px 40px rgba(229, 184, 105, 0.55);
+    box-shadow: 0 14px 40px rgba(0, 240, 255, 0.5);
   }
 
-  .spin-master-btn:active:not(:disabled) {
+  .spin-btn:active:not(:disabled) {
     transform: translateY(2px) scale(0.98);
   }
 
-  .spin-master-btn:disabled {
+  .spin-btn:disabled {
     filter: grayscale(0.8);
     opacity: 0.5;
     cursor: not-allowed;
   }
 
-  .suspense-status {
+  .status-text {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.8px;
-    color: var(--text-muted);
+    color: var(--text-dim);
     min-height: 16px;
   }
 
-  /* Points Leaderboard Grid */
+  /* Point Grid */
   .points-board {
     width: 100%;
     background: var(--surface-glass);
@@ -342,7 +343,7 @@
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    color: var(--gold-bright);
+    color: var(--neon-cyan);
   }
 
   .player-point-list {
@@ -353,8 +354,8 @@
 
   .player-point-card {
     position: relative;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(10, 16, 31, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 10px 8px;
     display: flex;
@@ -365,9 +366,9 @@
   }
 
   .player-point-card.highlight {
-    border-color: var(--gold-primary);
-    transform: scale(1.04);
-    box-shadow: 0 0 20px rgba(229, 184, 105, 0.3);
+    border-color: var(--neon-cyan);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
   }
 
   .p-name {
@@ -383,7 +384,7 @@
   .p-score {
     font-size: 22px;
     font-weight: 900;
-    color: var(--gold-bright);
+    color: var(--neon-amber);
     line-height: 1;
   }
 
@@ -398,7 +399,7 @@
 
   .p-bar-fill {
     height: 100%;
-    background: var(--gold-gradient);
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
     width: 0%;
     transition: width 0.4s ease;
   }
@@ -408,12 +409,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--gold-bright);
+    color: var(--neon-cyan);
     font-weight: 900;
     font-size: 17px;
     pointer-events: none;
     animation: floatUp 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
-    text-shadow: 0 0 10px rgba(229, 184, 105, 0.8);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
   }
 
   @keyframes floatUp {
@@ -422,11 +423,11 @@
     100% { transform: translate(-50%, -35px) scale(1); opacity: 0; }
   }
 
-  /* Shayari Reveal Modal */
+  /* Shayari Dialog Modal */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(4, 6, 11, 0.88);
+    background: rgba(4, 8, 18, 0.85);
     backdrop-filter: blur(14px);
     z-index: 100;
     display: flex;
@@ -445,12 +446,12 @@
 
   .shayari-card {
     width: min(100%, 460px);
-    background: radial-gradient(circle at 50% 0%, #1c263c 0%, #0d121c 100%);
+    background: linear-gradient(180deg, #162444 0%, #0d1527 100%);
     border: 1px solid var(--surface-border);
     border-radius: 24px;
     padding: 28px 22px;
     text-align: center;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 45px rgba(229, 184, 105, 0.18);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.15);
     transform: scale(0.85) translateY(25px);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -464,12 +465,12 @@
     height: 60px;
     margin: 0 auto 10px;
     border-radius: 50%;
-    background: var(--gold-gradient);
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 30px;
-    box-shadow: 0 0 25px rgba(229, 184, 105, 0.45);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
   }
 
   .victim-name {
@@ -484,9 +485,9 @@
     display: inline-block;
     padding: 4px 14px;
     border-radius: 50px;
-    background: rgba(229, 184, 105, 0.12);
-    border: 1px solid var(--surface-border);
-    color: var(--gold-bright);
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--neon-cyan);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -495,10 +496,10 @@
   }
 
   .shayari-box {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(8, 14, 28, 0.65);
     padding: 18px;
     border-radius: 16px;
-    border: 1px solid rgba(229, 184, 105, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     margin-bottom: 22px;
     position: relative;
   }
@@ -506,12 +507,12 @@
   .shayari-box::before {
     content: '“';
     position: absolute;
-    top: -12px;
+    top: -10px;
     left: 14px;
-    font-size: 42px;
-    color: var(--gold-primary);
+    font-size: 40px;
+    color: var(--neon-cyan);
     font-family: Georgia, serif;
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   .shayari-line1 {
@@ -525,7 +526,7 @@
   .shayari-line2 {
     font-size: 15px;
     font-weight: 800;
-    color: var(--gold-bright);
+    color: var(--neon-cyan);
     line-height: 1.5;
   }
 
@@ -548,8 +549,8 @@
   .btn-modal:active { transform: scale(0.96); }
 
   .btn-close {
-    background: var(--gold-gradient);
-    color: #0a0e17;
+    background: linear-gradient(135deg, var(--neon-cyan), #0096c7);
+    color: #040914;
   }
 
   .btn-copy {
@@ -582,43 +583,43 @@
 <canvas id="fxCanvas"></canvas>
 
 <div class="stage" id="stage">
-  <div class="brand-badge">👑 Royal Hydration Protocol</div>
+  <div class="brand-pill">💧 Water Refill Mission</div>
   <h1>Wheel of Bakra</h1>
 
   <!-- Mode Switcher -->
-  <div class="mode-switch-wrap">
+  <div class="mode-switch">
     <button class="mode-tab active" id="tabInstant">⚡ Single Spin (Instant)</button>
-    <button class="mode-tab" id="tabSeries">🎯 10-Spins Battle</button>
+    <button class="mode-tab" id="tabSeries">🎯 10-Spins Match</button>
   </div>
 
-  <!-- Series Progress -->
+  <!-- Series HUD -->
   <div class="series-hud" id="seriesHud" style="display: none;">
-    <div>Match Round: <span class="series-pill" id="spinCounterPill">0 / 10</span></div>
-    <div style="font-size: 11px; color: var(--text-muted);">Max points = Ultimate Bakra!</div>
+    <div>Round: <span class="series-pill" id="spinCounterPill">0 / 10</span></div>
+    <div style="font-size: 11px; color: var(--text-dim);">Max points = Ultimate Bakra!</div>
     <button class="btn-reset" id="resetSeriesBtn">↺ Reset</button>
   </div>
 
-  <!-- Roster Control -->
+  <!-- Team Roster Input -->
   <div class="roster-card">
     <div class="roster-input-row">
-      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & hit Enter..." maxlength="14">
+      <input type="text" id="nameInput" class="roster-input" placeholder="Add teammate name..." maxlength="14">
       <button class="add-btn" id="addBtn">+ Add</button>
     </div>
     <div class="tags-list" id="tagsList"></div>
   </div>
 
-  <!-- Luxury Canvas Wheel -->
+  <!-- Modern Aurora Canvas Wheel -->
   <div class="wheel-viewport">
     <div class="halo-ring"></div>
     <div class="pointer-mech" id="pointerMech">
-      <svg viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 48L3 14C1 8 5 0 11 0H21C27 0 31 8 29 14L16 48Z" fill="url(#ptrGold)"/>
-        <circle cx="16" cy="14" r="5" fill="#ffffff" filter="drop-shadow(0 0 4px #ffd98a)"/>
+      <svg viewBox="0 0 34 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 48L3 14C1 8 5 0 12 0H22C29 0 33 8 31 14L17 48Z" fill="url(#ptrNeon)"/>
+        <circle cx="17" cy="14" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #00f0ff)"/>
         <defs>
-          <linearGradient id="ptrGold" x1="16" y1="0" x2="16" y2="48" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#FFF0B3"/>
-            <stop offset="0.4" stop-color="#E5B869"/>
-            <stop offset="1" stop-color="#8A6524"/>
+          <linearGradient id="ptrNeon" x1="17" y1="0" x2="17" y2="48" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00F0FF"/>
+            <stop offset="0.6" stop-color="#0072FF"/>
+            <stop offset="1" stop-color="#001F54"/>
           </linearGradient>
         </defs>
       </svg>
@@ -626,129 +627,127 @@
     <canvas id="wheelCanvas" width="800" height="800"></canvas>
   </div>
 
-  <!-- Spin Controls -->
+  <!-- Actions -->
   <div class="action-wrap">
-    <button class="spin-master-btn" id="spinBtn">SPIN THE WHEEL 🎲</button>
-    <div class="suspense-status" id="suspenseText">Kiski kismat phootne wali hai?</div>
+    <button class="spin-btn" id="spinBtn">SPIN THE WHEEL 🎲</button>
+    <div class="status-text" id="statusText">Kiski kismat chamakne wali hai?</div>
   </div>
 
   <!-- Leaderboard -->
   <div class="points-board">
     <div class="board-header">
-      <span id="boardTitle">Live Score Counter</span>
-      <span style="font-size: 10px; color: var(--gold-bright);">+1 Pt per spin hit</span>
+      <span id="boardTitle">Live Scoreboard</span>
+      <span style="font-size: 10px; color: var(--neon-cyan);">+1 Pt on hit</span>
     </div>
     <div class="player-point-list" id="pointGrid"></div>
   </div>
 </div>
 
-<!-- Rhyme / Shayari Modal -->
+<!-- Rhyme Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="shayari-card">
     <div class="victim-avatar" id="modalAvatar">🐐</div>
     <h2 class="victim-name" id="modalVictim">Rohan</h2>
-    <div class="victim-badge" id="modalBadge">Designated Jal Mantri</div>
+    <div class="victim-badge" id="modalBadge">Official Jal Mantri</div>
     
     <div class="shayari-box">
-      <div class="shayari-line1" id="shayariLine1">Subah se baithe baithe tod raha hai khatiya,</div>
-      <div class="shayari-line2" id="shayariLine2">Chal uth botal bhar, acting mat kar ghatiya! 🚰🔥</div>
+      <div class="shayari-line1" id="shayariLine1">Nazar lagi wheel par, dharak raha tha dil,</div>
+      <div class="shayari-line2" id="shayariLine2">Botal uthao dost, aur chup chaap karo fill! 💧🚰</div>
     </div>
 
     <div class="modal-btn-row">
-      <button class="btn-modal btn-copy" id="copyBtn">Shayari Copy Karo 📋</button>
-      <button class="btn-modal btn-close" id="closeModalBtn">Main Jaata Hu 🏃‍♂️</button>
+      <button class="btn-modal btn-copy" id="copyBtn">Copy Shayari 📋</button>
+      <button class="btn-modal btn-close" id="closeModalBtn">Duty Par Chale 🏃‍♂️</button>
     </div>
   </div>
 </div>
 
 <script>
-// --- ROSTER & LUXURY COLOR PALETTE ---
+// --- ROSTER & MODERN PALETTE ENGINE ---
 let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
 let scores = { "Pranay": 0, "Rohan": 0, "Vivek": 0, "Gaus": 0 };
 
-// Ultra-premium jewel-tone gradients
-const LUXE_PALETTES = [
-  { primary: "#6d28d9", secondary: "#3b0764", accent: "#c084fc" }, // Royal Amethyst
-  { primary: "#0891b2", secondary: "#164e63", accent: "#67e8f9" }, // Sapphire Ocean
-  { primary: "#be123c", secondary: "#4c0519", accent: "#fda4af" }, // Imperial Ruby
-  { primary: "#b45309", secondary: "#451a03", accent: "#fde68a" }, // Molten Amber
-  { primary: "#047857", secondary: "#022c22", accent: "#6ee7b7" }, // Emerald Velvet
-  { primary: "#4338ca", secondary: "#1e1b4b", accent: "#a5b4fc" }, // Deep Indigo
-  { primary: "#9d174d", secondary: "#500724", accent: "#f472b6" }  // Rich Rose
+const THEME_SLICES = [
+  { c1: "#00f0ff", c2: "#0072ff", accent: "#70e000" }, // Cyan - Blue
+  { c1: "#ff007f", c2: "#7928ca", accent: "#ffbe0b" }, // Magenta - Violet
+  { c1: "#05ffa1", c2: "#008f7a", accent: "#00f0ff" }, // Mint - Teal
+  { c1: "#ffbe0b", c2: "#fb5607", accent: "#ff007f" }, // Amber - Sunset
+  { c1: "#7209b7", c2: "#3a0ca3", accent: "#4cc9f0" }, // Purple - Deep Indigo
+  { c1: "#4cc9f0", c2: "#4361ee", accent: "#f72585" }  // Electric Sky - Royal Blue
 ];
 
-// --- HINGLISH SHAYARI / RHYMING ROASTS ---
+// --- WITTY & CLEAN HINGLISH SHAYARIS ---
 const instantShayaris = [
   {
-    l1: "Subah se baithe baithe tod raha tha khatiya,",
-    l2: "Chal uth botal bhar, acting mat kar ghatiya! 🚰🔥"
+    l1: "Nazar lagi wheel par, dharak raha tha dil,",
+    l2: "Botal uthao dost, aur chup chaap karo fill! 💧🚰"
   },
   {
-    l1: "Slack pe busy hone ka natak band kar pyaare,",
-    l2: "Purifier bula raha hai khol ke baahein saare! 🏃‍♂️💨"
+    l1: "Slack par 'In a meeting' ka status hai purana,",
+    l2: "Purifier bula raha hai, ab botal bhar ke aana! 🏃‍♂️💨"
   },
   {
-    l1: "Code me tere chahe kitne bhi ho error,",
-    l2: "Paani lane me nahi chalega tera terror! 💻💧"
+    l1: "Code tera super hit hai, style tera chill,",
+    l2: "Thanda paani laane me dikha de apna skill! 💻⚡"
   },
   {
-    l1: "Chair se chipak ke ban gaya tha aalsi nawab,",
-    l2: "Botal bhar ke la warna junta maangegi hisaab! 🪑👑"
+    l1: "Chair se chipak ke baithe the janaab-e-aali,",
+    l2: "Utho botal bharo jaldi, desk pe hai sab khali! 🪑✨"
   },
   {
-    l1: "Screen ko ghoor ke mat ban itna serious bro,",
-    l2: "Filter ki taraf thoda step badha ke go! 🚶‍♂️✨"
+    l1: "Screen ko ghoorne se pyaas nahi bujhegi bhai,",
+    l2: "Filter ki ore chalke kismat ki karo bhalai! 🚶‍♂️🧊"
   },
   {
-    l1: "Meeting ka bahana ab kaam nahi aayega,",
-    l2: "Paani laaye bina tu lunch nahi khaayega! 🍱🚫"
+    l1: "Chalta nahi bahaana yahan, na chalti thakan,",
+    l2: "Pantry se paani laao, khush ho sabka mann! 🚰🙌"
   },
   {
-    l1: "Tu soch raha tha ki kismat degi sahara,",
-    l2: "Par wheel ne tujhe hi 'Jal Mantri' pukara! 🏆🌊"
+    l1: "Tu soch raha tha bachna aasan hoga aaj,",
+    l2: "Wheel ne pehna diya tumhe 'Jal Mantri' ka taaj! 👑🌊"
   },
   {
-    l1: "Jitni speed se keyboard pe chalti hai ungli,",
-    l2: "Utni speed se botal bhar ke laa jungli! ⌨️⚡"
+    l1: "Keyboard pe ungliyan naach rahi thin tez,",
+    l2: "RO filter tak chalke jeet lo yeh race! ⌨️🏆"
   },
   {
-    l1: "Aankhon me umeed aur dil me tha darr,",
-    l2: "Ab chup chaap jaa aur thanda paani bhar! 🧊🙌"
+    l1: "Puri team ki umeedon ka khil gaya gulab,",
+    l2: "Thanda paani lake hero karo lajawaab! 🧊🌹"
   },
   {
-    l1: "Aasman me chamakte hain sitare tare,",
-    l2: "Aaj botal bharenge hamare hero pyaare! 🌟🚰"
+    l1: "Aasman me chamakte hain sitare hazaar,",
+    l2: "Aaj paani laane ko hamara dost hai taiyyar! 🌟🚰"
   }
 ];
 
 const finaleShayaris = [
   {
-    l1: "10 rounds ke mahayudh me kismat ne kiya aisa sitam,",
-    l2: "Points table pe top karke botal ke malik ban gaye tum! 👑🚰"
+    l1: "10 rounds ke match me score kiya sabse bhaari,",
+    l2: "Points table pe top karke mili botal bharne ki baari! 🏆🚰"
   },
   {
-    l1: "Duniya jeetne nikle the par paani me doob gayi naav,",
-    l2: "Sabse zyada score karke bano tumhi office ke rao! 🐐🔥"
+    l1: "Points table par chadh gaye jaise koi superstar,",
+    l2: "Cooler refill karne ki zimmedari hai ab aap par sarkar! 👑💧"
   },
   {
-    l1: "Khel me sabne chalayi thi apni poori chaal,",
-    l2: "Par points jeet ke bakre ka hua bura haal! 💀💧"
+    l1: "Khel me sabne lagayi thi apni poori jaan,",
+    l2: "Score jeet ke ban gaye tum sabse bade mehmaan! 🌟🙌"
   }
 ];
 
-// --- GAME MODE STATE ---
+// --- GAME STATE ---
 let currentMode = "instant";
 const SERIES_MAX_SPINS = 10;
 let currentSpinCount = 0;
 
-// --- DOM ELEMENTS ---
+// --- DOM REFS ---
 const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
 const fxCanvas = document.getElementById("fxCanvas");
 const fxCtx = fxCanvas.getContext("2d");
 const pointerMech = document.getElementById("pointerMech");
 const spinBtn = document.getElementById("spinBtn");
-const suspenseText = document.getElementById("suspenseText");
+const statusText = document.getElementById("statusText");
 const modalOverlay = document.getElementById("modalOverlay");
 const modalVictim = document.getElementById("modalVictim");
 const modalBadge = document.getElementById("modalBadge");
@@ -768,7 +767,7 @@ const seriesHud = document.getElementById("seriesHud");
 const spinCounterPill = document.getElementById("spinCounterPill");
 const resetSeriesBtn = document.getElementById("resetSeriesBtn");
 
-// --- SYNTHETIC AUDIO ENGINE ---
+// --- SYNTHETIC WEB AUDIO ENGINE ---
 let audioCtx = null;
 
 function ensureAudio() {
@@ -785,7 +784,7 @@ function playHapticTick(pitch = 560) {
   osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.035);
 
-  gain.gain.setValueAtTime(0.22, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.035);
 
   osc.connect(gain);
@@ -794,7 +793,7 @@ function playHapticTick(pitch = 560) {
   osc.stop(audioCtx.currentTime + 0.035);
 }
 
-function playWinStinger(isGrand = false) {
+function playWinFanfare(isGrand = false) {
   if (!audioCtx) return;
   const freqs = isGrand ? [261.63, 329.63, 392.00, 523.25, 659.25, 783.99] : [329.63, 415.30, 493.88, 659.25];
   freqs.forEach((freq, i) => {
@@ -837,37 +836,36 @@ function drawWheel() {
 
   ctx.clearRect(0, 0, size, size);
 
-  // 1. Deep Obsidian Base
+  // 1. Base Ring
   ctx.beginPath();
   ctx.arc(cx, cy, radius + 16, 0, Math.PI * 2);
-  ctx.fillStyle = "#090d16";
+  ctx.fillStyle = "#0c1427";
   ctx.fill();
 
-  // 2. Jewel-Tone Wheel Slices
+  // 2. Wheel Slices
   for (let i = 0; i < numSlices; i++) {
     const startAngle = rotation + i * slice;
     const endAngle = startAngle + slice;
-    const palette = LUXE_PALETTES[i % LUXE_PALETTES.length];
+    const theme = THEME_SLICES[i % THEME_SLICES.length];
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, radius, startAngle, endAngle);
     ctx.closePath();
 
-    // Radial Jewel Gradient
     const grad = ctx.createRadialGradient(cx, cy, 30, cx, cy, radius);
-    grad.addColorStop(0, palette.primary);
-    grad.addColorStop(0.7, palette.secondary);
-    grad.addColorStop(1, "#080c14");
+    grad.addColorStop(0, theme.c1);
+    grad.addColorStop(0.7, theme.c2);
+    grad.addColorStop(1, "#070c18");
     ctx.fillStyle = grad;
     ctx.fill();
 
-    // Golden Sector Inlay Lines
-    ctx.strokeStyle = "rgba(229, 184, 105, 0.35)";
+    // Divider Line
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Slice Typography
+    // Name Text
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(startAngle + slice / 2);
@@ -875,32 +873,32 @@ function drawWheel() {
     ctx.textBaseline = "middle";
     
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 34px -apple-system, sans-serif";
-    ctx.shadowColor = "rgba(0,0,0,0.8)";
+    ctx.font = "900 34px system-ui, -apple-system, sans-serif";
+    ctx.shadowColor = "rgba(0,0,0,0.85)";
     ctx.shadowBlur = 10;
     ctx.fillText(roster[i], radius - 55, 0);
 
-    // Subtle Gold Accent Pip
+    // Accent Pip
     ctx.beginPath();
-    ctx.arc(radius - 22, 0, 4, 0, Math.PI * 2);
-    ctx.fillStyle = palette.accent;
+    ctx.arc(radius - 22, 0, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = theme.accent;
     ctx.fill();
     ctx.restore();
   }
 
-  // 3. Precision Machined Metallic Bezel
+  // 3. Titanium Outer Bezel
   ctx.beginPath();
   ctx.arc(cx, cy, radius + 2, 0, Math.PI * 2);
   ctx.lineWidth = 18;
   const bezelGrad = ctx.createLinearGradient(0, 0, size, size);
-  bezelGrad.addColorStop(0, "#ffd98a");
-  bezelGrad.addColorStop(0.3, "#8a6524");
-  bezelGrad.addColorStop(0.7, "#e5b869");
-  bezelGrad.addColorStop(1, "#4a3512");
+  bezelGrad.addColorStop(0, "#00f0ff");
+  bezelGrad.addColorStop(0.3, "#0072ff");
+  bezelGrad.addColorStop(0.7, "#9d4edd");
+  bezelGrad.addColorStop(1, "#00f0ff");
   ctx.strokeStyle = bezelGrad;
   ctx.stroke();
 
-  // 4. Gold Studs / Rivets
+  // 4. LED Neon Rivets
   const rivets = 24;
   for (let j = 0; j < rivets; j++) {
     const angle = (j * (Math.PI * 2)) / rivets + pinAngleOffset;
@@ -909,27 +907,27 @@ function drawWheel() {
 
     ctx.beginPath();
     ctx.arc(rx, ry, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = j % 2 === 0 ? "#fff0b3" : "#ffd98a";
-    ctx.shadowColor = "rgba(255, 217, 138, 0.8)";
+    ctx.fillStyle = j % 2 === 0 ? "#00f0ff" : "#ffffff";
+    ctx.shadowColor = "rgba(0, 240, 255, 0.9)";
     ctx.shadowBlur = 8;
     ctx.fill();
     ctx.shadowBlur = 0;
   }
 
-  // 5. Deluxe Center Hub
+  // 5. Center Hub
   ctx.beginPath();
   ctx.arc(cx, cy, 64, 0, Math.PI * 2);
-  ctx.fillStyle = "#080b12";
+  ctx.fillStyle = "#0c1427";
   ctx.fill();
   ctx.lineWidth = 6;
-  ctx.strokeStyle = "rgba(229, 184, 105, 0.8)";
+  ctx.strokeStyle = "rgba(0, 240, 255, 0.8)";
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(cx, cy, 52, 0, Math.PI * 2);
   const hubGrad = ctx.createRadialGradient(cx - 15, cy - 15, 5, cx, cy, 52);
-  hubGrad.addColorStop(0, "rgba(255, 217, 138, 0.4)");
-  hubGrad.addColorStop(1, "rgba(10, 14, 24, 0.95)");
+  hubGrad.addColorStop(0, "rgba(0, 240, 255, 0.35)");
+  hubGrad.addColorStop(1, "rgba(12, 20, 39, 0.95)");
   ctx.fillStyle = hubGrad;
   ctx.fill();
 
@@ -939,14 +937,14 @@ function drawWheel() {
   ctx.fillText("💧", cx, cy + 2);
 }
 
-// --- PARTICLE CELEBRATION SYSTEM ---
+// --- CONFETTI SYSTEM ---
 let particles = [];
 function fireConfetti(isGrand = false) {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
   particles = [];
   const count = isGrand ? 160 : 100;
-  const colors = ["#ffd98a", "#e5b869", "#ffffff", "#00f2fe", "#ff3366", "#c084fc"];
+  const colors = ["#00f0ff", "#ff007f", "#05ffa1", "#ffbe0b", "#9d4edd", "#ffffff"];
 
   for (let i = 0; i < count; i++) {
     particles.push({
@@ -986,7 +984,7 @@ function fireConfetti(isGrand = false) {
   requestAnimationFrame(render);
 }
 
-// --- LEADERBOARD LOGIC ---
+// --- LEADERBOARD & FLOATING PILLS ---
 function renderLeaderboard(highlightWinner = null) {
   pointGrid.innerHTML = "";
   const maxScore = Math.max(...Object.values(scores), 1);
@@ -1021,14 +1019,14 @@ function showFloatingPoint(victim) {
   }
 }
 
-// --- PHYSICS SPIN ENGINE ---
+// --- SPIN ANIMATION PHYSICS ENGINE ---
 function spinWheel() {
   if (isSpinning || roster.length < 2) return;
   ensureAudio();
   isSpinning = true;
   spinBtn.disabled = true;
 
-  suspenseText.textContent = "Kismat ghoom rahi hai... 🌀";
+  statusText.textContent = "Kismat ghoom rahi hai... 🌀";
 
   const winnerIndex = Math.floor(Math.random() * roster.length);
   const sliceSize = (Math.PI * 2) / roster.length;
@@ -1063,7 +1061,7 @@ function spinWheel() {
       setTimeout(() => pointerMech.classList.remove("bump"), 45);
 
       if (progress > 0.75) {
-        suspenseText.textContent = `Lagta hai ${roster[currentSlice]} fasne wala hai... 👀`;
+        statusText.textContent = `Lagta hai ${roster[currentSlice]} fasne wala hai... 👀`;
       }
     }
 
@@ -1084,14 +1082,14 @@ function spinWheel() {
       setTimeout(() => stage.classList.remove("shake"), 450);
 
       if (currentMode === "instant") {
-        suspenseText.textContent = "Bakra mil gaya! 🎯";
-        playWinStinger(false);
+        statusText.textContent = "Bakra mil gaya! 🎯";
+        playWinFanfare(false);
         fireConfetti(false);
 
         const shayari = instantShayaris[Math.floor(Math.random() * instantShayaris.length)];
         modalAvatar.textContent = "🐐";
         modalVictim.textContent = victim;
-        modalBadge.textContent = "Designated Jal Mantri";
+        modalBadge.textContent = "Official Jal Mantri";
         shayariLine1.textContent = shayari.l1;
         shayariLine2.textContent = shayari.l2;
         modalOverlay.classList.add("open");
@@ -1100,7 +1098,6 @@ function spinWheel() {
         spinCounterPill.textContent = `${currentSpinCount} / ${SERIES_MAX_SPINS}`;
 
         if (currentSpinCount >= SERIES_MAX_SPINS) {
-          // Identify Highest Point Holder
           let maxPts = -1;
           let losers = [];
 
@@ -1114,23 +1111,23 @@ function spinWheel() {
           }
 
           const grandLoser = losers[Math.floor(Math.random() * losers.length)];
-          suspenseText.textContent = "Tournament Khatam! Ultimate Bakra mil gaya! 🏆";
+          statusText.textContent = "Tournament Khatam! Ultimate Champion mil gaya! 🏆";
 
-          playWinStinger(true);
+          playWinFanfare(true);
           fireConfetti(true);
 
           const grandShayari = finaleShayaris[Math.floor(Math.random() * finaleShayaris.length)];
           modalAvatar.textContent = "👑";
           modalVictim.textContent = grandLoser;
-          modalBadge.textContent = `Tournament Champion Bakra (${maxPts} Points)`;
+          modalBadge.textContent = `10-Spins Winner (${maxPts} Points)`;
           shayariLine1.textContent = grandShayari.l1;
           shayariLine2.textContent = grandShayari.l2;
           modalOverlay.classList.add("open");
 
           currentSpinCount = 0;
         } else {
-          suspenseText.textContent = `Round ${currentSpinCount} Done! ${victim} got +1 Pt! Spin again!`;
-          playWinStinger(false);
+          statusText.textContent = `Round ${currentSpinCount} Complete! ${victim} got +1 Pt! Spin again!`;
+          playWinFanfare(false);
         }
       }
     }
@@ -1139,7 +1136,7 @@ function spinWheel() {
   requestAnimationFrame(frame);
 }
 
-// --- ROSTER MANAGEMENT UI ---
+// --- TEAM MANAGEMENT ---
 function renderTags() {
   tagsList.innerHTML = "";
   roster.forEach((name, index) => {
@@ -1165,7 +1162,7 @@ function addName() {
 tagsList.addEventListener("click", (e) => {
   if (e.target.classList.contains("tag-remove")) {
     if (roster.length <= 2) {
-      alert("Kam se kam 2 log toh hone chahiye duty ke liye!");
+      alert("Kam se kam 2 log hone chahiye duty ke liye!");
       return;
     }
     const idx = parseInt(e.target.dataset.index, 10);
@@ -1185,10 +1182,10 @@ closeModalBtn.addEventListener("click", () => {
 });
 
 copyBtn.addEventListener("click", () => {
-  const text = `🚨 *PAANI DUTY ROAST* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n\n"${shayariLine1.textContent}\n${shayariLine2.textContent}"`;
+  const text = `🚨 *WATER DUTY SHAYARI* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n\n"${shayariLine1.textContent}\n${shayariLine2.textContent}"`;
   navigator.clipboard.writeText(text).then(() => {
     copyBtn.textContent = "Copied! 😂";
-    setTimeout(() => { copyBtn.textContent = "Shayari Copy Karo 📋"; }, 2000);
+    setTimeout(() => { copyBtn.textContent = "Copy Shayari 📋"; }, 2000);
   });
 });
 
@@ -1199,7 +1196,7 @@ tabInstant.addEventListener("click", () => {
   tabInstant.classList.add("active");
   tabSeries.classList.remove("active");
   seriesHud.style.display = "none";
-  document.getElementById("boardTitle").textContent = "Live Score Counter";
+  document.getElementById("boardTitle").textContent = "Live Scoreboard";
 });
 
 tabSeries.addEventListener("click", () => {
@@ -1208,7 +1205,7 @@ tabSeries.addEventListener("click", () => {
   tabSeries.classList.add("active");
   tabInstant.classList.remove("active");
   seriesHud.style.display = "flex";
-  document.getElementById("boardTitle").textContent = "10-Spins Battle Leaderboard";
+  document.getElementById("boardTitle").textContent = "10-Spins Match Leaderboard";
   resetSeries();
 });
 
@@ -1217,7 +1214,7 @@ function resetSeries() {
   spinCounterPill.textContent = `0 / ${SERIES_MAX_SPINS}`;
   roster.forEach(n => scores[n] = 0);
   renderLeaderboard();
-  suspenseText.textContent = "Match Reset! Spin karo!";
+  statusText.textContent = "Match Reset! Spin karo!";
 }
 
 resetSeriesBtn.addEventListener("click", resetSeries);
@@ -1227,7 +1224,7 @@ window.addEventListener("resize", () => {
   fxCanvas.height = window.innerHeight;
 });
 
-// Initialize
+// Init
 setupCanvasDPI();
 renderTags();
 </script>
