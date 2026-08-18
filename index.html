@@ -3,19 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HydraSpin - Office Hydration Roulette</title>
+<title>HydraSpin - Office Hydration Duty</title>
 <style>
   :root {
-    --bg-base: #080d1a;
-    --surface-glass: rgba(18, 28, 51, 0.75);
-    --surface-border: rgba(99, 140, 255, 0.2);
-    --neon-cyan: #00f0ff;
-    --neon-purple: #9d4edd;
-    --neon-coral: #ff3b6c;
-    --neon-mint: #05ffa1;
-    --neon-amber: #ffbe0b;
-    --text-main: #f8fafc;
-    --text-dim: #8fa0c2;
+    --bg-base: #060913;
+    --bg-surface: rgba(15, 23, 42, 0.75);
+    --surface-border: rgba(255, 255, 255, 0.1);
+    --primary: #38bdf8;
+    --primary-glow: rgba(56, 189, 248, 0.35);
+    --accent-indigo: #6366f1;
+    --accent-emerald: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -26,15 +27,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(circle at 50% 10%, #152244 0%, #0c1427 45%, var(--bg-base) 100%);
-    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    background: radial-gradient(circle at 50% 10%, #111d38 0%, #080e1e 50%, var(--bg-base) 100%);
+    color: var(--text-primary);
     padding: 16px;
     overflow-x: hidden;
   }
 
-  .stage {
-    width: min(100%, 540px);
+  .app-stage {
+    width: min(100%, 520px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,28 +45,27 @@
   }
 
   /* Header */
-  .brand-pill {
+  .brand-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 5px 16px;
+    gap: 6px;
+    padding: 5px 14px;
     border-radius: 99px;
-    background: rgba(0, 240, 255, 0.08);
-    border: 1px solid rgba(0, 240, 255, 0.25);
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.25);
     font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--neon-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+    color: var(--primary);
   }
 
   h1 {
     margin: 0;
-    font-size: clamp(26px, 6vw, 36px);
-    font-weight: 900;
+    font-size: clamp(24px, 5.5vw, 34px);
+    font-weight: 800;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan) 100%);
+    background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
@@ -74,12 +74,12 @@
   /* Mode Segmented Control */
   .mode-switch {
     display: flex;
-    background: rgba(10, 16, 31, 0.9);
+    background: rgba(10, 16, 30, 0.85);
     border: 1px solid var(--surface-border);
     padding: 4px;
-    border-radius: 16px;
+    border-radius: 14px;
     width: 100%;
-    max-width: 410px;
+    max-width: 400px;
     gap: 4px;
     backdrop-filter: blur(12px);
   }
@@ -88,65 +88,64 @@
     flex: 1;
     border: none;
     background: transparent;
-    color: var(--text-dim);
+    color: var(--text-secondary);
     padding: 9px 12px;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .mode-tab.active {
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(157, 78, 221, 0.25));
-    border: 1px solid var(--neon-cyan);
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(99, 102, 241, 0.2));
+    border: 1px solid rgba(56, 189, 248, 0.4);
     color: #ffffff;
-    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 
-  /* Series Tracker Bar */
+  /* Match HUD */
   .series-hud {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--surface-glass);
+    background: var(--bg-surface);
     border: 1px solid var(--surface-border);
-    padding: 10px 16px;
-    border-radius: 14px;
+    padding: 9px 16px;
+    border-radius: 12px;
     font-size: 12px;
     font-weight: 700;
   }
 
   .series-pill {
-    background: rgba(255, 190, 11, 0.15);
-    color: var(--neon-amber);
-    border: 1px solid rgba(255, 190, 11, 0.3);
-    padding: 3px 12px;
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--accent-amber);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 2px 10px;
     border-radius: 20px;
   }
 
   .btn-reset {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--text-dim);
-    padding: 5px 12px;
+    background: transparent;
+    border: 1px solid var(--surface-border);
+    color: var(--text-secondary);
+    padding: 4px 10px;
     border-radius: 8px;
     font-size: 11px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
   }
-  .btn-reset:hover { color: #fff; border-color: var(--neon-coral); }
+  .btn-reset:hover { color: #fff; border-color: var(--primary); }
 
-  /* Player Input Box */
+  /* Roster Input */
   .roster-card {
     width: 100%;
-    background: var(--surface-glass);
+    background: var(--bg-surface);
     border: 1px solid var(--surface-border);
     backdrop-filter: blur(16px);
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 10px 12px;
     display: flex;
     flex-direction: column;
@@ -160,28 +159,28 @@
 
   .roster-input {
     flex: 1;
-    background: rgba(8, 13, 26, 0.7);
+    background: rgba(8, 12, 24, 0.6);
     border: 1px solid var(--surface-border);
-    border-radius: 12px;
-    padding: 9px 14px;
+    border-radius: 10px;
+    padding: 8px 12px;
     font-size: 13px;
     color: #fff;
     outline: none;
     transition: border-color 0.2s;
   }
 
-  .roster-input:focus { border-color: var(--neon-cyan); }
+  .roster-input:focus { border-color: var(--primary); }
 
   .add-btn {
-    background: linear-gradient(135deg, var(--neon-cyan), #00a6fb);
+    background: linear-gradient(135deg, var(--primary), #0284c7);
     border: none;
-    color: #040914;
-    border-radius: 12px;
-    padding: 0 18px;
-    font-weight: 900;
+    color: #040814;
+    border-radius: 10px;
+    padding: 0 16px;
+    font-weight: 800;
     font-size: 13px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.15s;
   }
   .add-btn:active { transform: scale(0.96); }
 
@@ -197,9 +196,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3px 9px;
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
@@ -211,21 +210,21 @@
     opacity: 0.5;
     transition: opacity 0.15s;
   }
-  .tag-remove:hover { opacity: 1; color: var(--neon-coral); }
+  .tag-remove:hover { opacity: 1; color: var(--accent-rose); }
 
-  /* Wheel Viewport */
+  /* Wheel Stage */
   .wheel-viewport {
     position: relative;
-    width: min(84vw, 385px);
+    width: min(84vw, 380px);
     aspect-ratio: 1;
-    margin: 4px 0;
+    margin: 2px 0;
   }
 
   .halo-ring {
     position: absolute;
     inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 240, 255, 0.18) 0%, rgba(157, 78, 221, 0.12) 45%, transparent 72%);
+    background: radial-gradient(circle, var(--primary-glow) 0%, rgba(99, 102, 241, 0.15) 45%, transparent 70%);
     filter: blur(12px);
     z-index: 1;
     pointer-events: none;
@@ -236,21 +235,21 @@
     z-index: 2;
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.7));
   }
 
-  /* Pointer Mech */
+  /* Precision Indicator */
   .pointer-mech {
     position: absolute;
-    top: -10px;
+    top: -8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 34px;
-    height: 48px;
+    width: 32px;
+    height: 46px;
     z-index: 10;
     pointer-events: none;
     transform-origin: 50% 10px;
-    filter: drop-shadow(0 8px 14px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7));
     transition: transform 0.05s ease-out;
   }
 
@@ -258,7 +257,7 @@
     transform: translateX(-50%) rotate(-24deg) scale(1.12);
   }
 
-  /* Spin Button */
+  /* Action Controls */
   .action-wrap {
     width: 100%;
     display: flex;
@@ -270,18 +269,18 @@
   .spin-btn {
     position: relative;
     width: 100%;
-    max-width: 360px;
+    max-width: 350px;
     padding: 16px 24px;
     border: none;
     border-radius: 16px;
-    background: linear-gradient(135deg, var(--neon-cyan) 0%, #0096c7 50%, var(--neon-purple) 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--primary) 0%, #0284c7 50%, var(--accent-indigo) 100%);
+    color: #040814;
     font-size: 17px;
     font-weight: 900;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px var(--primary-glow), inset 0 2px 2px rgba(255, 255, 255, 0.6);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
   }
@@ -290,7 +289,7 @@
     content: '';
     position: absolute;
     top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     transform: skewX(-20deg);
     animation: shine 3.5s infinite;
   }
@@ -301,7 +300,7 @@
 
   .spin-btn:hover:not(:disabled) {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 14px 40px rgba(0, 240, 255, 0.5);
+    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.55);
   }
 
   .spin-btn:active:not(:disabled) {
@@ -317,15 +316,15 @@
   .status-text {
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.8px;
-    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
     min-height: 16px;
   }
 
-  /* Point Grid */
+  /* Leaderboard Grid */
   .points-board {
     width: 100%;
-    background: var(--surface-glass);
+    background: var(--bg-surface);
     border: 1px solid var(--surface-border);
     backdrop-filter: blur(16px);
     border-radius: 16px;
@@ -342,8 +341,8 @@
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--neon-cyan);
+    letter-spacing: 1px;
+    color: var(--primary);
   }
 
   .player-point-list {
@@ -354,7 +353,7 @@
 
   .player-point-card {
     position: relative;
-    background: rgba(10, 16, 31, 0.7);
+    background: rgba(10, 16, 30, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 10px 8px;
@@ -366,9 +365,9 @@
   }
 
   .player-point-card.highlight {
-    border-color: var(--neon-cyan);
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    border-color: var(--primary);
+    transform: scale(1.04);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
   }
 
   .p-name {
@@ -384,7 +383,7 @@
   .p-score {
     font-size: 22px;
     font-weight: 900;
-    color: var(--neon-amber);
+    color: var(--accent-amber);
     line-height: 1;
   }
 
@@ -399,7 +398,7 @@
 
   .p-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    background: linear-gradient(90deg, var(--primary), var(--accent-indigo));
     width: 0%;
     transition: width 0.4s ease;
   }
@@ -409,12 +408,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--neon-cyan);
+    color: var(--primary);
     font-weight: 900;
     font-size: 17px;
     pointer-events: none;
     animation: floatUp 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
   }
 
   @keyframes floatUp {
@@ -427,7 +426,7 @@
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(4, 8, 18, 0.85);
+    background: rgba(3, 6, 14, 0.85);
     backdrop-filter: blur(14px);
     z-index: 100;
     display: flex;
@@ -446,12 +445,12 @@
 
   .shayari-card {
     width: min(100%, 460px);
-    background: linear-gradient(180deg, #162444 0%, #0d1527 100%);
+    background: linear-gradient(180deg, #131d33 0%, #0a1120 100%);
     border: 1px solid var(--surface-border);
     border-radius: 24px;
     padding: 28px 22px;
     text-align: center;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.15);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.15);
     transform: scale(0.85) translateY(25px);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -465,12 +464,12 @@
     height: 60px;
     margin: 0 auto 10px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    background: linear-gradient(135deg, var(--primary), var(--accent-indigo));
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 30px;
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
   }
 
   .victim-name {
@@ -485,9 +484,9 @@
     display: inline-block;
     padding: 4px 14px;
     border-radius: 50px;
-    background: rgba(0, 240, 255, 0.1);
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    color: var(--neon-cyan);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: var(--primary);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -496,7 +495,7 @@
   }
 
   .shayari-box {
-    background: rgba(8, 14, 28, 0.65);
+    background: rgba(8, 12, 24, 0.6);
     padding: 18px;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -510,9 +509,9 @@
     top: -10px;
     left: 14px;
     font-size: 40px;
-    color: var(--neon-cyan);
+    color: var(--primary);
     font-family: Georgia, serif;
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   .shayari-line1 {
@@ -526,7 +525,7 @@
   .shayari-line2 {
     font-size: 15px;
     font-weight: 800;
-    color: var(--neon-cyan);
+    color: var(--primary);
     line-height: 1.5;
   }
 
@@ -549,8 +548,8 @@
   .btn-modal:active { transform: scale(0.96); }
 
   .btn-close {
-    background: linear-gradient(135deg, var(--neon-cyan), #0096c7);
-    color: #040914;
+    background: linear-gradient(135deg, var(--primary), #0284c7);
+    color: #040814;
   }
 
   .btn-copy {
@@ -582,9 +581,9 @@
 
 <canvas id="fxCanvas"></canvas>
 
-<div class="stage" id="stage">
-  <div class="brand-pill">💧 Water Refill Mission</div>
-  <h1>Wheel of Bakra</h1>
+<div class="app-stage" id="stage">
+  <div class="brand-badge">💧 Office Hydration Protocol</div>
+  <h1>Wheel of Hydration</h1>
 
   <!-- Mode Switcher -->
   <div class="mode-switch">
@@ -592,34 +591,34 @@
     <button class="mode-tab" id="tabSeries">🎯 10-Spins Match</button>
   </div>
 
-  <!-- Series HUD -->
+  <!-- Series Progress HUD -->
   <div class="series-hud" id="seriesHud" style="display: none;">
     <div>Round: <span class="series-pill" id="spinCounterPill">0 / 10</span></div>
-    <div style="font-size: 11px; color: var(--text-dim);">Max points = Ultimate Bakra!</div>
+    <div style="font-size: 11px; color: var(--text-secondary);">Max points = Designated Hero!</div>
     <button class="btn-reset" id="resetSeriesBtn">↺ Reset</button>
   </div>
 
-  <!-- Team Roster Input -->
+  <!-- Team Input -->
   <div class="roster-card">
     <div class="roster-input-row">
-      <input type="text" id="nameInput" class="roster-input" placeholder="Add teammate name..." maxlength="14">
+      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & hit Enter..." maxlength="14">
       <button class="add-btn" id="addBtn">+ Add</button>
     </div>
     <div class="tags-list" id="tagsList"></div>
   </div>
 
-  <!-- Modern Aurora Canvas Wheel -->
+  <!-- Wheel Canvas Viewport -->
   <div class="wheel-viewport">
     <div class="halo-ring"></div>
     <div class="pointer-mech" id="pointerMech">
-      <svg viewBox="0 0 34 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17 48L3 14C1 8 5 0 12 0H22C29 0 33 8 31 14L17 48Z" fill="url(#ptrNeon)"/>
-        <circle cx="17" cy="14" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #00f0ff)"/>
+      <svg viewBox="0 0 32 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 46L3 13C1 7 5 0 11 0H21C27 0 31 7 29 13L16 46Z" fill="url(#ptrGrad)"/>
+        <circle cx="16" cy="13" r="5" fill="#ffffff" filter="drop-shadow(0 0 4px #38bdf8)"/>
         <defs>
-          <linearGradient id="ptrNeon" x1="17" y1="0" x2="17" y2="48" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#00F0FF"/>
-            <stop offset="0.6" stop-color="#0072FF"/>
-            <stop offset="1" stop-color="#001F54"/>
+          <linearGradient id="ptrGrad" x1="16" y1="0" x2="16" y2="46" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#38BDF8"/>
+            <stop offset="0.6" stop-color="#0284C7"/>
+            <stop offset="1" stop-color="#0F172A"/>
           </linearGradient>
         </defs>
       </svg>
@@ -630,23 +629,23 @@
   <!-- Actions -->
   <div class="action-wrap">
     <button class="spin-btn" id="spinBtn">SPIN THE WHEEL 🎲</button>
-    <div class="status-text" id="statusText">Kiski kismat chamakne wali hai?</div>
+    <div class="status-text" id="statusText">Kiski baari aane wali hai?</div>
   </div>
 
   <!-- Leaderboard -->
   <div class="points-board">
     <div class="board-header">
       <span id="boardTitle">Live Scoreboard</span>
-      <span style="font-size: 10px; color: var(--neon-cyan);">+1 Pt on hit</span>
+      <span style="font-size: 10px; color: var(--primary);">+1 Pt per hit</span>
     </div>
     <div class="player-point-list" id="pointGrid"></div>
   </div>
 </div>
 
-<!-- Rhyme Modal -->
+<!-- Shayari Modal Dialog -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="shayari-card">
-    <div class="victim-avatar" id="modalAvatar">🐐</div>
+    <div class="victim-avatar" id="modalAvatar">💧</div>
     <h2 class="victim-name" id="modalVictim">Rohan</h2>
     <div class="victim-badge" id="modalBadge">Official Jal Mantri</div>
     
@@ -663,20 +662,20 @@
 </div>
 
 <script>
-// --- ROSTER & MODERN PALETTE ENGINE ---
+// --- ROSTER & MODERN SLICE PALETTES ---
 let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
 let scores = { "Pranay": 0, "Rohan": 0, "Vivek": 0, "Gaus": 0 };
 
-const THEME_SLICES = [
-  { c1: "#00f0ff", c2: "#0072ff", accent: "#70e000" }, // Cyan - Blue
-  { c1: "#ff007f", c2: "#7928ca", accent: "#ffbe0b" }, // Magenta - Violet
-  { c1: "#05ffa1", c2: "#008f7a", accent: "#00f0ff" }, // Mint - Teal
-  { c1: "#ffbe0b", c2: "#fb5607", accent: "#ff007f" }, // Amber - Sunset
-  { c1: "#7209b7", c2: "#3a0ca3", accent: "#4cc9f0" }, // Purple - Deep Indigo
-  { c1: "#4cc9f0", c2: "#4361ee", accent: "#f72585" }  // Electric Sky - Royal Blue
+const PALETTE = [
+  { c1: "#0284c7", c2: "#0f172a", dot: "#38bdf8" }, // Azure Deep
+  { c1: "#6366f1", c2: "#1e1b4b", dot: "#a5b4fc" }, // Indigo Velvet
+  { c1: "#059669", c2: "#064e3b", dot: "#34d399" }, // Emerald Glow
+  { c1: "#d97706", c2: "#451a03", dot: "#fbbf24" }, // Amber Ember
+  { c1: "#e11d48", c2: "#4c0519", dot: "#fb7185" }, // Crimson Rose
+  { c1: "#7c3aed", c2: "#2e1065", dot: "#c084fc" }  // Deep Purple
 ];
 
-// --- WITTY & CLEAN HINGLISH SHAYARIS ---
+// --- CLEAN & WITTY HINGLISH SHAYARIS ---
 const instantShayaris = [
   {
     l1: "Nazar lagi wheel par, dharak raha tha dil,",
@@ -684,10 +683,10 @@ const instantShayaris = [
   },
   {
     l1: "Slack par 'In a meeting' ka status hai purana,",
-    l2: "Purifier bula raha hai, ab botal bhar ke aana! 🏃‍♂️💨"
+    l2: "Purifier bula raha hai, botal bhar ke aana! 🏃‍♂️💨"
   },
   {
-    l1: "Code tera super hit hai, style tera chill,",
+    l1: "Code tera super hit hai, logic tera chill,",
     l2: "Thanda paani laane me dikha de apna skill! 💻⚡"
   },
   {
@@ -696,34 +695,34 @@ const instantShayaris = [
   },
   {
     l1: "Screen ko ghoorne se pyaas nahi bujhegi bhai,",
-    l2: "Filter ki ore chalke kismat ki karo bhalai! 🚶‍♂️🧊"
+    l2: "Purifier ki ore chalke kismat ki karo bhalai! 🚶‍♂️🧊"
   },
   {
-    l1: "Chalta nahi bahaana yahan, na chalti thakan,",
-    l2: "Pantry se paani laao, khush ho sabka mann! 🚰🙌"
+    l1: "Chalta nahi bahaana yahan, na chalegi thakan,",
+    l2: "Thanda paani laake jeeto poori team ka mann! 🚰🙌"
   },
   {
-    l1: "Tu soch raha tha bachna aasan hoga aaj,",
+    l1: "Soch rahe the tum ki bachna aasan hoga aaj,",
     l2: "Wheel ne pehna diya tumhe 'Jal Mantri' ka taaj! 👑🌊"
   },
   {
-    l1: "Keyboard pe ungliyan naach rahi thin tez,",
+    l1: "Keyboard par ungliyan naach rahi thin tez,",
     l2: "RO filter tak chalke jeet lo yeh race! ⌨️🏆"
   },
   {
     l1: "Puri team ki umeedon ka khil gaya gulab,",
-    l2: "Thanda paani lake hero karo lajawaab! 🧊🌹"
+    l2: "Botal bhar ke laao aur bano lajawaab! 🧊🌹"
   },
   {
     l1: "Aasman me chamakte hain sitare hazaar,",
-    l2: "Aaj paani laane ko hamara dost hai taiyyar! 🌟🚰"
+    l2: "Desk pe paani laane ko hero hai taiyyar! 🌟🚰"
   }
 ];
 
 const finaleShayaris = [
   {
     l1: "10 rounds ke match me score kiya sabse bhaari,",
-    l2: "Points table pe top karke mili botal bharne ki baari! 🏆🚰"
+    l2: "Leaderboard pe top karke mili botal bharne ki baari! 🏆🚰"
   },
   {
     l1: "Points table par chadh gaye jaise koi superstar,",
@@ -731,7 +730,7 @@ const finaleShayaris = [
   },
   {
     l1: "Khel me sabne lagayi thi apni poori jaan,",
-    l2: "Score jeet ke ban gaye tum sabse bade mehmaan! 🌟🙌"
+    l2: "Top scorer ban ke chamko ban ke office ki shaan! 🌟🙌"
   }
 ];
 
@@ -803,7 +802,7 @@ function playWinFanfare(isGrand = false) {
     osc.frequency.value = freq;
     
     const start = audioCtx.currentTime + i * 0.07;
-    gain.gain.setValueAtTime(0.22, start);
+    gain.gain.setValueAtTime(0.2, start);
     gain.gain.exponentialRampToValueAtTime(0.001, start + (isGrand ? 0.8 : 0.45));
 
     osc.connect(gain);
@@ -836,17 +835,17 @@ function drawWheel() {
 
   ctx.clearRect(0, 0, size, size);
 
-  // 1. Base Ring
+  // 1. Dark Base Ring
   ctx.beginPath();
   ctx.arc(cx, cy, radius + 16, 0, Math.PI * 2);
-  ctx.fillStyle = "#0c1427";
+  ctx.fillStyle = "#0a1122";
   ctx.fill();
 
   // 2. Wheel Slices
   for (let i = 0; i < numSlices; i++) {
     const startAngle = rotation + i * slice;
     const endAngle = startAngle + slice;
-    const theme = THEME_SLICES[i % THEME_SLICES.length];
+    const item = PALETTE[i % PALETTE.length];
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
@@ -854,18 +853,18 @@ function drawWheel() {
     ctx.closePath();
 
     const grad = ctx.createRadialGradient(cx, cy, 30, cx, cy, radius);
-    grad.addColorStop(0, theme.c1);
-    grad.addColorStop(0.7, theme.c2);
-    grad.addColorStop(1, "#070c18");
+    grad.addColorStop(0, item.c1);
+    grad.addColorStop(0.75, item.c2);
+    grad.addColorStop(1, "#050a14");
     ctx.fillStyle = grad;
     ctx.fill();
 
     // Divider Line
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Name Text
+    // Text Label
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(startAngle + slice / 2);
@@ -874,31 +873,31 @@ function drawWheel() {
     
     ctx.fillStyle = "#ffffff";
     ctx.font = "900 34px system-ui, -apple-system, sans-serif";
-    ctx.shadowColor = "rgba(0,0,0,0.85)";
+    ctx.shadowColor = "rgba(0,0,0,0.8)";
     ctx.shadowBlur = 10;
     ctx.fillText(roster[i], radius - 55, 0);
 
-    // Accent Pip
+    // Accent Dot
     ctx.beginPath();
     ctx.arc(radius - 22, 0, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = theme.accent;
+    ctx.fillStyle = item.dot;
     ctx.fill();
     ctx.restore();
   }
 
-  // 3. Titanium Outer Bezel
+  // 3. Slate Bezel
   ctx.beginPath();
   ctx.arc(cx, cy, radius + 2, 0, Math.PI * 2);
   ctx.lineWidth = 18;
   const bezelGrad = ctx.createLinearGradient(0, 0, size, size);
-  bezelGrad.addColorStop(0, "#00f0ff");
-  bezelGrad.addColorStop(0.3, "#0072ff");
-  bezelGrad.addColorStop(0.7, "#9d4edd");
-  bezelGrad.addColorStop(1, "#00f0ff");
+  bezelGrad.addColorStop(0, "#38bdf8");
+  bezelGrad.addColorStop(0.3, "#0284c7");
+  bezelGrad.addColorStop(0.7, "#6366f1");
+  bezelGrad.addColorStop(1, "#0f172a");
   ctx.strokeStyle = bezelGrad;
   ctx.stroke();
 
-  // 4. LED Neon Rivets
+  // 4. LED Rivets
   const rivets = 24;
   for (let j = 0; j < rivets; j++) {
     const angle = (j * (Math.PI * 2)) / rivets + pinAngleOffset;
@@ -907,8 +906,8 @@ function drawWheel() {
 
     ctx.beginPath();
     ctx.arc(rx, ry, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = j % 2 === 0 ? "#00f0ff" : "#ffffff";
-    ctx.shadowColor = "rgba(0, 240, 255, 0.9)";
+    ctx.fillStyle = j % 2 === 0 ? "#38bdf8" : "#ffffff";
+    ctx.shadowColor = "rgba(56, 189, 248, 0.8)";
     ctx.shadowBlur = 8;
     ctx.fill();
     ctx.shadowBlur = 0;
@@ -917,17 +916,17 @@ function drawWheel() {
   // 5. Center Hub
   ctx.beginPath();
   ctx.arc(cx, cy, 64, 0, Math.PI * 2);
-  ctx.fillStyle = "#0c1427";
+  ctx.fillStyle = "#0c1527";
   ctx.fill();
   ctx.lineWidth = 6;
-  ctx.strokeStyle = "rgba(0, 240, 255, 0.8)";
+  ctx.strokeStyle = "rgba(56, 189, 248, 0.8)";
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(cx, cy, 52, 0, Math.PI * 2);
   const hubGrad = ctx.createRadialGradient(cx - 15, cy - 15, 5, cx, cy, 52);
-  hubGrad.addColorStop(0, "rgba(0, 240, 255, 0.35)");
-  hubGrad.addColorStop(1, "rgba(12, 20, 39, 0.95)");
+  hubGrad.addColorStop(0, "rgba(56, 189, 248, 0.35)");
+  hubGrad.addColorStop(1, "rgba(12, 21, 39, 0.95)");
   ctx.fillStyle = hubGrad;
   ctx.fill();
 
@@ -944,7 +943,7 @@ function fireConfetti(isGrand = false) {
   fxCanvas.height = window.innerHeight;
   particles = [];
   const count = isGrand ? 160 : 100;
-  const colors = ["#00f0ff", "#ff007f", "#05ffa1", "#ffbe0b", "#9d4edd", "#ffffff"];
+  const colors = ["#38bdf8", "#6366f1", "#10b981", "#f59e0b", "#f43f5e", "#ffffff"];
 
   for (let i = 0; i < count; i++) {
     particles.push({
@@ -984,7 +983,7 @@ function fireConfetti(isGrand = false) {
   requestAnimationFrame(render);
 }
 
-// --- LEADERBOARD & FLOATING PILLS ---
+// --- LEADERBOARD LOGIC ---
 function renderLeaderboard(highlightWinner = null) {
   pointGrid.innerHTML = "";
   const maxScore = Math.max(...Object.values(scores), 1);
@@ -1019,7 +1018,7 @@ function showFloatingPoint(victim) {
   }
 }
 
-// --- SPIN ANIMATION PHYSICS ENGINE ---
+// --- PHYSICS SPIN ENGINE ---
 function spinWheel() {
   if (isSpinning || roster.length < 2) return;
   ensureAudio();
@@ -1061,7 +1060,7 @@ function spinWheel() {
       setTimeout(() => pointerMech.classList.remove("bump"), 45);
 
       if (progress > 0.75) {
-        statusText.textContent = `Lagta hai ${roster[currentSlice]} fasne wala hai... 👀`;
+        statusText.textContent = `Lagta hai ${roster[currentSlice]} ki baari aane wali hai... 👀`;
       }
     }
 
@@ -1082,12 +1081,12 @@ function spinWheel() {
       setTimeout(() => stage.classList.remove("shake"), 450);
 
       if (currentMode === "instant") {
-        statusText.textContent = "Bakra mil gaya! 🎯";
+        statusText.textContent = "Jal Mantri mil gaya! 🎯";
         playWinFanfare(false);
         fireConfetti(false);
 
         const shayari = instantShayaris[Math.floor(Math.random() * instantShayaris.length)];
-        modalAvatar.textContent = "🐐";
+        modalAvatar.textContent = "💧";
         modalVictim.textContent = victim;
         modalBadge.textContent = "Official Jal Mantri";
         shayariLine1.textContent = shayari.l1;
@@ -1099,26 +1098,26 @@ function spinWheel() {
 
         if (currentSpinCount >= SERIES_MAX_SPINS) {
           let maxPts = -1;
-          let losers = [];
+          let winners = [];
 
           for (const [pName, pScore] of Object.entries(scores)) {
             if (pScore > maxPts) {
               maxPts = pScore;
-              losers = [pName];
+              winners = [pName];
             } else if (pScore === maxPts) {
-              losers.push(pName);
+              winners.push(pName);
             }
           }
 
-          const grandLoser = losers[Math.floor(Math.random() * losers.length)];
-          statusText.textContent = "Tournament Khatam! Ultimate Champion mil gaya! 🏆";
+          const grandHero = winners[Math.floor(Math.random() * winners.length)];
+          statusText.textContent = "Tournament Khatam! Ultimate Refill Hero mil gaya! 🏆";
 
           playWinFanfare(true);
           fireConfetti(true);
 
           const grandShayari = finaleShayaris[Math.floor(Math.random() * finaleShayaris.length)];
           modalAvatar.textContent = "👑";
-          modalVictim.textContent = grandLoser;
+          modalVictim.textContent = grandHero;
           modalBadge.textContent = `10-Spins Winner (${maxPts} Points)`;
           shayariLine1.textContent = grandShayari.l1;
           shayariLine2.textContent = grandShayari.l2;
@@ -1182,7 +1181,7 @@ closeModalBtn.addEventListener("click", () => {
 });
 
 copyBtn.addEventListener("click", () => {
-  const text = `🚨 *WATER DUTY SHAYARI* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n\n"${shayariLine1.textContent}\n${shayariLine2.textContent}"`;
+  const text = `🚨 *WATER DUTY PROTOCOL* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n\n"${shayariLine1.textContent}\n${shayariLine2.textContent}"`;
   navigator.clipboard.writeText(text).then(() => {
     copyBtn.textContent = "Copied! 😂";
     setTimeout(() => { copyBtn.textContent = "Copy Shayari 📋"; }, 2000);
