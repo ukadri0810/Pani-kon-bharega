@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Bakra Roulette - Water Bottle Duty Edition</title>
+<title>Royal Hydration Roulette - Luxury Edition</title>
 <style>
   :root {
-    --bg-dark: #07090e;
-    --card-bg: rgba(18, 24, 38, 0.8);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --accent-cyan: #00f2fe;
-    --accent-pink: #ff2a85;
-    --accent-gold: #ffb703;
-    --accent-purple: #8a2be2;
-    --accent-green: #38ef7d;
-    --text-primary: #f8fafc;
-    --text-muted: #94a3b8;
+    --bg-main: #06080e;
+    --gold-primary: #e5b869;
+    --gold-bright: #ffd98a;
+    --gold-dark: #8a6524;
+    --gold-gradient: linear-gradient(135deg, #ffd98a 0%, #d4a04e 50%, #916828 100%);
+    --surface-glass: rgba(16, 21, 33, 0.72);
+    --surface-border: rgba(229, 184, 105, 0.22);
+    --text-pure: #ffffff;
+    --text-muted: #9ba3b5;
+    --accent-red: #ff3366;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -26,15 +26,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: radial-gradient(circle at 50% 10%, #172138 0%, var(--bg-dark) 85%);
-    color: var(--text-primary);
-    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at 50% 15%, #182035 0%, #080b13 60%, var(--bg-main) 100%);
+    color: var(--text-pure);
+    padding: 20px 14px;
     overflow-x: hidden;
   }
 
   .stage {
-    width: min(100%, 560px);
+    width: min(100%, 540px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,42 +44,44 @@
   }
 
   /* Header */
-  .brand-tag {
+  .brand-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 14px;
+    gap: 7px;
+    padding: 5px 16px;
     border-radius: 99px;
-    background: rgba(0, 242, 254, 0.08);
-    border: 1px solid rgba(0, 242, 254, 0.25);
+    background: rgba(229, 184, 105, 0.08);
+    border: 1px solid var(--surface-border);
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--accent-cyan);
+    color: var(--gold-bright);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   }
 
   h1 {
     margin: 0;
-    font-size: clamp(24px, 5.5vw, 34px);
+    font-size: clamp(26px, 6vw, 36px);
     font-weight: 900;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
+    background: linear-gradient(135deg, #ffffff 30%, #ffd98a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
   }
 
-  /* Mode Switcher Tabs */
+  /* Mode Switcher */
   .mode-switch-wrap {
     display: flex;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--card-border);
+    background: rgba(8, 12, 20, 0.85);
+    border: 1px solid var(--surface-border);
     padding: 4px;
     border-radius: 14px;
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
     gap: 4px;
+    backdrop-filter: blur(12px);
   }
 
   .mode-tab {
@@ -87,45 +89,40 @@
     border: none;
     background: transparent;
     color: var(--text-muted);
-    padding: 10px 12px;
+    padding: 9px 12px;
     border-radius: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .mode-tab.active {
-    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(255, 42, 133, 0.15));
-    border: 1px solid rgba(0, 242, 254, 0.4);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--gold-gradient);
+    color: #0d1117;
+    box-shadow: 0 4px 14px rgba(229, 184, 105, 0.3);
   }
 
-  /* Series Progress Pill */
+  /* Series HUD */
   .series-hud {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-border);
     padding: 10px 16px;
     border-radius: 12px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    animation: fadeIn 0.3s ease;
   }
 
-  .series-hud-pill {
-    background: rgba(255, 183, 3, 0.15);
-    color: var(--accent-gold);
-    border: 1px solid rgba(255, 183, 3, 0.3);
-    padding: 2px 10px;
+  .series-pill {
+    background: rgba(229, 184, 105, 0.15);
+    color: var(--gold-bright);
+    border: 1px solid var(--surface-border);
+    padding: 3px 10px;
     border-radius: 20px;
   }
 
@@ -140,16 +137,16 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .btn-reset:hover { color: #fff; border-color: var(--accent-pink); }
+  .btn-reset:hover { color: #fff; border-color: var(--gold-bright); }
 
-  /* Roster Manager */
+  /* Roster Bar */
   .roster-card {
     width: 100%;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-border);
     backdrop-filter: blur(16px);
     border-radius: 14px;
-    padding: 10px 14px;
+    padding: 10px 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -162,37 +159,36 @@
 
   .roster-input {
     flex: 1;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--card-border);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--surface-border);
     border-radius: 10px;
-    padding: 8px 12px;
+    padding: 8px 14px;
     font-size: 13px;
     color: #fff;
     outline: none;
     transition: border-color 0.2s;
   }
 
-  .roster-input:focus { border-color: var(--accent-cyan); }
+  .roster-input:focus { border-color: var(--gold-primary); }
 
   .add-btn {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--card-border);
-    color: #fff;
+    background: var(--gold-gradient);
+    border: none;
+    color: #0a0e17;
     border-radius: 10px;
-    padding: 0 14px;
-    font-weight: 800;
+    padding: 0 16px;
+    font-weight: 900;
     font-size: 13px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s;
   }
-
-  .add-btn:hover { background: var(--accent-cyan); color: #000; }
+  .add-btn:active { transform: scale(0.96); }
 
   .tags-list {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-height: 55px;
+    max-height: 52px;
     overflow-y: auto;
   }
 
@@ -200,12 +196,13 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 3px 8px;
+    background: rgba(229, 184, 105, 0.08);
+    border: 1px solid var(--surface-border);
+    padding: 3px 9px;
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
+    color: #e2e8f0;
   }
 
   .tag-remove {
@@ -213,22 +210,22 @@
     opacity: 0.5;
     transition: opacity 0.15s;
   }
-  .tag-remove:hover { opacity: 1; color: var(--accent-pink); }
+  .tag-remove:hover { opacity: 1; color: var(--accent-red); }
 
-  /* Wheel Stage */
+  /* Wheel Frame */
   .wheel-viewport {
     position: relative;
-    width: min(84vw, 380px);
+    width: min(84vw, 385px);
     aspect-ratio: 1;
-    margin: 2px 0;
+    margin: 4px 0;
   }
 
-  .glow-halo {
+  .halo-ring {
     position: absolute;
     inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, transparent 70%);
-    filter: blur(8px);
+    background: radial-gradient(circle, rgba(229, 184, 105, 0.2) 0%, transparent 72%);
+    filter: blur(10px);
     z-index: 1;
     pointer-events: none;
   }
@@ -238,31 +235,29 @@
     z-index: 2;
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85));
   }
 
-  /* Mechanical Indicator */
+  /* Precision Indicator */
   .pointer-mech {
     position: absolute;
-    top: -8px;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
     width: 32px;
-    height: 46px;
+    height: 48px;
     z-index: 10;
     pointer-events: none;
     transform-origin: 50% 10px;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6));
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.8));
     transition: transform 0.05s ease-out;
   }
 
-  .pointer-mech svg { width: 100%; height: 100%; }
-
   .pointer-mech.bump {
-    transform: translateX(-50%) rotate(-24deg) scale(1.1);
+    transform: translateX(-50%) rotate(-24deg) scale(1.12);
   }
 
-  /* Controls */
+  /* Spin Button */
   .action-wrap {
     width: 100%;
     display: flex;
@@ -274,18 +269,18 @@
   .spin-master-btn {
     position: relative;
     width: 100%;
-    max-width: 360px;
+    max-width: 350px;
     padding: 16px 24px;
     border: none;
     border-radius: 16px;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9d4edd 100%);
-    color: #040814;
-    font-size: 18px;
+    background: var(--gold-gradient);
+    color: #090c14;
+    font-size: 17px;
     font-weight: 900;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0, 242, 254, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(229, 184, 105, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.6);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
   }
@@ -294,18 +289,18 @@
     content: '';
     position: absolute;
     top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
     transform: skewX(-20deg);
-    animation: shineSweep 4s infinite;
+    animation: shineSweep 3.5s infinite;
   }
 
   @keyframes shineSweep {
-    20%, 100% { left: 150%; }
+    18%, 100% { left: 160%; }
   }
 
   .spin-master-btn:hover:not(:disabled) {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 14px 40px rgba(0, 242, 254, 0.5);
+    box-shadow: 0 14px 40px rgba(229, 184, 105, 0.55);
   }
 
   .spin-master-btn:active:not(:disabled) {
@@ -321,8 +316,7 @@
   .suspense-status {
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    letter-spacing: 0.8px;
     color: var(--text-muted);
     min-height: 16px;
   }
@@ -330,11 +324,11 @@
   /* Points Leaderboard Grid */
   .points-board {
     width: 100%;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-border);
     backdrop-filter: blur(16px);
     border-radius: 16px;
-    padding: 14px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -344,41 +338,40 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-muted);
+    letter-spacing: 1.2px;
+    color: var(--gold-bright);
   }
 
   .player-point-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 8px;
   }
 
   .player-point-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     padding: 10px 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: hidden;
   }
 
   .player-point-card.highlight {
-    border-color: var(--accent-pink);
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 42, 133, 0.4);
+    border-color: var(--gold-primary);
+    transform: scale(1.04);
+    box-shadow: 0 0 20px rgba(229, 184, 105, 0.3);
   }
 
   .p-name {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     color: #fff;
     white-space: nowrap;
@@ -390,38 +383,37 @@
   .p-score {
     font-size: 22px;
     font-weight: 900;
-    color: var(--accent-gold);
+    color: var(--gold-bright);
     line-height: 1;
   }
 
   .p-bar-bg {
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 4px;
     overflow: hidden;
-    margin-top: 4px;
+    margin-top: 3px;
   }
 
   .p-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent-gold), var(--accent-pink));
+    background: var(--gold-gradient);
     width: 0%;
     transition: width 0.4s ease;
   }
 
-  /* Floating Point Animation */
   .point-float {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--accent-pink);
+    color: var(--gold-bright);
     font-weight: 900;
-    font-size: 18px;
+    font-size: 17px;
     pointer-events: none;
     animation: floatUp 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
-    text-shadow: 0 0 8px rgba(255, 42, 133, 0.8);
+    text-shadow: 0 0 10px rgba(229, 184, 105, 0.8);
   }
 
   @keyframes floatUp {
@@ -430,12 +422,12 @@
     100% { transform: translate(-50%, -35px) scale(1); opacity: 0; }
   }
 
-  /* Modal / Taunt Sheet */
+  /* Shayari Reveal Modal */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(3, 6, 12, 0.85);
-    backdrop-filter: blur(12px);
+    background: rgba(4, 6, 11, 0.88);
+    backdrop-filter: blur(14px);
     z-index: 100;
     display: flex;
     align-items: center;
@@ -443,7 +435,7 @@
     padding: 20px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .modal-overlay.open {
@@ -451,33 +443,33 @@
     pointer-events: auto;
   }
 
-  .taunt-card {
+  .shayari-card {
     width: min(100%, 460px);
-    background: linear-gradient(180deg, #182236 0%, #0d1322 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: radial-gradient(circle at 50% 0%, #1c263c 0%, #0d121c 100%);
+    border: 1px solid var(--surface-border);
     border-radius: 24px;
-    padding: 26px 20px;
+    padding: 28px 22px;
     text-align: center;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 42, 133, 0.2);
-    transform: scale(0.85) translateY(20px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 45px rgba(229, 184, 105, 0.18);
+    transform: scale(0.85) translateY(25px);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .modal-overlay.open .taunt-card {
+  .modal-overlay.open .shayari-card {
     transform: scale(1) translateY(0);
   }
 
   .victim-avatar {
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     margin: 0 auto 10px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+    background: var(--gold-gradient);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
-    box-shadow: 0 0 25px rgba(255, 183, 3, 0.5);
+    font-size: 30px;
+    box-shadow: 0 0 25px rgba(229, 184, 105, 0.45);
   }
 
   .victim-name {
@@ -485,33 +477,56 @@
     font-weight: 900;
     letter-spacing: -0.5px;
     color: #fff;
-    margin: 0 0 4px;
+    margin: 0 0 2px;
   }
 
   .victim-badge {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 4px 14px;
     border-radius: 50px;
-    background: rgba(255, 42, 133, 0.15);
-    border: 1px solid rgba(255, 42, 133, 0.3);
-    color: #ff4d88;
+    background: rgba(229, 184, 105, 0.12);
+    border: 1px solid var(--surface-border);
+    color: var(--gold-bright);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
-  .taunt-dialogue {
-    font-size: 16px;
+  .shayari-box {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(229, 184, 105, 0.15);
+    margin-bottom: 22px;
+    position: relative;
+  }
+
+  .shayari-box::before {
+    content: '“';
+    position: absolute;
+    top: -12px;
+    left: 14px;
+    font-size: 42px;
+    color: var(--gold-primary);
+    font-family: Georgia, serif;
+    opacity: 0.4;
+  }
+
+  .shayari-line1 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f1f5f9;
     line-height: 1.5;
-    font-weight: 500;
-    color: #e2e8f0;
-    background: rgba(255, 255, 255, 0.04);
-    padding: 16px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    margin-bottom: 20px;
+    margin-bottom: 6px;
+  }
+
+  .shayari-line2 {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--gold-bright);
+    line-height: 1.5;
   }
 
   .modal-btn-row {
@@ -521,9 +536,9 @@
 
   .btn-modal {
     flex: 1;
-    padding: 14px;
+    padding: 13px;
     border-radius: 12px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     border: none;
@@ -532,14 +547,17 @@
 
   .btn-modal:active { transform: scale(0.96); }
 
-  .btn-close { background: #fff; color: #000; }
+  .btn-close {
+    background: var(--gold-gradient);
+    color: #0a0e17;
+  }
+
   .btn-copy {
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  /* FX Canvas */
   canvas#fxCanvas {
     position: fixed;
     inset: 0;
@@ -547,7 +565,6 @@
     z-index: 105;
   }
 
-  /* Camera Shake */
   .shake {
     animation: camShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
@@ -558,11 +575,6 @@
     30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
     40%, 60% { transform: translate3d(5px, 0, 0); }
   }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 </style>
 </head>
 <body>
@@ -570,42 +582,43 @@
 <canvas id="fxCanvas"></canvas>
 
 <div class="stage" id="stage">
-  <div class="brand-tag">💧 Water Duty Protocol</div>
+  <div class="brand-badge">👑 Royal Hydration Protocol</div>
   <h1>Wheel of Bakra</h1>
 
-  <!-- Mode Selector -->
+  <!-- Mode Switcher -->
   <div class="mode-switch-wrap">
     <button class="mode-tab active" id="tabInstant">⚡ Single Spin (Instant)</button>
     <button class="mode-tab" id="tabSeries">🎯 10-Spins Battle</button>
   </div>
 
-  <!-- Series HUD (Shown only in 10-Spins Battle mode) -->
+  <!-- Series Progress -->
   <div class="series-hud" id="seriesHud" style="display: none;">
-    <div>Round: <span class="series-hud-pill" id="spinCounterPill">0 / 10</span></div>
+    <div>Match Round: <span class="series-pill" id="spinCounterPill">0 / 10</span></div>
     <div style="font-size: 11px; color: var(--text-muted);">Max points = Ultimate Bakra!</div>
-    <button class="btn-reset" id="resetSeriesBtn">↺ Reset Match</button>
+    <button class="btn-reset" id="resetSeriesBtn">↺ Reset</button>
   </div>
 
-  <!-- Interactive Roster Management -->
+  <!-- Roster Control -->
   <div class="roster-card">
     <div class="roster-input-row">
-      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & press Enter..." maxlength="14">
+      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & hit Enter..." maxlength="14">
       <button class="add-btn" id="addBtn">+ Add</button>
     </div>
     <div class="tags-list" id="tagsList"></div>
   </div>
 
-  <!-- Wheel Canvas Area -->
+  <!-- Luxury Canvas Wheel -->
   <div class="wheel-viewport">
-    <div class="glow-halo"></div>
+    <div class="halo-ring"></div>
     <div class="pointer-mech" id="pointerMech">
       <svg viewBox="0 0 32 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 48L2 12C0 7 4 0 10 0H22C28 0 32 7 30 12L16 48Z" fill="url(#ptrGrad)"/>
-        <circle cx="16" cy="12" r="5" fill="#ffffff" filter="drop-shadow(0 0 4px rgba(255,255,255,0.8))"/>
+        <path d="M16 48L3 14C1 8 5 0 11 0H21C27 0 31 8 29 14L16 48Z" fill="url(#ptrGold)"/>
+        <circle cx="16" cy="14" r="5" fill="#ffffff" filter="drop-shadow(0 0 4px #ffd98a)"/>
         <defs>
-          <linearGradient id="ptrGrad" x1="16" y1="0" x2="16" y2="48" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#FF3366"/>
-            <stop offset="1" stop-color="#BA0031"/>
+          <linearGradient id="ptrGold" x1="16" y1="0" x2="16" y2="48" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFF0B3"/>
+            <stop offset="0.4" stop-color="#E5B869"/>
+            <stop offset="1" stop-color="#8A6524"/>
           </linearGradient>
         </defs>
       </svg>
@@ -613,70 +626,120 @@
     <canvas id="wheelCanvas" width="800" height="800"></canvas>
   </div>
 
-  <!-- Controls -->
+  <!-- Spin Controls -->
   <div class="action-wrap">
-    <button class="spin-master-btn" id="spinBtn">FATE DECIDE KARO 🎲</button>
+    <button class="spin-master-btn" id="spinBtn">SPIN THE WHEEL 🎲</button>
     <div class="suspense-status" id="suspenseText">Kiski kismat phootne wali hai?</div>
   </div>
 
-  <!-- Live Points Leaderboard (Optional Battle Tracker) -->
+  <!-- Leaderboard -->
   <div class="points-board">
     <div class="board-header">
-      <span id="boardTitle">Live Duty Counter</span>
-      <span style="font-size: 10px; color: var(--accent-cyan);">+1 Pt per Spin Hit</span>
+      <span id="boardTitle">Live Score Counter</span>
+      <span style="font-size: 10px; color: var(--gold-bright);">+1 Pt per spin hit</span>
     </div>
     <div class="player-point-list" id="pointGrid"></div>
   </div>
 </div>
 
-<!-- Winner / Roast Modal -->
+<!-- Rhyme / Shayari Modal -->
 <div class="modal-overlay" id="modalOverlay">
-  <div class="taunt-card">
+  <div class="shayari-card">
     <div class="victim-avatar" id="modalAvatar">🐐</div>
     <h2 class="victim-name" id="modalVictim">Rohan</h2>
     <div class="victim-badge" id="modalBadge">Designated Jal Mantri</div>
-    <div class="taunt-dialogue" id="modalDialogue">Loading roast...</div>
+    
+    <div class="shayari-box">
+      <div class="shayari-line1" id="shayariLine1">Subah se baithe baithe tod raha hai khatiya,</div>
+      <div class="shayari-line2" id="shayariLine2">Chal uth botal bhar, acting mat kar ghatiya! 🚰🔥</div>
+    </div>
+
     <div class="modal-btn-row">
-      <button class="btn-modal btn-copy" id="copyBtn">Roast Copy Karo 📋</button>
+      <button class="btn-modal btn-copy" id="copyBtn">Shayari Copy Karo 📋</button>
       <button class="btn-modal btn-close" id="closeModalBtn">Main Jaata Hu 🏃‍♂️</button>
     </div>
   </div>
 </div>
 
 <script>
-// --- ROSTER & COLOR THEME ENGINE ---
+// --- ROSTER & LUXURY COLOR PALETTE ---
 let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
 let scores = { "Pranay": 0, "Rohan": 0, "Vivek": 0, "Gaus": 0 };
 
-const PALETTE = ["#00F2FE", "#FF2A85", "#FFB703", "#7928CA", "#38EF7D", "#FF5400", "#4FACFE"];
+// Ultra-premium jewel-tone gradients
+const LUXE_PALETTES = [
+  { primary: "#6d28d9", secondary: "#3b0764", accent: "#c084fc" }, // Royal Amethyst
+  { primary: "#0891b2", secondary: "#164e63", accent: "#67e8f9" }, // Sapphire Ocean
+  { primary: "#be123c", secondary: "#4c0519", accent: "#fda4af" }, // Imperial Ruby
+  { primary: "#b45309", secondary: "#451a03", accent: "#fde68a" }, // Molten Amber
+  { primary: "#047857", secondary: "#022c22", accent: "#6ee7b7" }, // Emerald Velvet
+  { primary: "#4338ca", secondary: "#1e1b4b", accent: "#a5b4fc" }, // Deep Indigo
+  { primary: "#9d174d", secondary: "#500724", accent: "#f472b6" }  // Rich Rose
+];
 
-// --- GAME STATE ---
-let currentMode = "instant"; // 'instant' | 'series'
+// --- HINGLISH SHAYARI / RHYMING ROASTS ---
+const instantShayaris = [
+  {
+    l1: "Subah se baithe baithe tod raha tha khatiya,",
+    l2: "Chal uth botal bhar, acting mat kar ghatiya! 🚰🔥"
+  },
+  {
+    l1: "Slack pe busy hone ka natak band kar pyaare,",
+    l2: "Purifier bula raha hai khol ke baahein saare! 🏃‍♂️💨"
+  },
+  {
+    l1: "Code me tere chahe kitne bhi ho error,",
+    l2: "Paani lane me nahi chalega tera terror! 💻💧"
+  },
+  {
+    l1: "Chair se chipak ke ban gaya tha aalsi nawab,",
+    l2: "Botal bhar ke la warna junta maangegi hisaab! 🪑👑"
+  },
+  {
+    l1: "Screen ko ghoor ke mat ban itna serious bro,",
+    l2: "Filter ki taraf thoda step badha ke go! 🚶‍♂️✨"
+  },
+  {
+    l1: "Meeting ka bahana ab kaam nahi aayega,",
+    l2: "Paani laaye bina tu lunch nahi khaayega! 🍱🚫"
+  },
+  {
+    l1: "Tu soch raha tha ki kismat degi sahara,",
+    l2: "Par wheel ne tujhe hi 'Jal Mantri' pukara! 🏆🌊"
+  },
+  {
+    l1: "Jitni speed se keyboard pe chalti hai ungli,",
+    l2: "Utni speed se botal bhar ke laa jungli! ⌨️⚡"
+  },
+  {
+    l1: "Aankhon me umeed aur dil me tha darr,",
+    l2: "Ab chup chaap jaa aur thanda paani bhar! 🧊🙌"
+  },
+  {
+    l1: "Aasman me chamakte hain sitare tare,",
+    l2: "Aaj botal bharenge hamare hero pyaare! 🌟🚰"
+  }
+];
+
+const finaleShayaris = [
+  {
+    l1: "10 rounds ke mahayudh me kismat ne kiya aisa sitam,",
+    l2: "Points table pe top karke botal ke malik ban gaye tum! 👑🚰"
+  },
+  {
+    l1: "Duniya jeetne nikle the par paani me doob gayi naav,",
+    l2: "Sabse zyada score karke bano tumhi office ke rao! 🐐🔥"
+  },
+  {
+    l1: "Khel me sabne chalayi thi apni poori chaal,",
+    l2: "Par points jeet ke bakre ka hua bura haal! 💀💧"
+  }
+];
+
+// --- GAME MODE STATE ---
+let currentMode = "instant";
 const SERIES_MAX_SPINS = 10;
 let currentSpinCount = 0;
-
-// Hinglish Roasts: Instant Mode
-const instantRoasts = [
-  "Slack pe 'Busy' daal ke hero mat ban, chal chup chaap botal bhar ke la! 🏃‍♂️💨",
-  "Arre chair se fevicol chhoot gaya ho toh purifier ka deedar kar le champion! 🪑💀",
-  "Badhaai ho! Board of Directors ne unanimous voting se tumhe aaj ka 'Chief Hydration Officer' chuna hai! 👑🚰",
-  "Keyboard pe ungliya tez chal rahi hain par pair jam gaye kya? UTH AB! ⌨️🚶‍♂️",
-  "Screen pe fake serious expression mat bana, wheel ne teri polling khol di hai! 🕶️😂",
-  "Code ka bug baad me solve karna, pehle poori team ki pyaas bujha! 🐛💧",
-  "Thanda paani laana, aur raaste me kisi se pantry ke gappe mat ladane lag jaana! 🧊🙅‍♂️",
-  "Sabki nazrein tere pe hi hain, ab 'meri meeting hai' bolne ka chance gaya! 📞🚫",
-  "Aankhein band karke soch raha tha bach jaayega? Naseeb me refill hi likha hai! 🎯🔥",
-  "Itna aalsi banega toh water filter bhi tujhe biometric se block kar dega! 🚰🥱"
-];
-
-// Hinglish Roasts: Tournament / Grand Finale (Max Points after 10 spins)
-const finaleRoasts = [
-  "🏆 MAHA-BAKRA CROWNED! 10 rounds ke mahayudh me sabse zyada points score karke record tod diya! Ab poora cooler refill kar! 👑🚰",
-  "Kismat itni legendary kharab hai ki 10 spins me bhi bach nahi paya! Chal ab botal bharne ki permanent shift teri! 💀🔥",
-  "Points table pe top karne ka shauk yahan le dooba! Jal Mantri ji, VIP Paani Seva shuru kijiye! 🚶‍♂️💨",
-  "Pure office ka unanimous champion of dehydration! Chup chaap jao aur RO filter ka aashirwaad leke aao! 🧊🙌",
-  "10 rounds of high voltage drama and you emerged as the supreme Hydration Slave! Proud of you! 🚰🐐"
-];
 
 // --- DOM ELEMENTS ---
 const canvas = document.getElementById("wheelCanvas");
@@ -689,8 +752,9 @@ const suspenseText = document.getElementById("suspenseText");
 const modalOverlay = document.getElementById("modalOverlay");
 const modalVictim = document.getElementById("modalVictim");
 const modalBadge = document.getElementById("modalBadge");
-const modalDialogue = document.getElementById("modalDialogue");
 const modalAvatar = document.getElementById("modalAvatar");
+const shayariLine1 = document.getElementById("shayariLine1");
+const shayariLine2 = document.getElementById("shayariLine2");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const copyBtn = document.getElementById("copyBtn");
 const nameInput = document.getElementById("nameInput");
@@ -708,42 +772,39 @@ const resetSeriesBtn = document.getElementById("resetSeriesBtn");
 let audioCtx = null;
 
 function ensureAudio() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
 }
 
-function playHapticTick(frequency = 580) {
+function playHapticTick(pitch = 560) {
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
+  
   osc.type = "sine";
-  osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.03);
+  osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.035);
 
-  gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+  gain.gain.setValueAtTime(0.22, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.035);
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start();
-  osc.stop(audioCtx.currentTime + 0.03);
+  osc.stop(audioCtx.currentTime + 0.035);
 }
 
 function playWinStinger(isGrand = false) {
   if (!audioCtx) return;
-  const chords = isGrand ? [261.63, 329.63, 392.00, 523.25, 659.25, 783.99] : [329.63, 415.30, 493.88, 659.25];
-  chords.forEach((freq, idx) => {
+  const freqs = isGrand ? [261.63, 329.63, 392.00, 523.25, 659.25, 783.99] : [329.63, 415.30, 493.88, 659.25];
+  freqs.forEach((freq, i) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = isGrand ? "sawtooth" : "triangle";
     osc.frequency.value = freq;
     
-    const start = audioCtx.currentTime + idx * 0.07;
-    gain.gain.setValueAtTime(0.25, start);
+    const start = audioCtx.currentTime + i * 0.07;
+    gain.gain.setValueAtTime(0.22, start);
     gain.gain.exponentialRampToValueAtTime(0.001, start + (isGrand ? 0.8 : 0.45));
 
     osc.connect(gain);
@@ -753,11 +814,11 @@ function playWinStinger(isGrand = false) {
   });
 }
 
-// --- CANVAS WHEEL DRAWING ENGINE ---
+// --- CANVAS HIGH DPI RENDERING ---
 let rotation = 0;
 let isSpinning = false;
 let lastSliceIndex = -1;
-let ledAngleOffset = 0;
+let pinAngleOffset = 0;
 
 function setupCanvasDPI() {
   const dpr = window.devicePixelRatio || 1;
@@ -776,33 +837,34 @@ function drawWheel() {
 
   ctx.clearRect(0, 0, size, size);
 
-  // 1. Shadow Base
-  ctx.save();
+  // 1. Deep Obsidian Base
   ctx.beginPath();
-  ctx.arc(cx, cy, radius + 14, 0, Math.PI * 2);
-  ctx.fillStyle = "#0c111d";
+  ctx.arc(cx, cy, radius + 16, 0, Math.PI * 2);
+  ctx.fillStyle = "#090d16";
   ctx.fill();
-  ctx.restore();
 
-  // 2. Wheel Slices
+  // 2. Jewel-Tone Wheel Slices
   for (let i = 0; i < numSlices; i++) {
     const startAngle = rotation + i * slice;
     const endAngle = startAngle + slice;
-    const color = PALETTE[i % PALETTE.length];
+    const palette = LUXE_PALETTES[i % LUXE_PALETTES.length];
 
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, radius, startAngle, endAngle);
     ctx.closePath();
 
-    const grad = ctx.createRadialGradient(cx, cy, 40, cx, cy, radius);
-    grad.addColorStop(0, color);
-    grad.addColorStop(1, shadeColor(color, -45));
+    // Radial Jewel Gradient
+    const grad = ctx.createRadialGradient(cx, cy, 30, cx, cy, radius);
+    grad.addColorStop(0, palette.primary);
+    grad.addColorStop(0.7, palette.secondary);
+    grad.addColorStop(1, "#080c14");
     ctx.fillStyle = grad;
     ctx.fill();
 
-    ctx.strokeStyle = "rgba(10, 15, 26, 0.85)";
-    ctx.lineWidth = 5;
+    // Golden Sector Inlay Lines
+    ctx.strokeStyle = "rgba(229, 184, 105, 0.35)";
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     // Slice Typography
@@ -811,37 +873,45 @@ function drawWheel() {
     ctx.rotate(startAngle + slice / 2);
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
+    
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 36px -apple-system, sans-serif";
-    ctx.shadowColor = "rgba(0,0,0,0.7)";
-    ctx.shadowBlur = 8;
+    ctx.font = "900 34px -apple-system, sans-serif";
+    ctx.shadowColor = "rgba(0,0,0,0.8)";
+    ctx.shadowBlur = 10;
     ctx.fillText(roster[i], radius - 55, 0);
+
+    // Subtle Gold Accent Pip
+    ctx.beginPath();
+    ctx.arc(radius - 22, 0, 4, 0, Math.PI * 2);
+    ctx.fillStyle = palette.accent;
+    ctx.fill();
     ctx.restore();
   }
 
-  // 3. Metallic Outer Bezel
+  // 3. Precision Machined Metallic Bezel
   ctx.beginPath();
   ctx.arc(cx, cy, radius + 2, 0, Math.PI * 2);
   ctx.lineWidth = 18;
-  const ringGrad = ctx.createLinearGradient(0, 0, size, size);
-  ringGrad.addColorStop(0, "#2c3e50");
-  ringGrad.addColorStop(0.5, "#0f172a");
-  ringGrad.addColorStop(1, "#1e293b");
-  ctx.strokeStyle = ringGrad;
+  const bezelGrad = ctx.createLinearGradient(0, 0, size, size);
+  bezelGrad.addColorStop(0, "#ffd98a");
+  bezelGrad.addColorStop(0.3, "#8a6524");
+  bezelGrad.addColorStop(0.7, "#e5b869");
+  bezelGrad.addColorStop(1, "#4a3512");
+  ctx.strokeStyle = bezelGrad;
   ctx.stroke();
 
-  // 4. LED Bulbs
-  const leds = 20;
-  for (let j = 0; j < leds; j++) {
-    const angle = (j * (Math.PI * 2)) / leds + ledAngleOffset;
-    const lx = cx + (radius + 2) * Math.cos(angle);
-    const ly = cy + (radius + 2) * Math.sin(angle);
+  // 4. Gold Studs / Rivets
+  const rivets = 24;
+  for (let j = 0; j < rivets; j++) {
+    const angle = (j * (Math.PI * 2)) / rivets + pinAngleOffset;
+    const rx = cx + (radius + 2) * Math.cos(angle);
+    const ry = cy + (radius + 2) * Math.sin(angle);
 
     ctx.beginPath();
-    ctx.arc(lx, ly, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = j % 2 === 0 ? "#00f2fe" : "#ffb703";
-    ctx.shadowColor = ctx.fillStyle;
-    ctx.shadowBlur = 10;
+    ctx.arc(rx, ry, 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = j % 2 === 0 ? "#fff0b3" : "#ffd98a";
+    ctx.shadowColor = "rgba(255, 217, 138, 0.8)";
+    ctx.shadowBlur = 8;
     ctx.fill();
     ctx.shadowBlur = 0;
   }
@@ -849,50 +919,43 @@ function drawWheel() {
   // 5. Deluxe Center Hub
   ctx.beginPath();
   ctx.arc(cx, cy, 64, 0, Math.PI * 2);
-  ctx.fillStyle = "#090d16";
+  ctx.fillStyle = "#080b12";
   ctx.fill();
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = "rgba(229, 184, 105, 0.8)";
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.arc(cx, cy, 54, 0, Math.PI * 2);
-  const hubGrad = ctx.createLinearGradient(cx - 50, cy - 50, cx + 50, cy + 50);
-  hubGrad.addColorStop(0, "rgba(255,255,255,0.2)");
-  hubGrad.addColorStop(1, "rgba(0,0,0,0.6)");
+  ctx.arc(cx, cy, 52, 0, Math.PI * 2);
+  const hubGrad = ctx.createRadialGradient(cx - 15, cy - 15, 5, cx, cy, 52);
+  hubGrad.addColorStop(0, "rgba(255, 217, 138, 0.4)");
+  hubGrad.addColorStop(1, "rgba(10, 14, 24, 0.95)");
   ctx.fillStyle = hubGrad;
   ctx.fill();
 
-  ctx.font = "32px sans-serif";
+  ctx.font = "30px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("🚰", cx, cy + 2);
+  ctx.fillText("💧", cx, cy + 2);
 }
 
-function shadeColor(color, percent) {
-  let num = parseInt(color.replace("#",""), 16);
-  let r = (num >> 16) + percent;
-  let g = ((num >> 8) & 0x00FF) + percent;
-  let b = (num & 0x0000FF) + percent;
-  return `rgb(${Math.min(255, Math.max(0, r))}, ${Math.min(255, Math.max(0, g))}, ${Math.min(255, Math.max(0, b))})`;
-}
-
-// --- PARTICLE / CELEBRATION SYSTEM ---
+// --- PARTICLE CELEBRATION SYSTEM ---
 let particles = [];
 function fireConfetti(isGrand = false) {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
   particles = [];
-  const count = isGrand ? 180 : 110;
+  const count = isGrand ? 160 : 100;
+  const colors = ["#ffd98a", "#e5b869", "#ffffff", "#00f2fe", "#ff3366", "#c084fc"];
 
   for (let i = 0; i < count; i++) {
     particles.push({
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
-      vx: (Math.random() - 0.5) * (isGrand ? 32 : 24),
-      vy: (Math.random() - 0.8) * (isGrand ? 34 : 26),
+      vx: (Math.random() - 0.5) * (isGrand ? 30 : 22),
+      vy: (Math.random() - 0.8) * (isGrand ? 32 : 24),
       size: Math.random() * 8 + 4,
-      color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
       alpha: 1,
       rot: Math.random() * 360,
       rotSpeed: (Math.random() - 0.5) * 14
@@ -923,7 +986,7 @@ function fireConfetti(isGrand = false) {
   requestAnimationFrame(render);
 }
 
-// --- LEADERBOARD & POINTS ENGINE ---
+// --- LEADERBOARD LOGIC ---
 function renderLeaderboard(highlightWinner = null) {
   pointGrid.innerHTML = "";
   const maxScore = Math.max(...Object.values(scores), 1);
@@ -958,7 +1021,7 @@ function showFloatingPoint(victim) {
   }
 }
 
-// --- SPIN ANIMATION PHYSICS ---
+// --- PHYSICS SPIN ENGINE ---
 function spinWheel() {
   if (isSpinning || roster.length < 2) return;
   ensureAudio();
@@ -984,7 +1047,7 @@ function spinWheel() {
     const progress = Math.min(elapsed / duration, 1);
     const easeOut = 1 - Math.pow(1 - progress, 4.6);
     rotation = startRotation + delta * easeOut;
-    ledAngleOffset += 0.04 * (1 - progress * 0.8);
+    pinAngleOffset += 0.04 * (1 - progress * 0.8);
 
     drawWheel();
 
@@ -995,7 +1058,7 @@ function spinWheel() {
     if (currentSlice !== lastSliceIndex && progress < 0.985) {
       lastSliceIndex = currentSlice;
       const speedFactor = 1 - progress;
-      playHapticTick(480 + speedFactor * 300);
+      playHapticTick(460 + speedFactor * 320);
       pointerMech.classList.add("bump");
       setTimeout(() => pointerMech.classList.remove("bump"), 45);
 
@@ -1021,53 +1084,52 @@ function spinWheel() {
       setTimeout(() => stage.classList.remove("shake"), 450);
 
       if (currentMode === "instant") {
-        // Instant Mode Outcome
         suspenseText.textContent = "Bakra mil gaya! 🎯";
         playWinStinger(false);
         fireConfetti(false);
 
-        const roast = instantRoasts[Math.floor(Math.random() * instantRoasts.length)];
+        const shayari = instantShayaris[Math.floor(Math.random() * instantShayaris.length)];
         modalAvatar.textContent = "🐐";
         modalVictim.textContent = victim;
         modalBadge.textContent = "Designated Jal Mantri";
-        modalDialogue.textContent = roast;
+        shayariLine1.textContent = shayari.l1;
+        shayariLine2.textContent = shayari.l2;
         modalOverlay.classList.add("open");
       } else {
-        // 10-Spins Battle Mode Outcome
         currentSpinCount++;
         spinCounterPill.textContent = `${currentSpinCount} / ${SERIES_MAX_SPINS}`;
 
         if (currentSpinCount >= SERIES_MAX_SPINS) {
-          // Find tournament ultimate loser (highest points)
-          let highestScore = -1;
-          let tournamentLosers = [];
+          // Identify Highest Point Holder
+          let maxPts = -1;
+          let losers = [];
 
           for (const [pName, pScore] of Object.entries(scores)) {
-            if (pScore > highestScore) {
-              highestScore = pScore;
-              tournamentLosers = [pName];
-            } else if (pScore === highestScore) {
-              tournamentLosers.push(pName);
+            if (pScore > maxPts) {
+              maxPts = pScore;
+              losers = [pName];
+            } else if (pScore === maxPts) {
+              losers.push(pName);
             }
           }
 
-          const grandLoser = tournamentLosers[Math.floor(Math.random() * tournamentLosers.length)];
+          const grandLoser = losers[Math.floor(Math.random() * losers.length)];
           suspenseText.textContent = "Tournament Khatam! Ultimate Bakra mil gaya! 🏆";
 
           playWinStinger(true);
           fireConfetti(true);
 
-          const grandRoast = finaleRoasts[Math.floor(Math.random() * finaleRoasts.length)];
+          const grandShayari = finaleShayaris[Math.floor(Math.random() * finaleShayaris.length)];
           modalAvatar.textContent = "👑";
           modalVictim.textContent = grandLoser;
-          modalBadge.textContent = `Grand Tournament Loser (${highestScore} Points)`;
-          modalDialogue.textContent = grandRoast;
+          modalBadge.textContent = `Tournament Champion Bakra (${maxPts} Points)`;
+          shayariLine1.textContent = grandShayari.l1;
+          shayariLine2.textContent = grandShayari.l2;
           modalOverlay.classList.add("open");
 
-          // Reset count for next game
           currentSpinCount = 0;
         } else {
-          suspenseText.textContent = `Round ${currentSpinCount} Done! ${victim} got +1 Pt! Agla spin karo!`;
+          suspenseText.textContent = `Round ${currentSpinCount} Done! ${victim} got +1 Pt! Spin again!`;
           playWinStinger(false);
         }
       }
@@ -1107,9 +1169,9 @@ tagsList.addEventListener("click", (e) => {
       return;
     }
     const idx = parseInt(e.target.dataset.index, 10);
-    const removedName = roster[idx];
+    const removed = roster[idx];
     roster.splice(idx, 1);
-    delete scores[removedName];
+    delete scores[removed];
     renderTags();
   }
 });
@@ -1123,21 +1185,21 @@ closeModalBtn.addEventListener("click", () => {
 });
 
 copyBtn.addEventListener("click", () => {
-  const text = `🚨 *PAANI DUTY ALERT* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n"${modalDialogue.textContent}"`;
+  const text = `🚨 *PAANI DUTY ROAST* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n\n"${shayariLine1.textContent}\n${shayariLine2.textContent}"`;
   navigator.clipboard.writeText(text).then(() => {
     copyBtn.textContent = "Copied! 😂";
-    setTimeout(() => { copyBtn.textContent = "Roast Copy Karo 📋"; }, 2000);
+    setTimeout(() => { copyBtn.textContent = "Shayari Copy Karo 📋"; }, 2000);
   });
 });
 
-// Mode Switching Handlers
+// Mode Switching
 tabInstant.addEventListener("click", () => {
   if (isSpinning) return;
   currentMode = "instant";
   tabInstant.classList.add("active");
   tabSeries.classList.remove("active");
   seriesHud.style.display = "none";
-  document.getElementById("boardTitle").textContent = "Live Duty Counter";
+  document.getElementById("boardTitle").textContent = "Live Score Counter";
 });
 
 tabSeries.addEventListener("click", () => {
@@ -1165,7 +1227,7 @@ window.addEventListener("resize", () => {
   fxCanvas.height = window.innerHeight;
 });
 
-// Init
+// Initialize
 setupCanvasDPI();
 renderTags();
 </script>
