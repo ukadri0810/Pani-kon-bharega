@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Water Bottle Spin Wheel</title>
+<title>Water Bottle Duty - Spin of Shame</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -12,92 +12,239 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Arial, sans-serif;
-    background: #f4f7fb;
-    color: #172033;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at top, #1e293b, #0f172a);
+    color: #f8fafc;
+    padding: 20px 0;
+    overflow-x: hidden;
   }
   .app {
-    width: min(92vw, 620px);
+    width: min(92vw, 560px);
     text-align: center;
+    position: relative;
   }
-  h1 { margin: 0 0 8px; font-size: clamp(26px, 6vw, 40px); }
-  p { margin: 0 0 22px; color: #647084; }
+  h1 { 
+    margin: 0 0 6px; 
+    font-size: clamp(24px, 5vw, 36px); 
+    font-weight: 900;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  p.subtitle { 
+    margin: 0 0 20px; 
+    color: #94a3b8; 
+    font-size: 15px; 
+  }
   .wheel-wrap {
     position: relative;
-    width: min(88vw, 500px);
+    width: min(85vw, 420px);
     aspect-ratio: 1;
     margin: auto;
   }
-  canvas {
+  canvas#wheel {
     width: 100%;
     height: 100%;
     display: block;
-    filter: drop-shadow(0 14px 20px rgba(0,0,0,.12));
+    filter: drop-shadow(0 16px 28px rgba(0,0,0,.45));
+    transition: transform 0.1s ease-out;
+  }
+  canvas#confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 99;
   }
   .pointer {
     position: absolute;
-    top: -4px;
+    top: -8px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 18px solid transparent;
-    border-right: 18px solid transparent;
-    border-top: 38px solid #e63946;
-    z-index: 2;
-    filter: drop-shadow(0 3px 3px rgba(0,0,0,.2));
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 40px solid #ef4444;
+    z-index: 5;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,.4));
+    transform-origin: 50% 15%;
+    transition: transform 0.08s ease-out;
   }
-  button {
-    margin-top: 26px;
+  .pointer.hit {
+    transform: translateX(-50%) rotate(-18deg);
+  }
+  .spin-btn {
+    margin-top: 24px;
     border: 0;
-    border-radius: 12px;
-    padding: 15px 34px;
+    border-radius: 50px;
+    padding: 16px 42px;
     font-size: 18px;
-    font-weight: 700;
-    color: white;
-    background: #1769e0;
-    cursor: pointer;
-    box-shadow: 0 7px 16px rgba(23,105,224,.25);
-  }
-  button:hover { background: #1258bf; }
-  button:disabled { opacity: .6; cursor: not-allowed; }
-  #result {
-    min-height: 34px;
-    margin-top: 20px;
-    font-size: 24px;
     font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #0f172a;
+    background: linear-gradient(135deg, #38bdf8, #22d3ee);
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .spin-btn:hover:not(:disabled) {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+  }
+  .spin-btn:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+  .spin-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.6);
+  }
+  .taunt-card {
+    min-height: 110px;
+    margin-top: 22px;
+    padding: 18px 22px;
+    border-radius: 16px;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(15px) scale(0.96);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .taunt-card.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .target-name {
+    font-size: 24px;
+    font-weight: 900;
+    color: #f87171;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: pulseName 1s infinite alternate;
+  }
+  .taunt-msg {
+    font-size: 16px;
+    color: #cbd5e1;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  @keyframes pulseName {
+    from { transform: scale(1); filter: drop-shadow(0 0 2px rgba(248,113,113,0.3)); }
+    to { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(248,113,113,0.8)); }
   }
 </style>
 </head>
 <body>
+
+<canvas id="confetti"></canvas>
+
 <div class="app">
-  <h1>💧 Who Will Fill the Bottle?</h1>
-  <p>Spin the wheel and let fate decide!</p>
+  <h1>💧 WHEEL OF REFILL</h1>
+  <p class="subtitle">Spin to find today's designated hydration slave.</p>
 
   <div class="wheel-wrap">
-    <div class="pointer"></div>
+    <div class="pointer" id="pointer"></div>
     <canvas id="wheel" width="700" height="700"></canvas>
   </div>
 
-  <button id="spinBtn">SPIN THE WHEEL</button>
-  <div id="result"></div>
+  <button class="spin-btn" id="spinBtn">SACRIFICE SOMEONE 🎲</button>
+  
+  <div class="taunt-card" id="tauntCard">
+    <div class="target-name" id="targetName"></div>
+    <div class="taunt-msg" id="tauntMsg"></div>
+  </div>
 </div>
 
 <script>
 const names = ["Pranay", "Rohan", "Vivek", "Gaus"];
+const colors = ["#f87171", "#fbbf24", "#34d399", "#60a5fa"];
+
+const taunts = [
+  "Stop pretending to type aggressively on Slack. Get up and walk! 🏃‍♂️",
+  "Don't fake an urgent call now. The water purifier is calling your name! 📞❌",
+  "Your chair has suffered enough of your weight today. Go hydrate the squad! 🪑",
+  "Congratulations! You won an all-inclusive VIP trip to the RO filter! 🏆🚰",
+  "We can all see you staring at the screen in pure denial. MOVE! 💀",
+  "Hydration Butler of the Hour™ — don't forget to fill it with cold water! 🧊",
+  "Stop looking around for volunteers. Fate pointed right at you, champion! 🫵",
+  "Zero excuses. Your legs still work, go do your office duty! 🚶‍♂️💨"
+];
+
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 const btn = document.getElementById("spinBtn");
-const result = document.getElementById("result");
+const pointer = document.getElementById("pointer");
+const tauntCard = document.getElementById("tauntCard");
+const targetName = document.getElementById("targetName");
+const tauntMsg = document.getElementById("tauntMsg");
+const confettiCanvas = document.getElementById("confetti");
+const confettiCtx = confettiCanvas.getContext("2d");
 
-const colors = ["#4dabf7", "#ffd43b", "#69db7c", "#ff8787"];
 let rotation = 0;
 let spinning = false;
+let audioCtx = null;
+let lastTickIndex = -1;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playTickSound() {
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.035);
+  
+  gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.035);
+  
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.035);
+}
+
+function playVictoryFanfare() {
+  if (!audioCtx) return;
+  const notes = [261.63, 329.63, 392.00, 523.25];
+  notes.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "triangle";
+    osc.frequency.value = freq;
+    
+    const start = audioCtx.currentTime + i * 0.09;
+    gain.gain.setValueAtTime(0.3, start);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(start);
+    osc.stop(start + 0.35);
+  });
+}
 
 function drawWheel() {
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
-  const radius = 320;
+  const radius = 315;
   const slice = (Math.PI * 2) / names.length;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -110,10 +257,10 @@ function drawWheel() {
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, radius, start, end);
     ctx.closePath();
-    ctx.fillStyle = colors[i];
+    ctx.fillStyle = colors[i % colors.length];
     ctx.fill();
-    ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 7;
+    ctx.strokeStyle = "#0f172a";
+    ctx.lineWidth = 8;
     ctx.stroke();
 
     ctx.save();
@@ -121,53 +268,139 @@ function drawWheel() {
     ctx.rotate(start + slice / 2);
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "#172033";
-    ctx.font = "bold 42px Arial";
-    ctx.fillText(names[i], radius - 35, 0);
+    ctx.fillStyle = "#0f172a";
+    ctx.font = "900 44px 'Segoe UI', Arial, sans-serif";
+    ctx.shadowColor = "rgba(255,255,255,0.4)";
+    ctx.shadowBlur = 4;
+    ctx.fillText(names[i], radius - 45, 0);
     ctx.restore();
   }
 
-  // Center circle
+  // Outer border ring
   ctx.beginPath();
-  ctx.arc(cx, cy, 48, 0, Math.PI * 2);
-  ctx.fillStyle = "#fff";
-  ctx.fill();
-  ctx.strokeStyle = "#d9e0ea";
-  ctx.lineWidth = 5;
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+  ctx.lineWidth = 14;
+  ctx.strokeStyle = "#1e293b";
   ctx.stroke();
+
+  // Center hub
+  ctx.beginPath();
+  ctx.arc(cx, cy, 52, 0, Math.PI * 2);
+  ctx.fillStyle = "#0f172a";
+  ctx.fill();
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = "#38bdf8";
+  ctx.stroke();
+
+  ctx.fillStyle = "#38bdf8";
+  ctx.font = "bold 28px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("💧", cx, cy + 2);
+}
+
+// Confetti Particle System
+let particles = [];
+function fireConfetti() {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+  particles = [];
+  
+  for (let i = 0; i < 90; i++) {
+    particles.push({
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+      vx: (Math.random() - 0.5) * 18,
+      vy: (Math.random() - 0.7) * 20,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 12
+    });
+  }
+
+  function renderConfetti() {
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    particles.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.45;
+      p.alpha -= 0.012;
+      p.rotation += p.rotSpeed;
+
+      confettiCtx.save();
+      confettiCtx.globalAlpha = Math.max(p.alpha, 0);
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate((p.rotation * Math.PI) / 180);
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      confettiCtx.restore();
+    });
+
+    particles = particles.filter(p => p.alpha > 0);
+    if (particles.length > 0) {
+      requestAnimationFrame(renderConfetti);
+    } else {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }
+  }
+  requestAnimationFrame(renderConfetti);
 }
 
 function spin() {
   if (spinning) return;
+  initAudio();
   spinning = true;
   btn.disabled = true;
-  result.textContent = "";
+  tauntCard.classList.remove("show");
 
   const winner = Math.floor(Math.random() * names.length);
   const slice = (Math.PI * 2) / names.length;
 
-  // Pointer is at the top (-PI/2). Make the selected slice land there.
   const targetAngle = -Math.PI / 2 - (winner + 0.5) * slice;
-  const current = rotation;
-  const normalizedTarget = targetAngle - current;
-  const extraSpins = 6 + Math.floor(Math.random() * 3);
-  const finalRotation = current + normalizedTarget + extraSpins * Math.PI * 2;
+  const current = rotation % (Math.PI * 2);
+  const extraSpins = (6 + Math.floor(Math.random() * 3)) * Math.PI * 2;
+  const totalChange = (targetAngle - current) + extraSpins + (targetAngle < current ? Math.PI * 2 : 0);
 
+  const startRot = rotation;
   const startTime = performance.now();
-  const duration = 4200;
+  const duration = 4600;
 
   function animate(now) {
-    const progress = Math.min((now - startTime) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 4);
-    rotation = current + (finalRotation - current) * eased;
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Custom cubic-bezier deceleration
+    const easeOut = 1 - Math.pow(1 - progress, 4.5);
+    rotation = startRot + totalChange * easeOut;
     drawWheel();
+
+    // Trigger tick sound & pointer bounce on slice boundary
+    const normalizedRot = (rotation + Math.PI / 2) % (Math.PI * 2);
+    const positiveAngle = normalizedRot < 0 ? normalizedRot + Math.PI * 2 : normalizedRot;
+    const currentSlice = Math.floor(positiveAngle / slice);
+
+    if (currentSlice !== lastTickIndex && progress < 0.98) {
+      lastTickIndex = currentSlice;
+      playTickSound();
+      pointer.classList.add("hit");
+      setTimeout(() => pointer.classList.remove("hit"), 60);
+    }
 
     if (progress < 1) {
       requestAnimationFrame(animate);
     } else {
       spinning = false;
       btn.disabled = false;
-      result.textContent = "💧 " + names[winner] + " is filling the bottle!";
+      playVictoryFanfare();
+      fireConfetti();
+
+      // Show funny taunt message
+      const randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
+      targetName.textContent = `🚨 ${names[winner]} 🚨`;
+      tauntMsg.textContent = randomTaunt;
+      tauntCard.classList.add("show");
     }
   }
 
@@ -175,6 +408,10 @@ function spin() {
 }
 
 btn.addEventListener("click", spin);
+window.addEventListener("resize", () => {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+});
 drawWheel();
 </script>
 </body>
