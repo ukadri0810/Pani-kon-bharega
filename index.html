@@ -3,29 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BreakRoom Live - Studio Office Party Hub</title>
+<title>BreakRoom Live - Studio Party Hub</title>
 <style>
   :root {
-    --bg-base: #060911;
-    --bg-elevated: #0d1322;
-    --glass-card: rgba(15, 23, 42, 0.72);
-    --glass-border: rgba(255, 255, 255, 0.09);
-    --glass-border-glow: rgba(56, 189, 248, 0.35);
+    --bg-main: #090d16;
+    --bg-card: #111827;
+    --bg-card-elevated: #1a2337;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(14, 165, 233, 0.35);
     
-    --primary: #00d2ff;
-    --primary-deep: #0066ff;
-    --accent-purple: #8b5cf6;
-    --accent-emerald: #10b981;
-    --accent-amber: #f59e0b;
-    --accent-coral: #ff4757;
+    --cyan-400: #38bdf8;
+    --cyan-500: #0ea5e9;
+    --violet-500: #8b5cf6;
+    --emerald-400: #34d399;
+    --amber-400: #fbbf24;
+    --rose-400: #fb7185;
     
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --text-tertiary: #64748b;
+    --text-muted: #64748b;
     
-    --radius-sm: 10px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -36,66 +34,49 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(circle at 50% 0%, #152243 0%, #0a0f1d 45%, var(--bg-base) 100%);
+    font-family: var(--font-sans);
+    background: radial-gradient(circle at 50% 0%, #151f38 0%, #0c1220 50%, var(--bg-main) 100%);
     color: var(--text-primary);
     padding: 16px 12px 60px;
     overflow-x: hidden;
   }
 
-  /* Ambient Glow in background */
-  .bg-glow-orb {
-    position: fixed;
-    top: -120px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 350px;
-    background: radial-gradient(circle, rgba(0, 210, 255, 0.15), rgba(139, 92, 246, 0.08), transparent 70%);
-    filter: blur(50px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Main Wrapper */
   .app-shell {
-    width: min(100%, 580px);
+    width: min(100%, 600px);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 14px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
-  /* Header Section */
+  /* Header & Navigation */
   .header-bar {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4px;
   }
 
-  .brand-chip {
+  .brand-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
     border-radius: 99px;
-    background: rgba(0, 210, 255, 0.08);
-    border: 1px solid rgba(0, 210, 255, 0.25);
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid var(--border-highlight);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 210, 255, 0.15);
+    color: var(--cyan-400);
   }
 
-  .rules-trigger-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--glass-border);
+  .btn-rule-guide {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
     color: var(--text-secondary);
     padding: 6px 14px;
     border-radius: 99px;
@@ -107,27 +88,27 @@
     gap: 6px;
     transition: all 0.2s ease;
   }
-  .rules-trigger-btn:hover {
+  .btn-rule-guide:hover {
     color: #fff;
-    border-color: var(--primary);
-    background: rgba(0, 210, 255, 0.1);
+    border-color: var(--cyan-400);
+    background: rgba(14, 165, 233, 0.12);
   }
 
-  /* Game Segmented Navigation Dock */
-  .nav-dock {
+  /* Game Switcher Tabs */
+  .game-dock {
     display: flex;
     overflow-x: auto;
-    background: rgba(13, 19, 34, 0.88);
-    border: 1px solid var(--glass-border);
+    background: rgba(17, 24, 39, 0.85);
+    border: 1px solid var(--border-subtle);
     backdrop-filter: blur(20px);
     padding: 5px;
     border-radius: 18px;
     width: 100%;
     gap: 4px;
     scrollbar-width: none;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   }
-  .nav-dock::-webkit-scrollbar { display: none; }
+  .game-dock::-webkit-scrollbar { display: none; }
 
   .dock-btn {
     flex: 1;
@@ -148,19 +129,19 @@
   }
 
   .dock-btn.active {
-    background: linear-gradient(135deg, rgba(0, 210, 255, 0.18), rgba(139, 92, 246, 0.22));
-    border: 1px solid rgba(0, 210, 255, 0.45);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(139, 92, 246, 0.25));
+    border: 1px solid rgba(14, 165, 233, 0.45);
     color: #ffffff;
-    box-shadow: 0 4px 16px rgba(0, 210, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.2);
   }
 
-  /* Roster Manager Drawer */
+  /* Universal Roster Drawer */
   .roster-card {
     width: 100%;
-    background: var(--glass-card);
-    border: 1px solid var(--glass-border);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
     backdrop-filter: blur(20px);
-    border-radius: var(--radius-md);
+    border-radius: 16px;
     padding: 12px 14px;
     display: flex;
     flex-direction: column;
@@ -171,22 +152,19 @@
 
   .roster-input {
     flex: 1;
-    background: rgba(8, 12, 22, 0.65);
-    border: 1px solid var(--glass-border);
+    background: rgba(9, 13, 22, 0.6);
+    border: 1px solid var(--border-subtle);
     border-radius: 12px;
-    padding: 10px 14px;
+    padding: 9px 14px;
     font-size: 13px;
     color: #fff;
     outline: none;
     transition: all 0.2s ease;
   }
-  .roster-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 14px rgba(0, 210, 255, 0.25);
-  }
+  .roster-input:focus { border-color: var(--cyan-400); }
 
-  .add-btn {
-    background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  .btn-add {
+    background: linear-gradient(135deg, var(--cyan-400), var(--cyan-500));
     border: none;
     color: #040814;
     border-radius: 12px;
@@ -194,9 +172,7 @@
     font-weight: 800;
     font-size: 13px;
     cursor: pointer;
-    transition: transform 0.15s ease;
   }
-  .add-btn:active { transform: scale(0.96); }
 
   .tags-list {
     display: flex;
@@ -219,7 +195,7 @@
     color: #e2e8f0;
   }
   .tag-remove { cursor: pointer; opacity: 0.5; font-size: 14px; }
-  .tag-remove:hover { opacity: 1; color: var(--accent-coral); }
+  .tag-remove:hover { opacity: 1; color: var(--rose-400); }
 
   /* Game View Containers */
   .game-view {
@@ -228,23 +204,23 @@
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    animation: smoothFade 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .game-view.active { display: flex; }
 
-  @keyframes smoothFade {
-    from { opacity: 0; transform: translateY(8px) scale(0.99); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Universal Studio Glass Card */
-  .studio-card {
+  /* Game Stage Card */
+  .stage-card {
     width: 100%;
-    background: var(--glass-card);
-    border: 1px solid var(--glass-border);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
     backdrop-filter: blur(24px);
-    border-radius: var(--radius-lg);
-    padding: 24px 20px;
+    border-radius: 24px;
+    padding: 22px 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -252,75 +228,58 @@
     gap: 16px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     position: relative;
-    overflow: hidden;
   }
 
-  /* Hero Action Buttons */
-  .btn-hero {
+  /* Interactive Buttons */
+  .btn-primary {
     position: relative;
     width: 100%;
     max-width: 340px;
-    padding: 16px 24px;
+    padding: 15px 24px;
     border: none;
     border-radius: 16px;
-    background: linear-gradient(135deg, var(--primary) 0%, #0084ff 50%, var(--accent-purple) 100%);
+    background: linear-gradient(135deg, var(--cyan-400) 0%, var(--cyan-500) 50%, var(--violet-500) 100%);
     color: #ffffff;
     font-size: 16px;
     font-weight: 900;
     letter-spacing: 0.8px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 12px 30px rgba(0, 102, 255, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.4);
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     overflow: hidden;
   }
-  .btn-hero::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transform: skewX(-20deg);
-    animation: lightSweep 4s infinite;
-  }
-  @keyframes lightSweep { 20%, 100% { left: 160%; } }
-
-  .btn-hero:hover:not(:disabled) {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 16px 36px rgba(0, 210, 255, 0.5);
-  }
-  .btn-hero:active:not(:disabled) { transform: translateY(2px) scale(0.98); }
-  .btn-hero:disabled { filter: grayscale(0.8); opacity: 0.5; cursor: not-allowed; }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-2px) scale(1.02); }
+  .btn-primary:active:not(:disabled) { transform: translateY(2px) scale(0.98); }
+  .btn-primary:disabled { filter: grayscale(0.8); opacity: 0.5; cursor: not-allowed; }
 
   .btn-secondary {
     background: rgba(255, 255, 255, 0.07);
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border-subtle);
     color: #fff;
-    padding: 12px 20px;
-    border-radius: 14px;
+    padding: 11px 18px;
+    border-radius: 12px;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-  }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
   .btn-secondary:active { transform: scale(0.96); }
 
-  /* ================= GAME 1: WHEEL ================= */
+  /* Water Wheel Canvas Wrapper */
   .wheel-wrapper {
     position: relative;
-    width: min(84vw, 370px);
+    width: min(84vw, 360px);
     aspect-ratio: 1;
     margin: 4px 0;
   }
 
-  .wheel-glow-ring {
+  .wheel-halo {
     position: absolute;
     inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 70%);
     filter: blur(14px);
     pointer-events: none;
   }
@@ -333,84 +292,108 @@
     filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.8));
   }
 
-  .wheel-pointer-assembly {
+  .wheel-pointer {
     position: absolute;
     top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 34px;
-    height: 48px;
+    width: 32px;
+    height: 46px;
     z-index: 10;
     pointer-events: none;
     transform-origin: 50% 12px;
     filter: drop-shadow(0 8px 12px rgba(0,0,0,0.8));
     transition: transform 0.05s ease-out;
   }
-  .wheel-pointer-assembly.bump { transform: translateX(-50%) rotate(-24deg) scale(1.12); }
+  .wheel-pointer.bump { transform: translateX(-50%) rotate(-24deg) scale(1.12); }
 
-  /* ================= GAME 2: 5-SECOND PANIC ================= */
-  .timer-svg-wrap {
+  /* 5-Sec Panic Ring & Timer */
+  .timer-preset-row {
+    display: flex;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .preset-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .preset-chip.active {
+    background: rgba(14, 165, 233, 0.2);
+    color: var(--cyan-400);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+  }
+
+  .timer-dial-box {
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
   }
   .timer-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
-  .timer-circle-bg { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 8; }
-  .timer-circle-progress {
+  .timer-ring-bg { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 7; }
+  .timer-ring-bar {
     fill: none;
-    stroke: var(--primary);
-    stroke-width: 8;
+    stroke: var(--cyan-400);
+    stroke-width: 7;
     stroke-linecap: round;
     stroke-dasharray: 283;
     stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
   }
-  .timer-text-overlay {
+  .timer-text-content {
     position: absolute;
     inset: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
-    font-weight: 900;
-    color: #fff;
   }
+  .timer-num { font-size: 38px; font-weight: 900; line-height: 1; }
+  .timer-sub { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
 
-  .panic-prompt-box {
-    font-size: 20px;
+  .panic-prompt-card {
+    font-size: 19px;
     font-weight: 800;
-    line-height: 1.45;
+    line-height: 1.4;
     color: #ffffff;
-    min-height: 68px;
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
-  /* ================= GAME 3: THE IMPOSTER (3D CARD) ================= */
-  .perspective-container {
+  /* Imposter Game 3D Flip Card */
+  .imposter-flip-box {
     perspective: 1000px;
     width: 100%;
     max-width: 320px;
-    height: 150px;
+    height: 140px;
   }
-  .flip-card-inner {
+  .imposter-inner {
     position: relative;
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: pointer;
   }
-  .flip-card-inner.flipped { transform: rotateY(180deg); }
+  .imposter-inner.flipped { transform: rotateY(180deg); }
 
-  .flip-card-front, .flip-card-back {
+  .card-face {
     position: absolute;
     inset: 0;
     backface-visibility: hidden;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -418,84 +401,73 @@
     padding: 16px;
     text-align: center;
   }
-
-  .flip-card-front {
-    background: linear-gradient(135deg, rgba(13, 22, 41, 0.9), rgba(20, 31, 56, 0.9));
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  .card-face.front {
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(26, 35, 55, 0.95));
   }
-  .flip-card-back {
+  .card-face.back {
     background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-    border-color: var(--accent-purple);
+    border-color: var(--violet-500);
     transform: rotateY(180deg);
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
   }
 
-  /* ================= GAME 4: TABOO ================= */
-  .taboo-word-hero {
+  /* Taboo Grid */
+  .taboo-main-word {
     font-size: 26px;
     font-weight: 900;
-    color: var(--primary);
+    color: var(--cyan-400);
     letter-spacing: 1px;
     text-transform: uppercase;
-    text-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
   }
   .forbidden-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
   }
   .forbidden-pill {
-    background: rgba(255, 71, 87, 0.1);
-    border: 1px solid rgba(255, 71, 87, 0.3);
-    color: #ff8b94;
-    padding: 8px 12px;
+    background: rgba(251, 113, 133, 0.12);
+    border: 1px solid rgba(251, 113, 133, 0.3);
+    color: #fca5a5;
+    padding: 8px 10px;
     border-radius: 10px;
     font-weight: 800;
     font-size: 13px;
     text-decoration: line-through;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  /* ================= GAME 5: EMOJI MYSTERY ================= */
-  .emoji-stage {
-    font-size: 58px;
+  /* Emoji Box */
+  .emoji-clue-stage {
+    font-size: 54px;
     letter-spacing: 8px;
-    min-height: 80px;
+    min-height: 75px;
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
-    animation: gentleBob 2s infinite ease-in-out alternate;
   }
-  @keyframes gentleBob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
 
-  .emoji-answer-box {
-    background: rgba(0, 210, 255, 0.08);
-    border: 1px solid rgba(0, 210, 255, 0.25);
+  .emoji-answer-pill {
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.3);
     border-radius: 12px;
-    padding: 10px 18px;
-    font-size: 16px;
+    padding: 8px 16px;
+    font-size: 15px;
     font-weight: 800;
-    color: var(--primary);
+    color: var(--cyan-400);
     display: none;
-    animation: smoothFade 0.2s ease;
   }
 
-  /* Universal Leaderboard */
+  /* Scoreboard */
   .scoreboard-card {
     width: 100%;
-    background: var(--glass-card);
-    border: 1px solid var(--glass-border);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
     backdrop-filter: blur(20px);
-    border-radius: var(--radius-md);
-    padding: 14px 16px;
+    border-radius: 16px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   .scoreboard-header {
@@ -506,193 +478,207 @@
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    color: var(--primary);
+    color: var(--cyan-400);
   }
 
   .scoreboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+    gap: 6px;
   }
 
-  .player-pill-card {
-    position: relative;
-    background: rgba(10, 16, 30, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+  .score-pill-card {
+    background: rgba(9, 13, 22, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
-    padding: 10px 8px;
+    padding: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    gap: 2px;
   }
-  .player-pill-card.highlight {
-    border-color: var(--primary);
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+  .score-pill-card.highlight {
+    border-color: var(--cyan-400);
+    box-shadow: 0 0 16px rgba(14, 165, 233, 0.3);
   }
+  .p-score { font-size: 20px; font-weight: 900; color: var(--amber-400); }
 
-  .p-rank {
-    position: absolute;
-    top: 4px;
-    left: 6px;
-    font-size: 10px;
-    font-weight: 900;
-    color: var(--text-tertiary);
-  }
-  .p-name { font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-  .p-score { font-size: 22px; font-weight: 900; color: var(--accent-amber); line-height: 1; }
-
-  /* Modal Sheets */
+  /* Modals */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(4, 7, 16, 0.88);
-    backdrop-filter: blur(16px);
+    background: rgba(3, 6, 14, 0.88);
+    backdrop-filter: blur(14px);
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 18px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.3s ease;
   }
   .modal-overlay.open { opacity: 1; pointer-events: auto; }
 
   .dialog-card {
     width: min(100%, 460px);
-    background: linear-gradient(180deg, #131f38 0%, #0c1322 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-lg);
-    padding: 28px 24px;
+    background: linear-gradient(180deg, #162035 0%, #0c1220 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    padding: 26px 20px;
     text-align: center;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 210, 255, 0.15);
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
   }
-  .modal-overlay.open .dialog-card { transform: scale(1) translateY(0); }
 
   .shayari-box {
-    background: rgba(8, 14, 28, 0.7);
-    padding: 18px;
-    border-radius: var(--radius-md);
+    background: rgba(8, 12, 22, 0.65);
+    padding: 16px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    margin: 16px 0 20px;
+    margin: 14px 0 18px;
   }
-  .shayari-line1 { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; }
-  .shayari-line2 { font-size: 15px; font-weight: 800; color: var(--primary); }
+  .shayari-line1 { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 5px; }
+  .shayari-line2 { font-size: 15px; font-weight: 800; color: var(--cyan-400); }
 
-  /* Rules Drawer Modal */
-  .rules-drawer {
+  /* Rules Explainer Box Inside Modal */
+  .rules-container {
     text-align: left;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 4px;
   }
-  .rules-item-row {
+  .rule-block {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 14px;
     margin-bottom: 12px;
-    font-size: 13px;
-    line-height: 1.5;
+  }
+  .rule-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--cyan-400);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .rule-steps {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 12.5px;
+    line-height: 1.55;
     color: #cbd5e1;
   }
-  .rules-item-row b { color: var(--primary); }
+  .rule-steps li { margin-bottom: 4px; }
+  .rule-steps b { color: #fff; }
 
   canvas#fxCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 105; }
 </style>
 </head>
 <body>
 
-<div class="bg-glow-orb"></div>
 <canvas id="fxCanvas"></canvas>
 
 <div class="app-shell">
-  <!-- Top Action Bar -->
+  <!-- Top Navigation Bar -->
   <div class="header-bar">
-    <div class="brand-chip">💧 BreakRoom Live</div>
-    <button class="rules-trigger-btn" id="openRulesBtn">📖 Quick Rules</button>
+    <div class="brand-badge">💧 BreakRoom Live</div>
+    <button class="btn-rule-guide" id="openRulesBtn">📖 How to Play</button>
   </div>
 
-  <!-- Segmented Navigation Dock -->
-  <nav class="nav-dock">
+  <!-- Game Segmented Dock -->
+  <nav class="game-dock">
     <button class="dock-btn active" data-game="wheel">💧 Water Duty</button>
-    <button class="dock-btn" data-game="rapid">⚡ 5-Sec Panic</button>
+    <button class="dock-btn" data-game="rapid">⚡ Rapid Panic</button>
     <button class="dock-btn" data-game="imposter">🕵️ The Imposter</button>
     <button class="dock-btn" data-game="taboo">🤐 Taboo Clues</button>
     <button class="dock-btn" data-game="emoji">🎭 Emoji Mystery</button>
   </nav>
 
-  <!-- Global Team Roster Drawer -->
+  <!-- Global Roster Bar -->
   <div class="roster-card">
     <div class="roster-input-row">
-      <input type="text" id="nameInput" class="roster-input" placeholder="Add teammate name..." maxlength="14">
-      <button class="add-btn" id="addBtn">+ Add</button>
+      <input type="text" id="nameInput" class="roster-input" placeholder="Type teammate name & enter..." maxlength="14">
+      <button class="btn-add" id="addBtn">+ Add</button>
     </div>
     <div class="tags-list" id="tagsList"></div>
   </div>
 
   <!-- ================= GAME 1: WATER DUTY WHEEL ================= -->
   <section class="game-view active" id="view-wheel">
-    <div class="studio-card">
+    <div class="stage-card">
       <div class="wheel-wrapper">
-        <div class="wheel-glow-ring"></div>
-        <div class="wheel-pointer-assembly" id="pointerAssembly">
-          <svg viewBox="0 0 34 48" fill="none">
-            <path d="M17 48L3 14C1 8 5 0 12 0H22C29 0 33 8 31 14L17 48Z" fill="url(#ptrGradient)"/>
-            <circle cx="17" cy="14" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #00d2ff)"/>
-            <defs>
-              <linearGradient id="ptrGradient" x1="17" y1="0" x2="17" y2="48" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#00D2FF"/>
-                <stop offset="0.6" stop-color="#0066FF"/>
-                <stop offset="1" stop-color="#0F172A"/>
-              </linearGradient>
-            </defs>
+        <div class="wheel-halo"></div>
+        <div class="wheel-pointer" id="wheelPointer">
+          <svg viewBox="0 0 32 46" fill="none">
+            <path d="M16 46L3 13C1 7 5 0 11 0H21C27 0 31 7 29 13L16 46Z" fill="#38BDF8"/>
+            <circle cx="16" cy="13" r="5" fill="#ffffff"/>
           </svg>
         </div>
         <canvas id="wheelCanvas" width="800" height="800"></canvas>
       </div>
-      <button class="btn-hero" id="spinWheelBtn">SPIN FOR WATER DUTY 🎲</button>
+      <button class="btn-primary" id="spinWheelBtn">SPIN FOR WATER DUTY 🎲</button>
     </div>
   </section>
 
-  <!-- ================= GAME 2: 5-SECOND PANIC ================= -->
+  <!-- ================= GAME 2: RAPID PANIC ================= -->
   <section class="game-view" id="view-rapid">
-    <div class="studio-card">
-      <div class="timer-svg-wrap">
-        <svg class="timer-svg" viewBox="0 0 100 100">
-          <circle class="timer-circle-bg" cx="50" cy="50" r="45"></circle>
-          <circle class="timer-circle-progress" id="timerProgress" cx="50" cy="50" r="45"></circle>
-        </svg>
-        <div class="timer-text-overlay" id="timerText">5</div>
+    <div class="stage-card">
+      <!-- Realistic Timer Length Selector -->
+      <div class="timer-preset-row">
+        <button class="preset-chip" data-time="5">5s (Insane)</button>
+        <button class="preset-chip active" data-time="10">10s (Standard)</button>
+        <button class="preset-chip" data-time="15">15s (Chill)</button>
       </div>
-      <div class="panic-prompt-box" id="panicPrompt">Press Start to begin Rapid Fire!</div>
-      <button class="btn-hero" id="startPanicBtn">START 5s ROUND ⏱️</button>
-      <div style="display: flex; gap: 10px; width: 100%; max-width: 340px;">
-        <button class="btn-secondary" id="passPanicBtn" style="flex: 1; color: var(--accent-emerald);">Passed (+1 Pt) ✅</button>
-        <button class="btn-secondary" id="failPanicBtn" style="flex: 1; color: var(--accent-coral);">Failed ❌</button>
+
+      <!-- High-Precision Animated Ring -->
+      <div class="timer-dial-box">
+        <svg class="timer-svg" viewBox="0 0 100 100">
+          <circle class="timer-ring-bg" cx="50" cy="50" r="45"></circle>
+          <circle class="timer-ring-bar" id="timerRing" cx="50" cy="50" r="45"></circle>
+        </svg>
+        <div class="timer-text-content">
+          <div class="timer-num" id="timerDigits">10</div>
+          <div class="timer-sub" id="timerSubLabel">Seconds</div>
+        </div>
+      </div>
+
+      <div class="panic-prompt-card" id="panicPrompt">Pick a teammate, choose time, and press Start!</div>
+      
+      <button class="btn-primary" id="startPanicBtn">START ROUND ⏱️</button>
+      
+      <div style="display: flex; gap: 8px; width: 100%; max-width: 320px;">
+        <button class="btn-secondary" id="passPanicBtn" style="flex: 1; color: var(--emerald-400);">Passed (+1 Pt) ✅</button>
+        <button class="btn-secondary" id="failPanicBtn" style="flex: 1; color: var(--rose-400);">Failed ❌</button>
       </div>
     </div>
   </section>
 
   <!-- ================= GAME 3: THE IMPOSTER ================= -->
   <section class="game-view" id="view-imposter">
-    <div class="studio-card">
-      <div style="font-size: 13px; font-weight: 800; color: var(--text-secondary);" id="imposterTurnHeader">Player 1: Pass & Reveal</div>
-      
-      <div class="perspective-container">
-        <div class="flip-card-inner" id="flipCard">
-          <div class="flip-card-front">
-            <div style="font-size: 28px; margin-bottom: 6px;">🔒</div>
-            <div style="font-size: 14px; font-weight: 800; color: var(--primary);">TAP TO REVEAL SECRET</div>
-            <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 4px;">Keep screen hidden from others</div>
+    <div class="stage-card">
+      <div style="display: flex; justify-content: space-between; width: 100%; font-size: 11px; font-weight: 800; color: var(--text-secondary);">
+        <span id="imposterCategoryLabel">Category: Indian Snacks</span>
+        <span id="imposterProgress">Player 1 / 4</span>
+      </div>
+
+      <div class="imposter-flip-box">
+        <div class="imposter-inner" id="imposterCard">
+          <div class="card-face front">
+            <div style="font-size: 26px; margin-bottom: 4px;">🔒</div>
+            <div style="font-size: 13px; font-weight: 800; color: var(--cyan-400);" id="imposterPassPlayer">Tap to reveal secret word</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 3px;">Pass phone privately to this player</div>
           </div>
-          <div class="flip-card-back">
-            <div id="imposterSecretRole" style="font-size: 18px; font-weight: 900; color: #fff;">SECRET WORD</div>
-            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">Tap again to hide</div>
+          <div class="card-face back">
+            <div style="font-size: 18px; font-weight: 900; color: #fff;" id="imposterWordSlot">SECRET WORD</div>
+            <div style="font-size: 10px; color: var(--text-secondary); margin-top: 4px;">Tap again to hide</div>
           </div>
         </div>
       </div>
 
-      <div style="display: flex; gap: 10px; width: 100%; max-width: 340px;">
-        <button class="btn-hero" id="nextImposterTurnBtn">NEXT PLAYER ➡️</button>
+      <div style="display: flex; gap: 8px; width: 100%; max-width: 320px;">
+        <button class="btn-primary" id="nextImposterBtn">NEXT PLAYER ➡️</button>
         <button class="btn-secondary" id="resetImposterBtn">NEW 🔄</button>
       </div>
     </div>
@@ -700,23 +686,23 @@
 
   <!-- ================= GAME 4: TABOO CLUES ================= -->
   <section class="game-view" id="view-taboo">
-    <div class="studio-card">
-      <div style="font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-coral);">Guesser looks away! Don't say:</div>
-      <div class="taboo-word-hero" id="tabooWord">COFFEE MACHINE</div>
+    <div class="stage-card">
+      <div style="font-size: 11px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--rose-400);">Guesser turns away! Don't say:</div>
+      <div class="taboo-main-word" id="tabooWord">COFFEE MACHINE</div>
       <div class="forbidden-grid" id="forbiddenGrid"></div>
-      <button class="btn-hero" id="nextTabooBtn">NEXT CARD ➡️</button>
+      <button class="btn-primary" id="nextTabooBtn">NEXT WORD CARD ➡️</button>
     </div>
   </section>
 
   <!-- ================= GAME 5: EMOJI MYSTERY ================= -->
   <section class="game-view" id="view-emoji">
-    <div class="studio-card">
-      <div style="font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-amber);" id="emojiCat">Category: Bollywood Movie</div>
-      <div class="emoji-stage" id="emojiClue">🦁 👑</div>
-      <div class="emoji-answer-box" id="emojiAnswer">Answer: The Lion King</div>
-      <div style="display: flex; gap: 10px; width: 100%; max-width: 340px;">
+    <div class="stage-card">
+      <div style="font-size: 11px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--amber-400);" id="emojiCategory">Category: Bollywood Movie</div>
+      <div class="emoji-clue-stage" id="emojiClue">🦁 👑</div>
+      <div class="emoji-answer-pill" id="emojiAnswer">Answer: The Lion King</div>
+      <div style="display: flex; gap: 8px; width: 100%; max-width: 320px;">
         <button class="btn-secondary" id="revealEmojiBtn" style="flex: 1;">REVEAL 👁️</button>
-        <button class="btn-hero" id="nextEmojiBtn" style="flex: 1.4;">NEXT ➡️</button>
+        <button class="btn-primary" id="nextEmojiBtn" style="flex: 1.4;">NEXT ➡️</button>
       </div>
     </div>
   </section>
@@ -725,7 +711,7 @@
   <div class="scoreboard-card">
     <div class="scoreboard-header">
       <span>Group Scoreboard</span>
-      <span style="color: var(--accent-amber);">Live Leaderboard</span>
+      <span style="color: var(--amber-400);">Live Leaderboard</span>
     </div>
     <div class="scoreboard-grid" id="scoreboardGrid"></div>
   </div>
@@ -734,61 +720,93 @@
 <!-- ================= WINNER / SHAYARI MODAL ================= -->
 <div class="modal-overlay" id="shayariModal">
   <div class="dialog-card">
-    <div style="font-size: 40px; margin-bottom: 8px;">💧</div>
-    <h2 style="margin: 0; font-size: 26px; font-weight: 900;" id="winnerName">Rohan</h2>
-    <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--primary); margin-top: 4px;">Designated Jal Mantri</div>
+    <div style="font-size: 38px; margin-bottom: 6px;">💧</div>
+    <h2 style="margin: 0; font-size: 24px; font-weight: 900;" id="winnerName">Rohan</h2>
+    <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--cyan-400); margin-top: 3px;">Official Jal Mantri</div>
     
     <div class="shayari-box">
       <div class="shayari-line1" id="shayariLine1">Nazar lagi wheel par, dharak raha tha dil,</div>
       <div class="shayari-line2" id="shayariLine2">Botal uthao dost, aur chup chaap karo fill! 💧🚰</div>
     </div>
 
-    <div style="display: flex; gap: 10px;">
+    <div style="display: flex; gap: 8px;">
       <button class="btn-secondary" id="copyShayariBtn" style="flex: 1;">Copy 📋</button>
-      <button class="btn-hero" id="closeShayariBtn" style="flex: 1.5;">Duty Par Chale 🏃‍♂️</button>
+      <button class="btn-primary" id="closeShayariBtn" style="flex: 1.5;">Duty Par Chale 🏃‍♂️</button>
     </div>
   </div>
 </div>
 
-<!-- ================= QUICK RULES MODAL ================= -->
+<!-- ================= HOW TO PLAY MODAL ================= -->
 <div class="modal-overlay" id="rulesModal">
-  <div class="dialog-card rules-drawer">
-    <h3 style="margin: 0 0 16px; font-size: 20px; font-weight: 900; color: #fff; text-align: center;">📖 BreakRoom Guide</h3>
+  <div class="dialog-card" style="max-width: 520px;">
+    <h3 style="margin: 0 0 16px; font-size: 20px; font-weight: 900; color: #fff;">📖 How to Play Each Game</h3>
     
-    <div class="rules-item-row">
-      <b>💧 Water Duty:</b> Spin the wheel to pick today's official hydration hero. Enjoy a clean rhyming shayari taunt!
-    </div>
-    <div class="rules-item-row">
-      <b>⚡ 5-Sec Panic:</b> Hot seat player must shout 3 valid answers within 5 seconds before the buzzer strikes zero.
-    </div>
-    <div class="rules-item-row">
-      <b>🕵️ The Imposter:</b> Pass phone to check your role. Everyone gets the secret word except 1 imposter. Take turns giving 1-word clues and vote out the bluffer!
-    </div>
-    <div class="rules-item-row">
-      <b>🤐 Taboo Clues:</b> Describe the main target word without uttering any of the 4 red forbidden clue words!
-    </div>
-    <div class="rules-item-row">
-      <b>🎭 Emoji Mystery:</b> First teammate to shout the correct decoded title or brand wins the point.
+    <div class="rules-container">
+      <div class="rule-block">
+        <div class="rule-title">💧 Water Duty Wheel</div>
+        <ol class="rule-steps">
+          <li>Add everyone to the roster and tap <b>SPIN FOR WATER DUTY</b>.</li>
+          <li>The chosen player gets assigned as today's <b>Jal Mantri</b> along with a funny rhyming shayari.</li>
+          <li>No excuses allowed—the selected person takes the bottle and refills it!</li>
+        </ol>
+      </div>
+
+      <div class="rule-block">
+        <div class="rule-title">⚡ Rapid Panic (5s / 10s / 15s)</div>
+        <ol class="rule-steps">
+          <li>Pick a player for the hot seat and select timer difficulty (5s, 10s, or 15s).</li>
+          <li>Tap <b>START ROUND</b>. A <b>3-second preparation countdown</b> lets you read the prompt before the timer fires!</li>
+          <li>The player must shout <b>3 distinct answers</b> before the buzzer hits 0. Tap <b>Passed</b> to give them +1 Point.</li>
+        </ol>
+      </div>
+
+      <div class="rule-block">
+        <div class="rule-title">🕵️ The Office Imposter</div>
+        <ol class="rule-steps">
+          <li>Pass the device one by one. Each player taps the card to view their role privately.</li>
+          <li>Everyone sees the <b>Secret Word</b>, EXCEPT 1 randomly chosen <b>Imposter</b> (who only sees the broad category).</li>
+          <li>Go in a circle: each player says <b>one single clue word</b> related to the secret topic.</li>
+          <li>After clues, the room debates and votes on who is bluffing!</li>
+        </ol>
+      </div>
+
+      <div class="rule-block">
+        <div class="rule-title">🤐 Taboo Clues</div>
+        <ol class="rule-steps">
+          <li>One player (the guesser) turns their back so they cannot see the screen.</li>
+          <li>The rest of the team describes the <b>top cyan word</b> without saying any of the <b>4 red forbidden words</b>!</li>
+          <li>No rhyming or spelling allowed. If guessed correctly, award the team a point.</li>
+        </ol>
+      </div>
+
+      <div class="rule-block">
+        <div class="rule-title">🎭 Emoji Mystery</div>
+        <ol class="rule-steps">
+          <li>The screen displays emojis representing a Bollywood movie, brand, or office habit.</li>
+          <li>The first person in the room to shout the correct decoded answer gets the point!</li>
+          <li>Tap <b>REVEAL</b> to verify who was right.</li>
+        </ol>
+      </div>
     </div>
 
-    <button class="btn-hero" id="closeRulesBtn" style="margin-top: 14px; width: 100%;">Samajh Gaya! Let's Play 🚀</button>
+    <button class="btn-primary" id="closeRulesBtn" style="margin-top: 14px; width: 100%;">Got It! Let's Play 🚀</button>
   </div>
 </div>
 
 <script>
-// --- ROSTER & SYSTEM STATE ---
+// --- ROSTER & SCORE ENGINE ---
 let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
 let scores = { "Pranay": 0, "Rohan": 0, "Vivek": 0, "Gaus": 0 };
 
 const PALETTE = [
-  { c1: "#00d2ff", c2: "#0055ff" },
-  { c1: "#8b5cf6", c2: "#4c1d95" },
-  { c1: "#10b981", c2: "#064e3b" },
-  { c1: "#f59e0b", c2: "#78350f" },
-  { c1: "#ff4757", c2: "#7f1d1d" }
+  { c1: "#0284c7", c2: "#0f172a" },
+  { c1: "#6366f1", c2: "#1e1b4b" },
+  { c1: "#059669", c2: "#064e3b" },
+  { c1: "#d97706", c2: "#451a03" },
+  { c1: "#e11d48", c2: "#4c0519" }
 ];
 
-// Content Data
+// Content Databases
 const shayaris = [
   { l1: "Nazar lagi wheel par, dharak raha tha dil,", l2: "Botal uthao dost, aur chup chaap karo fill! 💧🚰" },
   { l1: "Slack par 'In a meeting' ka status hai purana,", l2: "Purifier bula raha hai, botal bhar ke aana! 🏃‍♂️💨" },
@@ -802,8 +820,10 @@ const rapidPrompts = [
   "Name 3 snacks ordered during office tea breaks!",
   "Name 3 Bollywood movies featuring rain or water!",
   "Name 3 apps you open as soon as you unlock your phone!",
-  "Name 3 things you keep on your work desk!",
-  "Name 3 shortcuts you press on your keyboard daily!"
+  "Name 3 things you always keep on your work desk!",
+  "Name 3 keyboard shortcuts you press every single day!",
+  "Name 3 food items you order on Zomato / Swiggy!",
+  "Name 3 things you do when the office Wi-Fi goes down!"
 ];
 
 const tabooCards = [
@@ -811,7 +831,8 @@ const tabooCards = [
   { word: "AIR CONDITIONER", forbidden: ["COLD", "REMOTE", "SUMMER", "ROOM"] },
   { word: "PRINTER", forbidden: ["PAPER", "INK", "SCAN", "XEROX"] },
   { word: "WATER BOTTLE", forbidden: ["PURIFIER", "REFILL", "FILTER", "THIRST"] },
-  { word: "SMARTPHONE", forbidden: ["CALL", "SCREEN", "BATTERY", "ANDROID"] }
+  { word: "SMARTPHONE", forbidden: ["CALL", "SCREEN", "BATTERY", "ANDROID"] },
+  { word: "METRO TRAIN", forbidden: ["STATION", "TOKEN", "DELHI", "TRACK"] }
 ];
 
 const emojiCards = [
@@ -819,10 +840,16 @@ const emojiCards = [
   { clue: "☕ 👀 😴", answer: "Monday Morning Coffee", cat: "Office Mood" },
   { clue: "3️⃣ 🤡 🎓", answer: "3 Idiots", cat: "Bollywood Movie" },
   { clue: "🍎 📱 💻", answer: "Apple Ecosystem", cat: "Tech Brand" },
-  { clue: "🍔 👑", answer: "Burger King", cat: "Food Brand" }
+  { clue: "🍔 👑", answer: "Burger King", cat: "Food Brand" },
+  { clue: "🏏 🇮🇳 🏆", answer: "Team India World Cup", cat: "Sports Event" }
 ];
 
-const imposterWords = ["Taj Mahal", "Samosa", "Water Purifier", "Keyboard", "Netflix", "Metro Train", "Chai", "Cricket Stadium"];
+const imposterDecks = [
+  { cat: "Indian Street Foods", words: ["Samosa", "Pani Puri", "Vada Pav", "Pav Bhaji", "Momos", "Dosa"] },
+  { cat: "Famous Indian Monuments", words: ["Taj Mahal", "India Gate", "Red Fort", "Gateway of India", "Qutub Minar"] },
+  { cat: "Office Break Items", words: ["Coffee Machine", "Water Purifier", "Microwave", "Snack Vending Machine", "Bean Bag"] },
+  { cat: "Daily Tech Apps", words: ["WhatsApp", "Instagram", "Slack", "Netflix", "YouTube", "Spotify"] }
+];
 
 // --- SOUND ENGINE (Web Audio API) ---
 let audioCtx = null;
@@ -862,7 +889,7 @@ function playWinFanfare() {
   });
 }
 
-// --- PARTICLE CONFETTI ---
+// --- CONFETTI SYSTEM ---
 const fxCanvas = document.getElementById("fxCanvas");
 const fxCtx = fxCanvas.getContext("2d");
 let particles = [];
@@ -871,7 +898,7 @@ function fireConfetti() {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
   particles = [];
-  const colors = ["#00d2ff", "#8b5cf6", "#10b981", "#f59e0b", "#ffffff"];
+  const colors = ["#38bdf8", "#8b5cf6", "#34d399", "#fbbf24", "#ffffff"];
   for (let i = 0; i < 90; i++) {
     particles.push({
       x: window.innerWidth / 2, y: window.innerHeight / 2,
@@ -895,7 +922,7 @@ function fireConfetti() {
   requestAnimationFrame(render);
 }
 
-// --- NAVIGATION SWITCHER ---
+// --- DOCK NAVIGATION ---
 document.querySelectorAll(".dock-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".dock-btn").forEach(b => b.classList.remove("active"));
@@ -905,10 +932,10 @@ document.querySelectorAll(".dock-btn").forEach(btn => {
   });
 });
 
-// --- WHEEL ENGINE ---
+// --- GAME 1: WATER DUTY WHEEL ---
 const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
-const pointerAssembly = document.getElementById("pointerAssembly");
+const wheelPointer = document.getElementById("wheelPointer");
 let rotation = 0;
 let isSpinning = false;
 let lastSlice = -1;
@@ -918,7 +945,6 @@ function drawWheel() {
   const slice = (Math.PI * 2) / roster.length;
   ctx.clearRect(0, 0, size, size);
 
-  // Deep Obsidian Base
   ctx.beginPath();
   ctx.arc(cx, cy, r + 14, 0, Math.PI * 2);
   ctx.fillStyle = "#0a1122";
@@ -933,19 +959,13 @@ function drawWheel() {
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, r, start, end);
     ctx.closePath();
-
-    const grad = ctx.createRadialGradient(cx, cy, 30, cx, cy, r);
-    grad.addColorStop(0, color.c1);
-    grad.addColorStop(0.8, color.c2);
-    grad.addColorStop(1, "#060912");
-    ctx.fillStyle = grad;
+    ctx.fillStyle = color.c1;
     ctx.fill();
 
     ctx.strokeStyle = "rgba(255,255,255,0.18)";
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Player Text
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(start + slice / 2);
@@ -953,20 +973,16 @@ function drawWheel() {
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
     ctx.font = "900 34px system-ui";
-    ctx.shadowColor = "rgba(0,0,0,0.85)";
-    ctx.shadowBlur = 8;
     ctx.fillText(roster[i], r - 55, 0);
     ctx.restore();
   }
 
-  // Metallic Bezel
   ctx.beginPath();
   ctx.arc(cx, cy, r + 2, 0, Math.PI * 2);
   ctx.lineWidth = 16;
-  ctx.strokeStyle = "#00d2ff";
+  ctx.strokeStyle = "#0ea5e9";
   ctx.stroke();
 
-  // Center Hub
   ctx.beginPath();
   ctx.arc(cx, cy, 54, 0, Math.PI * 2);
   ctx.fillStyle = "#0c1527";
@@ -1000,8 +1016,8 @@ document.getElementById("spinWheelBtn").addEventListener("click", () => {
     if (currSlice !== lastSlice && p < 0.98) {
       lastSlice = currSlice;
       playHapticTick();
-      pointerAssembly.classList.add("bump");
-      setTimeout(() => pointerAssembly.classList.remove("bump"), 40);
+      wheelPointer.classList.add("bump");
+      setTimeout(() => wheelPointer.classList.remove("bump"), 40);
     }
 
     if (p < 1) requestAnimationFrame(animate);
@@ -1022,81 +1038,145 @@ document.getElementById("spinWheelBtn").addEventListener("click", () => {
   requestAnimationFrame(animate);
 });
 
-// --- 5-SECOND PANIC ENGINE ---
-let panicInterval = null;
-const timerProgress = document.getElementById("timerProgress");
-const timerText = document.getElementById("timerText");
+// --- GAME 2: REALISTIC RAPID PANIC TIMER ---
+let selectedPanicDuration = 10;
+let panicRAF = null;
+let panicStartTime = null;
+let prepInterval = null;
 
-document.getElementById("startPanicBtn").addEventListener("click", () => {
+const timerDigits = document.getElementById("timerDigits");
+const timerSubLabel = document.getElementById("timerSubLabel");
+const timerRing = document.getElementById("timerRing");
+const panicPrompt = document.getElementById("panicPrompt");
+const startPanicBtn = document.getElementById("startPanicBtn");
+
+document.querySelectorAll(".preset-chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".preset-chip").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedPanicDuration = parseInt(btn.dataset.time, 10);
+    timerDigits.textContent = selectedPanicDuration;
+    timerSubLabel.textContent = "Seconds";
+    timerRing.style.strokeDashoffset = "0";
+    timerRing.style.stroke = "var(--cyan-400)";
+  });
+});
+
+startPanicBtn.addEventListener("click", () => {
   ensureAudio();
-  clearInterval(panicInterval);
-  document.getElementById("panicPrompt").textContent = rapidPrompts[Math.floor(Math.random() * rapidPrompts.length)];
-  
-  let count = 5;
-  timerText.textContent = count;
-  timerProgress.style.strokeDashoffset = "0";
-  timerProgress.style.stroke = "var(--primary)";
+  clearInterval(prepInterval);
+  cancelAnimationFrame(panicRAF);
 
-  const circumference = 283;
-  panicInterval = setInterval(() => {
-    count--;
-    timerText.textContent = count;
-    timerProgress.style.strokeDashoffset = (circumference - (count / 5) * circumference);
+  // 1. Pick a random prompt
+  panicPrompt.textContent = rapidPrompts[Math.floor(Math.random() * rapidPrompts.length)];
+  startPanicBtn.disabled = true;
 
-    if (count <= 2) timerProgress.style.stroke = "var(--accent-coral)";
-    playHapticTick(count === 0 ? 320 : 680);
+  // 2. Realistic 3-Second Preparation Countdown (allows player to read!)
+  let prepCount = 3;
+  timerSubLabel.textContent = "GET READY...";
+  timerDigits.textContent = prepCount;
+  timerRing.style.stroke = "var(--amber-400)";
+  timerRing.style.strokeDashoffset = "0";
+  playHapticTick(400);
 
-    if (count <= 0) {
-      clearInterval(panicInterval);
-      timerText.textContent = "⏰";
+  prepInterval = setInterval(() => {
+    prepCount--;
+    if (prepCount > 0) {
+      timerDigits.textContent = prepCount;
+      playHapticTick(400);
+    } else {
+      clearInterval(prepInterval);
+      startActualTimer();
     }
   }, 1000);
 });
+
+function startActualTimer() {
+  timerSubLabel.textContent = "SPEAK NOW!";
+  timerRing.style.stroke = "var(--cyan-400)";
+  panicStartTime = performance.now();
+  const totalMs = selectedPanicDuration * 1000;
+  const circumference = 283;
+  let lastSecondPlayed = -1;
+
+  function loop(now) {
+    const elapsed = now - panicStartTime;
+    const remainingMs = Math.max(0, totalMs - elapsed);
+    const progress = remainingMs / totalMs;
+
+    const remainingSec = Math.ceil(remainingMs / 1000);
+    timerDigits.textContent = remainingSec;
+    timerRing.style.strokeDashoffset = (circumference * (1 - progress));
+
+    if (remainingSec <= 3) timerRing.style.stroke = "var(--rose-400)";
+
+    if (remainingSec !== lastSecondPlayed && remainingSec > 0) {
+      lastSecondPlayed = remainingSec;
+      playHapticTick(remainingSec <= 3 ? 800 : 550);
+    }
+
+    if (remainingMs > 0) {
+      panicRAF = requestAnimationFrame(loop);
+    } else {
+      timerDigits.textContent = "⏰";
+      timerSubLabel.textContent = "TIME UP!";
+      startPanicBtn.disabled = false;
+      playHapticTick(250);
+    }
+  }
+  panicRAF = requestAnimationFrame(loop);
+}
 
 document.getElementById("passPanicBtn").addEventListener("click", () => {
   playWinFanfare();
   fireConfetti();
 });
 
-// --- THE IMPOSTER ENGINE ---
-let currentImposterWord = "";
-let imposterIndex = -1;
-let currentTurnIdx = 0;
-const flipCard = document.getElementById("flipCard");
+// --- GAME 3: THE IMPOSTER ---
+let currentSecretWord = "";
+let currentCategory = "";
+let imposterIdx = -1;
+let currentTurn = 0;
+const imposterCard = document.getElementById("imposterCard");
 
 function initImposterGame() {
-  currentImposterWord = imposterWords[Math.floor(Math.random() * imposterWords.length)];
-  imposterIndex = Math.floor(Math.random() * roster.length);
-  currentTurnIdx = 0;
-  flipCard.classList.remove("flipped");
+  const deck = imposterDecks[Math.floor(Math.random() * imposterDecks.length)];
+  currentCategory = deck.cat;
+  currentSecretWord = deck.words[Math.floor(Math.random() * deck.words.length)];
+  imposterIdx = Math.floor(Math.random() * roster.length);
+  currentTurn = 0;
+  imposterCard.classList.remove("flipped");
   updateImposterUI();
 }
 
 function updateImposterUI() {
-  if (currentTurnIdx >= roster.length) {
-    document.getElementById("imposterTurnHeader").textContent = "All players ready! Begin debate and vote!";
-    document.getElementById("imposterSecretRole").textContent = "🗣️ DISCUSS & VOTE!";
+  document.getElementById("imposterCategoryLabel").textContent = `Category: ${currentCategory}`;
+  if (currentTurn >= roster.length) {
+    document.getElementById("imposterProgress").textContent = "All Done!";
+    document.getElementById("imposterPassPlayer").textContent = "All players ready! Discuss & vote!";
+    document.getElementById("imposterWordSlot").textContent = "🗣️ START CLUE ROUND!";
     return;
   }
-  document.getElementById("imposterTurnHeader").textContent = `${roster[currentTurnIdx]}: Tap to view role`;
-  document.getElementById("imposterSecretRole").textContent = currentTurnIdx === imposterIndex ? "🕵️ YOU ARE THE IMPOSTER!" : `WORD: ${currentImposterWord}`;
-  flipCard.classList.remove("flipped");
+  document.getElementById("imposterProgress").textContent = `Player ${currentTurn + 1} / ${roster.length}`;
+  document.getElementById("imposterPassPlayer").textContent = `Pass phone to: ${roster[currentTurn]}`;
+  document.getElementById("imposterWordSlot").textContent = currentTurn === imposterIdx ? "🕵️ YOU ARE THE IMPOSTER!" : `WORD: ${currentSecretWord}`;
+  imposterCard.classList.remove("flipped");
 }
 
-flipCard.addEventListener("click", () => {
+imposterCard.addEventListener("click", () => {
   ensureAudio();
-  flipCard.classList.toggle("flipped");
+  imposterCard.classList.toggle("flipped");
 });
 
-document.getElementById("nextImposterTurnBtn").addEventListener("click", () => {
-  if (currentTurnIdx < roster.length) {
-    currentTurnIdx++;
+document.getElementById("nextImposterBtn").addEventListener("click", () => {
+  if (currentTurn < roster.length) {
+    currentTurn++;
     updateImposterUI();
   }
 });
 document.getElementById("resetImposterBtn").addEventListener("click", initImposterGame);
 
-// --- TABOO ENGINE ---
+// --- GAME 4: TABOO ---
 function loadTabooCard() {
   const card = tabooCards[Math.floor(Math.random() * tabooCards.length)];
   document.getElementById("tabooWord").textContent = card.word;
@@ -1115,17 +1195,17 @@ document.getElementById("nextTabooBtn").addEventListener("click", () => {
   loadTabooCard();
 });
 
-// --- EMOJI ENGINE ---
+// --- GAME 5: EMOJI MYSTERY ---
 let emojiIdx = 0;
 function loadEmojiCard() {
   const card = emojiCards[emojiIdx % emojiCards.length];
-  document.getElementById("emojiCat").textContent = `Category: ${card.cat}`;
+  document.getElementById("emojiCategory").textContent = `Category: ${card.cat}`;
   document.getElementById("emojiClue").textContent = card.clue;
   document.getElementById("emojiAnswer").textContent = `Answer: ${card.answer}`;
   document.getElementById("emojiAnswer").style.display = "none";
 }
 document.getElementById("revealEmojiBtn").addEventListener("click", () => {
-  document.getElementById("emojiAnswer").style.display = "block";
+  document.getElementById("emojiAnswer").style.display = "inline-block";
   playWinFanfare();
 });
 document.getElementById("nextEmojiBtn").addEventListener("click", () => {
@@ -1150,17 +1230,11 @@ function renderTags() {
 function renderLeaderboard(highlight = null) {
   const grid = document.getElementById("scoreboardGrid");
   grid.innerHTML = "";
-  
-  // Sort roster by score descending
-  const sorted = [...roster].sort((a, b) => (scores[b] || 0) - (scores[a] || 0));
-
-  sorted.forEach((n, rank) => {
+  roster.forEach(n => {
     const card = document.createElement("div");
-    card.className = "player-pill-card" + (n === highlight ? " highlight" : "");
-    const medal = rank === 0 ? "🥇" : rank === 1 ? "🥈" : rank === 2 ? "🥉" : `#${rank + 1}`;
+    card.className = "score-pill-card" + (n === highlight ? " highlight" : "");
     card.innerHTML = `
-      <div class="p-rank">${medal}</div>
-      <div class="p-name">${n}</div>
+      <div style="font-size: 11px; font-weight: 800; color: #fff;">${n}</div>
       <div class="p-score">${scores[n] || 0}</div>
     `;
     grid.appendChild(card);
@@ -1187,23 +1261,23 @@ document.getElementById("tagsList").addEventListener("click", e => {
   }
 });
 
-// Modal Actions
+// Modals
 document.getElementById("closeShayariBtn").addEventListener("click", () => {
   document.getElementById("shayariModal").classList.remove("open");
 });
+document.getElementById("openRulesBtn").addEventListener("click", () => {
+  document.getElementById("rulesModal").classList.add("open");
+});
+document.getElementById("closeRulesBtn").addEventListener("click", () => {
+  document.getElementById("rulesModal").classList.remove("open");
+});
+
 document.getElementById("copyShayariBtn").addEventListener("click", () => {
   const text = `🚨 *WATER DUTY SHAYARI* 🚨\nTarget: ${document.getElementById("winnerName").textContent}\n\n"${document.getElementById("shayariLine1").textContent}\n${document.getElementById("shayariLine2").textContent}"`;
   navigator.clipboard.writeText(text).then(() => {
     document.getElementById("copyShayariBtn").textContent = "Copied! 😂";
     setTimeout(() => { document.getElementById("copyShayariBtn").textContent = "Copy 📋"; }, 2000);
   });
-});
-
-document.getElementById("openRulesBtn").addEventListener("click", () => {
-  document.getElementById("rulesModal").classList.add("open");
-});
-document.getElementById("closeRulesBtn").addEventListener("click", () => {
-  document.getElementById("rulesModal").classList.remove("open");
 });
 
 // Init on load
