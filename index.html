@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BreakRoom Live - Studio Office Party Hub</title>
+<title>BreakRoom Live - Studio Party Hub</title>
 <style>
   :root {
     --bg-main: #070a13;
@@ -301,7 +301,7 @@
   }
   .wheel-pointer.bump { transform: translateX(-50%) rotate(-24deg) scale(1.12); }
 
-  /* 🔗 The Missing Link (Procedural + Custom) */
+  /* 🔗 The Missing Link (Untimed & Infinite Generator) */
   .clue-badge-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -313,7 +313,7 @@
     background: rgba(14, 165, 233, 0.1);
     border: 1px solid rgba(14, 165, 233, 0.3);
     color: #fff;
-    padding: 12px 10px;
+    padding: 14px 10px;
     border-radius: 14px;
     font-weight: 800;
     font-size: 15px;
@@ -331,26 +331,6 @@
     width: 100%;
     max-width: 380px;
     line-height: 1.45;
-  }
-  .creator-panel {
-    width: 100%;
-    max-width: 360px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px dashed var(--border-highlight);
-    border-radius: 16px;
-    padding: 12px;
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .creator-input {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 8px 10px;
-    color: #fff;
-    font-size: 13px;
-    outline: none;
   }
 
   /* 🤔 Odd One Out */
@@ -651,10 +631,6 @@
     align-items: center;
     gap: 2px;
   }
-  .score-pill-card.highlight {
-    border-color: var(--cyan-400);
-    box-shadow: 0 0 16px rgba(14, 165, 233, 0.3);
-  }
   .p-score { font-size: 20px; font-weight: 900; color: var(--amber-400); }
 
   /* Modals */
@@ -769,8 +745,8 @@
   <section class="game-view" id="view-link">
     <div class="stage-card">
       <div style="display:flex; justify-content:space-between; width:100%;">
-        <span style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan-400);" id="linkSourceLabel">What connects all 4 items?</span>
-        <span style="font-size:10px; color:var(--amber-400); font-weight:800;" id="linkModeTag">Procedural Mode ⚡</span>
+        <span style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan-400);">What connects all 4 items?</span>
+        <span style="font-size:10px; color:var(--amber-400); font-weight:800;" id="linkComboBadge">Dynamic Permutations Active ⚡</span>
       </div>
 
       <div class="clue-badge-grid" id="linkCluesGrid"></div>
@@ -779,17 +755,6 @@
       <div style="display: flex; gap: 8px; width: 100%; max-width: 360px;">
         <button class="btn-secondary" id="revealLinkBtn" style="flex: 1;">REVEAL LINK 👁️</button>
         <button class="btn-primary" id="nextLinkBtn" style="flex: 1.3;">NEXT PUZZLE ➡️</button>
-      </div>
-
-      <button class="btn-secondary" id="toggleCreatorBtn" style="width:100%; max-width:360px; font-size:12px; padding:9px;">
-        ✍️ Add Custom Team Puzzle
-      </button>
-
-      <div class="creator-panel" id="creatorPanel">
-        <div style="font-size:11px; font-weight:800; color:var(--cyan-400);">CREATE CUSTOM CHALLENGE</div>
-        <input type="text" id="customWords" class="creator-input" placeholder="4 Clues: e.g. Chai, Samosa, 4PM, Balcony">
-        <input type="text" id="customAnswer" class="creator-input" placeholder="The Link: e.g. Daily Break Routine">
-        <button class="btn-primary" id="saveCustomBtn" style="padding:10px; font-size:12px;">Save & Play Now 🚀</button>
       </div>
     </div>
   </section>
@@ -1002,7 +967,7 @@
         <ol class="rule-steps">
           <li>Look at all 4 clue cards on screen.</li>
           <li>Brainstorm as a group: what single theme, word, or fact connects all four?</li>
-          <li>Tap <b>REVEAL LINK</b> once everyone has made their guesses. You can also create your own custom puzzles!</li>
+          <li>Tap <b>REVEAL LINK</b> once everyone has made their guesses. Puzzles dynamically generate from hundreds of combinations!</li>
         </ol>
       </div>
 
@@ -1097,62 +1062,118 @@ const shayaris = [
   { l1: "Chair se chipak ke baithe the janaab-e-aali,", l2: "Utho botal bharo jaldi, desk pe hai sab khali! 🪑✨" }
 ];
 
-// --- PROCEDURAL TAGGED MATRIX FOR MISSING LINK ---
-const taggedDictionary = [
-  { word: "Bat", tags: ["flying", "superhero", "night", "mammal", "cricket"] },
-  { word: "Spider", tags: ["superhero", "web", "eight-legs", "bugs"] },
-  { word: "Iron", tags: ["element", "metal", "superhero", "gym", "laundry"] },
-  { word: "Mercury", tags: ["element", "planet", "liquid-metal", "thermometer", "solar-system"] },
-  { word: "Mars", tags: ["planet", "red", "solar-system", "chocolate"] },
-  { word: "Venus", tags: ["planet", "goddess", "solar-system", "tennis"] },
-  { word: "Jupiter", tags: ["planet", "giant", "solar-system", "scooter"] },
-  { word: "Chai", tags: ["beverage", "hot", "office-break", "indian-street", "morning"] },
-  { word: "Coffee", tags: ["beverage", "hot", "office-break", "caffeine", "morning"] },
-  { word: "Samosa", tags: ["indian-street", "triangle", "office-break", "fried", "snack"] },
-  { word: "Pani Puri", tags: ["indian-street", "round", "spicy", "water", "snack"] },
-  { word: "Dosa", tags: ["south-india", "crispy", "snack", "fermented", "breakfast"] },
-  { word: "Idli", tags: ["south-india", "round", "steamed", "breakfast", "white"] },
-  { word: "Cheetah", tags: ["fast", "cat-family", "animal", "spotted", "safari"] },
-  { word: "Falcon", tags: ["fast", "flying", "bird", "predator", "superhero"] },
-  { word: "Bullet Train", tags: ["fast", "transport", "japan", "tracks"] },
-  { word: "Ferrari", tags: ["fast", "car", "red", "luxury", "italian"] },
-  { word: "Apple", tags: ["fruit", "tech", "red", "edible", "healthy"] },
-  { word: "Blackberry", tags: ["fruit", "tech", "edible", "keyboard"] },
-  { word: "Amazon", tags: ["tech", "rainforest", "river", "ecommerce"] },
-  { word: "Twitter (X)", tags: ["tech", "bird", "social-media", "blue"] },
-  { word: "Subway", tags: ["food-chain", "metro-train", "underground", "sandwich"] }
+// --- MASSIVELY EXPANDED PROCEDURAL TAGGED MATRIX (HUNDREDS OF COMBINATIONS) ---
+const missingLinkCategories = [
+  {
+    theme: "Superheroes & Comic Legends",
+    link: "Prefixes or names associated with Comic Superheroes / Powers!",
+    words: ["Spider", "Bat", "Iron", "Ant", "Wonder", "Super", "Aqua", "Cat", "Flash", "Thor", "Falcon", "Hulk"]
+  },
+  {
+    theme: "Indian Street Snacks & Chaat",
+    link: "Iconic Indian street food & evening tea snack delicacies!",
+    words: ["Samosa", "Pani Puri", "Vada Pav", "Pav Bhaji", "Bhel Puri", "Sev Puri", "Dahi Vada", "Kachori", "Aloo Tikki", "Momos", "Dosa"]
+  },
+  {
+    theme: "Cricket & Sports Legends",
+    link: "Core terms, positions & phrases used in Cricket!",
+    words: ["Wicket", "Boundary", "Yorker", "Googly", "Duck", "Century", "Pitch", "Stump", "Silly Point", "Maiden", "Spinner"]
+  },
+  {
+    theme: "Solar System & Astronomy",
+    link: "Celestial bodies, planets & objects in our Solar System!",
+    words: ["Mercury", "Mars", "Venus", "Jupiter", "Saturn", "Neptune", "Pluto", "Asteroid", "Comet", "Meteor", "Eclipse"]
+  },
+  {
+    theme: "Morning & Office Beverages",
+    link: "Popular hot / cold beverages enjoyed at work & cafes!",
+    words: ["Chai", "Filter Coffee", "Green Tea", "Espresso", "Hot Chocolate", "Cappuccino", "Latte", "Black Coffee", "Lemon Tea"]
+  },
+  {
+    theme: "World Speed Records",
+    link: "Things world-famous for extreme record-breaking speed!",
+    words: ["Cheetah", "Bullet Train", "Falcon", "Ferrari", "Formula 1", "Concorde", "Lightning", "Usain Bolt", "Jet Plane"]
+  },
+  {
+    theme: "Famous Indian Monuments",
+    link: "Famous historical Indian architectural wonders & monuments!",
+    words: ["Taj Mahal", "Red Fort", "Qutub Minar", "Gateway of India", "Hawa Mahal", "Charminar", "India Gate", "Sun Temple"]
+  },
+  {
+    theme: "South Indian Food Delicacies",
+    link: "Traditional South Indian breakfast & dining delicacies!",
+    words: ["Dosa", "Idli", "Medu Vada", "Uttapam", "Appam", "Puttu", "Pongal", "Payasam", "Rasam"]
+  },
+  {
+    theme: "Tech Titans & Platforms",
+    link: "Global digital platforms & technology ecosystem giants!",
+    words: ["Apple", "Amazon", "Google", "Microsoft", "Meta", "Netflix", "Spotify", "Twitter", "Adobe", "Intel"]
+  },
+  {
+    theme: "Things with Wheels / Transport",
+    link: "Common forms of wheeled transport & vehicles!",
+    words: ["Bicycle", "Skateboard", "Scooter", "Monorail", "Tractor", "Auto Rickshaw", "Metro", "Bus", "Tram"]
+  },
+  {
+    theme: "Things with Keys / Combinations",
+    link: "Things operated with keys, passwords, or keyboard combinations!",
+    words: ["Piano", "Password", "Safe", "Keyboard", "Padlock", "Map Legend", "Car Ignition", "Locker"]
+  },
+  {
+    theme: "Things That Melt Under Heat",
+    link: "Items that change from solid to liquid when heated!",
+    words: ["Chocolate", "Candle Wax", "Glacier", "Butter", "Cheese", "Iceberg", "Plastic", "Ice Cream"]
+  },
+  {
+    theme: "Things with Rings",
+    link: "Objects or entities characterized by circular rings!",
+    words: ["Saturn", "Tree Trunk", "Marriage", "Boxing Arena", "Olympic Flag", "Telephone Bell", "Onion"]
+  },
+  {
+    theme: "Words Associated with 'King'",
+    link: "Things, titles & icons directly associated with Kings / Royalty!",
+    words: ["Lion", "Chess", "Crown", "Jungle", "Royal", "Deck of Cards", "Throne", "Palace"]
+  },
+  {
+    theme: "Items in a Medical Clinic",
+    link: "Tools, accessories & supplies found in a doctor's examination room!",
+    words: ["Stethoscope", "Syringe", "Thermometer", "Bandage", "Prescription", "X-Ray", "White Coat", "First Aid"]
+  },
+  {
+    theme: "Things with Wings (Non-Birds)",
+    link: "Flying beings or machines with wings that are NOT birds!",
+    words: ["Airplane", "Butterfly", "Angel", "Dragon", "Pegasus", "Flying Squirrel", "Hang Glider", "Drone"]
+  },
+  {
+    theme: "Words that Follow 'Black'",
+    link: "Common words/terms that directly follow the prefix 'Black'!",
+    words: ["Board", "Berry", "Box", "Hole", "Jack", "Belt", "Pepper", "Mail", "Swan"]
+  },
+  {
+    theme: "Things with Strings",
+    link: "Instruments, tools & objects operating using strings / chords!",
+    words: ["Guitar", "Violin", "Kite", "Puppet", "Bow & Arrow", "Shoelace", "Tennis Racket", "Yo-Yo"]
+  }
 ];
 
-const categoryDescriptions = {
-  "superhero": "Prefixes or names associated with Comic Superheroes!",
-  "solar-system": "Celestial bodies / Planets in our Solar System!",
-  "office-break": "Classic items found during Indian Office breaks!",
-  "indian-street": "Popular street food items across India!",
-  "fast": "Things world-famous for record-breaking Speed!",
-  "tech": "Major global Technology Brands & Platforms!",
-  "south-india": "Iconic traditional South Indian Delicacies!",
-  "beverage": "Popular hot morning / work beverages!"
-};
-
-let customPuzzles = JSON.parse(localStorage.getItem("custom_breakroom_puzzles") || "[]");
-let seenTags = [];
+let usedCategoryIndices = [];
 
 const oddOneOutDecks = [
   { 
     items: ["Penguin", "Refrigerator", "Igloo", "Ice Cream"], 
-    hints: "• Penguin (only living thing)\n• Igloo (only architectural shelter)\n• Ice Cream (only sweet edible dessert)\n• Refrigerator (only machine powered by electricity)" 
+    hints: "• Penguin (only living animal)\n• Igloo (only architectural dwelling)\n• Ice Cream (only sweet edible dessert)\n• Refrigerator (only machine running on electricity)" 
   },
   { 
     items: ["Spider", "Octopus", "Scorpion", "Crab"], 
-    hints: "• Octopus (only creature living in deep water)\n• Spider (only one making webs)\n• Scorpion (only one with venomous stinging tail)\n• Crab (only one commonly cooked in curry)" 
+    hints: "• Octopus (only creature living in ocean waters)\n• Spider (only one making webs)\n• Scorpion (only one with venomous stinging tail)\n• Crab (only one with a hard calcified shell cooked in curry)" 
   },
   { 
     items: ["Guitar", "Violin", "Piano", "Flute"], 
-    hints: "• Flute (only wind instrument with no strings)\n• Piano (only percussion-key instrument)\n• Guitar (only one commonly played with a plectrum)" 
+    hints: "• Flute (only wind instrument with zero strings)\n• Piano (only key percussion hammer instrument)\n• Guitar (only one commonly played with a plectrum)" 
   },
   { 
     items: ["Samosa", "Burger", "Pizza", "Dosa"], 
-    hints: "• Dosa (only fermented breakfast food)\n• Samosa (only deep-fried street triangular snack)\n• Pizza (only round oven-baked dish)" 
+    hints: "• Dosa (only fermented traditional breakfast food)\n• Samosa (only deep-fried street triangular snack)\n• Pizza (only round oven-baked dish)" 
   }
 ];
 
@@ -1160,27 +1181,27 @@ const factOrFictionDecks = [
   { 
     statement: "Bananas are curved because they grow upwards towards the sun against gravity (Negative Geotropism).", 
     isFact: true, 
-    detail: "FACT! Bananas undergo 'negative geotropism'. Instead of growing down, they curve upwards towards the light!" 
+    detail: "FACT! Bananas undergo 'negative geotropism'. Instead of growing down, they curve upwards towards sunlight!" 
   },
   { 
     statement: "Wombats produce cube-shaped poop so their territory markers don't roll away from rocks.", 
     isFact: true, 
-    detail: "FACT! Wombats are the only known animals in the world to produce cubic poop!" 
+    detail: "FACT! Wombats are the only known animals on Earth to produce cubic poop!" 
   },
   { 
     statement: "The Great Wall of China is easily visible to the naked eye from the surface of the Moon.", 
     isFact: false, 
-    detail: "FICTION! This is a famous myth. Astronauts have confirmed it is virtually invisible without high-powered cameras." 
+    detail: "FICTION! This is an urban myth. Astronauts have confirmed it is virtually invisible without high-magnification lenses." 
   },
   { 
     statement: "Cotton candy was co-invented by a practicing dentist named William Morrison in 1897.", 
     isFact: true, 
-    detail: "FACT! Dentist William Morrison co-patented the electric candy machine originally named 'Fairy Floss'!" 
+    detail: "FACT! Dentist William Morrison co-patented the electric candy machine originally called 'Fairy Floss'!" 
   },
   { 
     statement: "Goldfish only have a memory span of exactly three seconds.", 
     isFact: false, 
-    detail: "FICTION! Scientific research proves goldfish can remember things for months and can even be trained." 
+    detail: "FICTION! Scientific research shows goldfish remember complex routes for months and can be conditioned to sound!" 
   }
 ];
 
@@ -1425,31 +1446,34 @@ document.getElementById("spinWheelBtn").addEventListener("click", () => {
   requestAnimationFrame(animate);
 });
 
-// --- 2. PROCEDURAL MISSING LINK ---
+// --- 2. PROCEDURAL MISSING LINK ENGINE ---
 function generateProceduralLink() {
-  const availableTags = Object.keys(categoryDescriptions).filter(t => !seenTags.includes(t));
-  const activeTags = availableTags.length > 0 ? availableTags : Object.keys(categoryDescriptions);
-  if (availableTags.length === 0) seenTags = [];
+  if (usedCategoryIndices.length >= missingLinkCategories.length) {
+    usedCategoryIndices = [];
+  }
 
-  const selectedTag = activeTags[Math.floor(Math.random() * activeTags.length)];
-  seenTags.push(selectedTag);
+  const availableIndices = missingLinkCategories
+    .map((_, i) => i)
+    .filter(i => !usedCategoryIndices.includes(i));
 
-  const matchingWords = taggedDictionary.filter(item => item.tags.includes(selectedTag));
-  const shuffled = [...matchingWords].sort(() => 0.5 - Math.random());
-  const selectedFour = shuffled.slice(0, 4).map(i => i.word);
+  const chosenIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+  usedCategoryIndices.push(chosenIndex);
 
-  return { clues: selectedFour, link: categoryDescriptions[selectedTag], type: "Procedural" };
+  const category = missingLinkCategories[chosenIndex];
+  
+  // Shuffle words inside this pool and pick 4 distinct items
+  const shuffledWords = [...category.words].sort(() => 0.5 - Math.random());
+  const selectedFour = shuffledWords.slice(0, 4);
+
+  return {
+    clues: selectedFour,
+    link: category.link,
+    theme: category.theme
+  };
 }
 
 function loadLinkPuzzle() {
-  let puzzle;
-  if (customPuzzles.length > 0 && Math.random() > 0.6) {
-    puzzle = customPuzzles[Math.floor(Math.random() * customPuzzles.length)];
-    document.getElementById("linkModeTag").textContent = "Teammate Custom ✍️";
-  } else {
-    puzzle = generateProceduralLink();
-    document.getElementById("linkModeTag").textContent = "Procedural Combination ⚡";
-  }
+  const puzzle = generateProceduralLink();
 
   const grid = document.getElementById("linkCluesGrid");
   grid.innerHTML = "";
@@ -1459,6 +1483,7 @@ function loadLinkPuzzle() {
     d.textContent = clue;
     grid.appendChild(d);
   });
+  
   const box = document.getElementById("linkAnswerBox");
   box.style.display = "none";
   box.innerHTML = `<b>🔗 THE CONNECTION:</b><br>${puzzle.link}`;
@@ -1470,43 +1495,6 @@ document.getElementById("revealLinkBtn").addEventListener("click", () => {
   document.getElementById("linkAnswerBox").style.display = "block";
 });
 document.getElementById("nextLinkBtn").addEventListener("click", loadLinkPuzzle);
-
-document.getElementById("toggleCreatorBtn").addEventListener("click", () => {
-  const panel = document.getElementById("creatorPanel");
-  panel.style.display = panel.style.display === "flex" ? "none" : "flex";
-});
-
-document.getElementById("saveCustomBtn").addEventListener("click", () => {
-  const raw = document.getElementById("customWords").value.trim();
-  const ans = document.getElementById("customAnswer").value.trim();
-  const words = raw.split(",").map(w => w.trim()).filter(w => w.length > 0);
-
-  if (words.length !== 4 || ans.length === 0) {
-    alert("Please enter exactly 4 comma-separated clue words and a valid connection answer!");
-    return;
-  }
-
-  const customObj = { clues: words, link: ans, type: "Custom" };
-  customPuzzles.push(customObj);
-  localStorage.setItem("custom_breakroom_puzzles", JSON.stringify(customPuzzles));
-
-  document.getElementById("customWords").value = "";
-  document.getElementById("customAnswer").value = "";
-  document.getElementById("creatorPanel").style.display = "none";
-
-  const grid = document.getElementById("linkCluesGrid");
-  grid.innerHTML = "";
-  words.forEach(clue => {
-    const d = document.createElement("div");
-    d.className = "clue-badge";
-    d.textContent = clue;
-    grid.appendChild(d);
-  });
-  const box = document.getElementById("linkAnswerBox");
-  box.style.display = "none";
-  box.innerHTML = `<b>🔗 THE CONNECTION:</b><br>${ans}`;
-  document.getElementById("linkModeTag").textContent = "Teammate Custom ✍️";
-});
 
 // --- 3. ODD ONE OUT ---
 let oddIdx = 0;
