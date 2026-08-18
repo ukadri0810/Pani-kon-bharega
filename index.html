@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HydraSpin - Office Hydration Duty</title>
+<title>BreakRoom Lounge - Office Group Party Games</title>
 <style>
   :root {
     --bg-base: #060913;
-    --bg-surface: rgba(15, 23, 42, 0.75);
+    --bg-surface: rgba(15, 23, 42, 0.82);
     --surface-border: rgba(255, 255, 255, 0.1);
     --primary: #38bdf8;
     --primary-glow: rgba(56, 189, 248, 0.35);
@@ -25,137 +25,88 @@
     margin: 0;
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-    background: radial-gradient(circle at 50% 10%, #111d38 0%, #080e1e 50%, var(--bg-base) 100%);
+    background: radial-gradient(circle at 50% 5%, #131f3b 0%, #090e1c 50%, var(--bg-base) 100%);
     color: var(--text-primary);
-    padding: 16px;
+    padding: 16px 12px 40px;
     overflow-x: hidden;
   }
 
-  .app-stage {
-    width: min(100%, 520px);
+  /* Header & Nav */
+  .app-header {
+    width: min(100%, 640px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    position: relative;
-    z-index: 2;
+    gap: 12px;
+    margin-bottom: 12px;
   }
 
-  /* Header */
   .brand-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 14px;
+    padding: 4px 14px;
     border-radius: 99px;
     background: rgba(56, 189, 248, 0.08);
     border: 1px solid rgba(56, 189, 248, 0.25);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--primary);
   }
 
-  h1 {
-    margin: 0;
-    font-size: clamp(24px, 5.5vw, 34px);
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-  }
-
-  /* Mode Segmented Control */
-  .mode-switch {
+  .game-nav {
     display: flex;
+    overflow-x: auto;
     background: rgba(10, 16, 30, 0.85);
     border: 1px solid var(--surface-border);
     padding: 4px;
-    border-radius: 14px;
+    border-radius: 16px;
     width: 100%;
-    max-width: 400px;
     gap: 4px;
-    backdrop-filter: blur(12px);
+    scrollbar-width: none;
   }
+  .game-nav::-webkit-scrollbar { display: none; }
 
-  .mode-tab {
+  .nav-btn {
     flex: 1;
+    white-space: nowrap;
     border: none;
     background: transparent;
     color: var(--text-secondary);
-    padding: 9px 12px;
-    border-radius: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .mode-tab.active {
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(99, 102, 241, 0.2));
+  .nav-btn.active {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.25));
     border: 1px solid rgba(56, 189, 248, 0.4);
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   }
 
-  /* Match HUD */
-  .series-hud {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--bg-surface);
-    border: 1px solid var(--surface-border);
-    padding: 9px 16px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .series-pill {
-    background: rgba(245, 158, 11, 0.15);
-    color: var(--accent-amber);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    padding: 2px 10px;
-    border-radius: 20px;
-  }
-
-  .btn-reset {
-    background: transparent;
-    border: 1px solid var(--surface-border);
-    color: var(--text-secondary);
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-reset:hover { color: #fff; border-color: var(--primary); }
-
-  /* Roster Input */
+  /* Roster Bar */
   .roster-card {
-    width: 100%;
+    width: min(100%, 640px);
     background: var(--bg-surface);
     border: 1px solid var(--surface-border);
     backdrop-filter: blur(16px);
-    border-radius: 14px;
-    padding: 10px 12px;
+    border-radius: 16px;
+    padding: 10px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  .roster-input-row {
-    display: flex;
-    gap: 8px;
-  }
+  .roster-input-row { display: flex; gap: 8px; }
 
   .roster-input {
     flex: 1;
@@ -168,7 +119,6 @@
     outline: none;
     transition: border-color 0.2s;
   }
-
   .roster-input:focus { border-color: var(--primary); }
 
   .add-btn {
@@ -180,15 +130,13 @@
     font-weight: 800;
     font-size: 13px;
     cursor: pointer;
-    transition: transform 0.15s;
   }
-  .add-btn:active { transform: scale(0.96); }
 
   .tags-list {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-height: 52px;
+    max-height: 48px;
     overflow-y: auto;
   }
 
@@ -202,22 +150,97 @@
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
-    color: #e2e8f0;
   }
 
-  .tag-remove {
-    cursor: pointer;
-    opacity: 0.5;
-    transition: opacity 0.15s;
-  }
+  .tag-remove { cursor: pointer; opacity: 0.5; }
   .tag-remove:hover { opacity: 1; color: var(--accent-rose); }
 
-  /* Wheel Stage */
+  /* Game Containers */
+  .game-container {
+    width: min(100%, 640px);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    animation: fadeIn 0.3s ease;
+  }
+  .game-container.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .game-card {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--surface-border);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    position: relative;
+  }
+
+  /* How To Play Accordion Box */
+  .rules-banner {
+    width: 100%;
+    background: rgba(10, 16, 30, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .rules-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--primary);
+    background: rgba(56, 189, 248, 0.05);
+    user-select: none;
+  }
+
+  .rules-header:hover { background: rgba(56, 189, 248, 0.1); }
+
+  .rules-content {
+    display: none;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    text-align: left;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .rules-content.open { display: block; }
+
+  .rules-list {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rules-list li span {
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  /* Wheel Styling */
   .wheel-viewport {
     position: relative;
-    width: min(84vw, 380px);
+    width: min(84vw, 360px);
     aspect-ratio: 1;
-    margin: 2px 0;
+    margin: 4px 0;
   }
 
   .halo-ring {
@@ -235,10 +258,9 @@
     z-index: 2;
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,0.7));
   }
 
-  /* Precision Indicator */
   .pointer-mech {
     position: absolute;
     top: -8px;
@@ -249,184 +271,152 @@
     z-index: 10;
     pointer-events: none;
     transform-origin: 50% 10px;
-    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7));
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.7));
     transition: transform 0.05s ease-out;
   }
+  .pointer-mech.bump { transform: translateX(-50%) rotate(-24deg) scale(1.12); }
 
-  .pointer-mech.bump {
-    transform: translateX(-50%) rotate(-24deg) scale(1.12);
-  }
-
-  /* Action Controls */
-  .action-wrap {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .spin-btn {
+  /* Buttons */
+  .primary-btn {
     position: relative;
     width: 100%;
-    max-width: 350px;
-    padding: 16px 24px;
+    max-width: 320px;
+    padding: 14px 22px;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     background: linear-gradient(135deg, var(--primary) 0%, #0284c7 50%, var(--accent-indigo) 100%);
     color: #040814;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 900;
     letter-spacing: 0.8px;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 10px 30px var(--primary-glow), inset 0 2px 2px rgba(255, 255, 255, 0.6);
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: hidden;
+    box-shadow: 0 10px 25px var(--primary-glow);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+  .primary-btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.02); }
+  .primary-btn:active:not(:disabled) { transform: translateY(2px) scale(0.98); }
+  .primary-btn:disabled { filter: grayscale(0.8); opacity: 0.5; cursor: not-allowed; }
 
-  .spin-btn::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transform: skewX(-20deg);
-    animation: shine 3.5s infinite;
-  }
-
-  @keyframes shine {
-    20%, 100% { left: 160%; }
-  }
-
-  .spin-btn:hover:not(:disabled) {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 14px 40px rgba(56, 189, 248, 0.55);
-  }
-
-  .spin-btn:active:not(:disabled) {
-    transform: translateY(2px) scale(0.98);
-  }
-
-  .spin-btn:disabled {
-    filter: grayscale(0.8);
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .status-text {
-    font-size: 12px;
+  .secondary-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--surface-border);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
-    min-height: 16px;
+    cursor: pointer;
   }
 
-  /* Leaderboard Grid */
+  /* 5-Sec HUD */
+  .timer-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: 900;
+    border: 5px solid var(--primary);
+    box-shadow: 0 0 25px var(--primary-glow);
+    animation: pulse 1s infinite alternate;
+  }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+  .prompt-display {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #ffffff;
+    min-height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Taboo Box */
+  .taboo-word {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .forbidden-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    max-width: 280px;
+  }
+  .forbidden-item {
+    background: rgba(244, 63, 94, 0.12);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+    color: #fda4af;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: line-through;
+  }
+
+  /* Emoji Box */
+  .emoji-clue {
+    font-size: 54px;
+    letter-spacing: 6px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Imposter Box */
+  .secret-word-card {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(8, 12, 24, 0.6);
+    border: 1px solid var(--surface-border);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  /* Leaderboards */
   .points-board {
     width: 100%;
     background: var(--bg-surface);
     border: 1px solid var(--surface-border);
-    backdrop-filter: blur(16px);
     border-radius: 16px;
     padding: 12px 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .board-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--primary);
-  }
-
-  .player-point-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 8px;
   }
-
+  .player-point-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+  }
   .player-point-card {
-    position: relative;
     background: rgba(10, 16, 30, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
-    padding: 10px 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 8px;
+    text-align: center;
   }
+  .p-score { font-size: 20px; font-weight: 900; color: var(--accent-amber); }
 
-  .player-point-card.highlight {
-    border-color: var(--primary);
-    transform: scale(1.04);
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
-  }
-
-  .p-name {
-    font-size: 12px;
-    font-weight: 800;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-
-  .p-score {
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--accent-amber);
-    line-height: 1;
-  }
-
-  .p-bar-bg {
-    width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 3px;
-  }
-
-  .p-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--accent-indigo));
-    width: 0%;
-    transition: width 0.4s ease;
-  }
-
-  .point-float {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--primary);
-    font-weight: 900;
-    font-size: 17px;
-    pointer-events: none;
-    animation: floatUp 0.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
-    text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
-  }
-
-  @keyframes floatUp {
-    0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; }
-    30% { transform: translate(-50%, -15px) scale(1.3); opacity: 1; }
-    100% { transform: translate(-50%, -35px) scale(1); opacity: 0; }
-  }
-
-  /* Shayari Dialog Modal */
+  /* Modals */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(3, 6, 14, 0.85);
+    background: rgba(3, 6, 14, 0.88);
     backdrop-filter: blur(14px);
     z-index: 100;
     display: flex;
@@ -435,13 +425,9 @@
     padding: 20px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
-  .modal-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
 
   .shayari-card {
     width: min(100%, 460px);
@@ -450,782 +436,603 @@
     border-radius: 24px;
     padding: 28px 22px;
     text-align: center;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.15);
-    transform: scale(0.85) translateY(25px);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .modal-overlay.open .shayari-card {
-    transform: scale(1) translateY(0);
-  }
-
-  .victim-avatar {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 10px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--accent-indigo));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
-  }
-
-  .victim-name {
-    font-size: 28px;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    color: #fff;
-    margin: 0 0 2px;
-  }
-
-  .victim-badge {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 50px;
-    background: rgba(56, 189, 248, 0.1);
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    color: var(--primary);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .shayari-box {
-    background: rgba(8, 12, 24, 0.6);
-    padding: 18px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    margin-bottom: 22px;
-    position: relative;
-  }
-
-  .shayari-box::before {
-    content: '“';
-    position: absolute;
-    top: -10px;
-    left: 14px;
-    font-size: 40px;
-    color: var(--primary);
-    font-family: Georgia, serif;
-    opacity: 0.4;
-  }
-
-  .shayari-line1 {
-    font-size: 15px;
-    font-weight: 700;
-    color: #f1f5f9;
-    line-height: 1.5;
-    margin-bottom: 6px;
-  }
-
-  .shayari-line2 {
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--primary);
-    line-height: 1.5;
-  }
-
-  .modal-btn-row {
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn-modal {
-    flex: 1;
-    padding: 13px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 800;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.15s;
-  }
-
-  .btn-modal:active { transform: scale(0.96); }
-
-  .btn-close {
-    background: linear-gradient(135deg, var(--primary), #0284c7);
-    color: #040814;
-  }
-
-  .btn-copy {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  canvas#fxCanvas {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 105;
-  }
-
-  .shake {
-    animation: camShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-  }
-
-  @keyframes camShake {
-    10%, 90% { transform: translate3d(-2px, 0, 0); }
-    20%, 80% { transform: translate3d(3px, 0, 0); }
-    30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
-    40%, 60% { transform: translate3d(5px, 0, 0); }
-  }
+  canvas#fxCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 105; }
 </style>
 </head>
 <body>
 
 <canvas id="fxCanvas"></canvas>
 
-<div class="app-stage" id="stage">
-  <div class="brand-badge">💧 Office Hydration Protocol</div>
-  <h1>Wheel of Hydration</h1>
+<div class="app-header">
+  <div class="brand-badge">⚡ Office Break Room Arcade</div>
+  
+  <!-- Game Switcher Navigation -->
+  <nav class="game-nav">
+    <button class="nav-btn active" data-game="wheel">💧 Water Wheel</button>
+    <button class="nav-btn" data-game="rapid">⚡ 5-Sec Panic</button>
+    <button class="nav-btn" data-game="imposter">🕵️ The Imposter</button>
+    <button class="nav-btn" data-game="taboo">🤐 Taboo Clues</button>
+    <button class="nav-btn" data-game="emoji">🎭 Emoji Mystery</button>
+  </nav>
 
-  <!-- Mode Switcher -->
-  <div class="mode-switch">
-    <button class="mode-tab active" id="tabInstant">⚡ Single Spin (Instant)</button>
-    <button class="mode-tab" id="tabSeries">🎯 10-Spins Match</button>
-  </div>
-
-  <!-- Series Progress HUD -->
-  <div class="series-hud" id="seriesHud" style="display: none;">
-    <div>Round: <span class="series-pill" id="spinCounterPill">0 / 10</span></div>
-    <div style="font-size: 11px; color: var(--text-secondary);">Max points = Designated Hero!</div>
-    <button class="btn-reset" id="resetSeriesBtn">↺ Reset</button>
-  </div>
-
-  <!-- Team Input -->
+  <!-- Global Team Roster -->
   <div class="roster-card">
     <div class="roster-input-row">
-      <input type="text" id="nameInput" class="roster-input" placeholder="Type name & hit Enter..." maxlength="14">
+      <input type="text" id="nameInput" class="roster-input" placeholder="Add teammate..." maxlength="14">
       <button class="add-btn" id="addBtn">+ Add</button>
     </div>
     <div class="tags-list" id="tagsList"></div>
   </div>
+</div>
 
-  <!-- Wheel Canvas Viewport -->
+<!-- ================= GAME 1: WATER WHEEL ================= -->
+<div class="game-container active" id="game-wheel">
+  <div class="rules-banner">
+    <div class="rules-header" onclick="toggleRules(this)">
+      <span>📖 HOW TO PLAY: WATER WHEEL</span>
+      <span>▼</span>
+    </div>
+    <div class="rules-content">
+      <ol class="rules-list">
+        <li><span>Spin to Pick:</span> Tap <b>SPIN WHEEL</b> to let fate decide today's designated Jal Mantri.</li>
+        <li><span>Fun Duty Shayari:</span> The chosen person receives a witty rhyme on screen.</li>
+        <li><span>Action:</span> No excuses allowed—grab the team bottle and make the refill trip!</li>
+      </ol>
+    </div>
+  </div>
+
   <div class="wheel-viewport">
     <div class="halo-ring"></div>
     <div class="pointer-mech" id="pointerMech">
-      <svg viewBox="0 0 32 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 46L3 13C1 7 5 0 11 0H21C27 0 31 7 29 13L16 46Z" fill="url(#ptrGrad)"/>
-        <circle cx="16" cy="13" r="5" fill="#ffffff" filter="drop-shadow(0 0 4px #38bdf8)"/>
-        <defs>
-          <linearGradient id="ptrGrad" x1="16" y1="0" x2="16" y2="46" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#38BDF8"/>
-            <stop offset="0.6" stop-color="#0284C7"/>
-            <stop offset="1" stop-color="#0F172A"/>
-          </linearGradient>
-        </defs>
+      <svg viewBox="0 0 32 46" fill="none">
+        <path d="M16 46L3 13C1 7 5 0 11 0H21C27 0 31 7 29 13L16 46Z" fill="#38BDF8"/>
+        <circle cx="16" cy="13" r="5" fill="#ffffff"/>
       </svg>
     </div>
     <canvas id="wheelCanvas" width="800" height="800"></canvas>
   </div>
+  <button class="primary-btn" id="spinBtn">SPIN WHEEL 🎲</button>
+</div>
 
-  <!-- Actions -->
-  <div class="action-wrap">
-    <button class="spin-btn" id="spinBtn">SPIN THE WHEEL 🎲</button>
-    <div class="status-text" id="statusText">Kiski baari aane wali hai?</div>
+<!-- ================= GAME 2: 5-SECOND RAPID FIRE ================= -->
+<div class="game-container" id="game-rapid">
+  <div class="rules-banner">
+    <div class="rules-header" onclick="toggleRules(this)">
+      <span>📖 HOW TO PLAY: 5-SECOND PANIC</span>
+      <span>▼</span>
+    </div>
+    <div class="rules-content">
+      <ol class="rules-list">
+        <li><span>Pick a Player:</span> Pick someone from the group to face the hot seat.</li>
+        <li><span>Start Timer:</span> Tap <b>START 5s ROUND</b>. The prompt and a 5-second countdown begin.</li>
+        <li><span>Name 3 Items:</span> The player must shout 3 distinct answers before the buzzer hits 0!</li>
+        <li><span>Score:</span> Tap <b>Passed</b> (+1 point) or <b>Failed</b> to pass the turn to the next player.</li>
+      </ol>
+    </div>
   </div>
 
-  <!-- Leaderboard -->
-  <div class="points-board">
-    <div class="board-header">
-      <span id="boardTitle">Live Scoreboard</span>
-      <span style="font-size: 10px; color: var(--primary);">+1 Pt per hit</span>
+  <div class="game-card">
+    <div class="timer-circle" id="rapidTimer">5</div>
+    <div class="prompt-display" id="rapidPrompt">Press Start for Rapid Fire!</div>
+    <div style="display: flex; gap: 8px; width: 100%; justify-content: center;">
+      <button class="primary-btn" id="startRapidBtn">START 5s ROUND ⏱️</button>
     </div>
-    <div class="player-point-list" id="pointGrid"></div>
+    <div style="display: flex; gap: 8px; margin-top: 8px;">
+      <button class="secondary-btn" id="passRapidBtn" style="color: var(--accent-emerald);">Passed (+1 Pt) ✅</button>
+      <button class="secondary-btn" id="failRapidBtn" style="color: var(--accent-rose);">Failed ❌</button>
+    </div>
   </div>
 </div>
 
-<!-- Shayari Modal Dialog -->
+<!-- ================= GAME 3: THE OFFICE IMPOSTER ================= -->
+<div class="game-container" id="game-imposter">
+  <div class="rules-banner">
+    <div class="rules-header" onclick="toggleRules(this)">
+      <span>📖 HOW TO PLAY: THE IMPOSTER</span>
+      <span>▼</span>
+    </div>
+    <div class="rules-content">
+      <ol class="rules-list">
+        <li><span>Pass the Device:</span> Each player secretly taps the card to check their word and hides it again.</li>
+        <li><span>The Mystery:</span> Everyone sees the real secret word, EXCEPT 1 randomly assigned Imposter!</li>
+        <li><span>The Clues:</span> Go in a circle; everyone says *one single clue word* related to the secret topic.</li>
+        <li><span>The Vote:</span> Debate and point at who you think is bluffing. Catch the imposter before they guess the word!</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="game-card">
+    <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary);" id="imposterTurnText">Player 1: Tap to view secret word</div>
+    <div class="secret-word-card" id="secretCard">
+      <div id="secretCardText" style="font-size: 18px; font-weight: 800;">🔒 TAP TO REVEAL</div>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button class="primary-btn" id="nextPlayerBtn">NEXT PLAYER ➡️</button>
+      <button class="secondary-btn" id="newImposterBtn">NEW GAME 🔄</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= GAME 4: TABOO FORBIDDEN WORDS ================= -->
+<div class="game-container" id="game-taboo">
+  <div class="rules-banner">
+    <div class="rules-header" onclick="toggleRules(this)">
+      <span>📖 HOW TO PLAY: TABOO CLUES</span>
+      <span>▼</span>
+    </div>
+    <div class="rules-content">
+      <ol class="rules-list">
+        <li><span>The Guesser:</span> One player turns their back to the screen so they cannot see the card.</li>
+        <li><span>The Clue Givers:</span> The rest of the team describes the top main word to the guesser.</li>
+        <li><span>Forbidden Words:</span> You <b>CANNOT</b> say any of the 4 red forbidden words or spellings/rhymes!</li>
+        <li><span>Goal:</span> See if the guesser can guess the exact word within 30 seconds.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="game-card">
+    <div style="font-size: 12px; font-weight: 800; color: var(--accent-rose); letter-spacing: 1px;">DON'T SAY THESE 4 WORDS:</div>
+    <div class="taboo-word" id="tabooTarget">COFFEE MACHINE</div>
+    <div class="forbidden-list" id="forbiddenList"></div>
+    <button class="primary-btn" id="nextTabooBtn">NEXT WORD ➡️</button>
+  </div>
+</div>
+
+<!-- ================= GAME 5: EMOJI MYSTERY ================= -->
+<div class="game-container" id="game-emoji">
+  <div class="rules-banner">
+    <div class="rules-header" onclick="toggleRules(this)">
+      <span>📖 HOW TO PLAY: EMOJI MYSTERY</span>
+      <span>▼</span>
+    </div>
+    <div class="rules-content">
+      <ol class="rules-list">
+        <li><span>Look at the Emojis:</span> The screen shows a sequence of emojis describing a movie, brand, or office habit.</li>
+        <li><span>First to Shout:</span> Anyone in the group can shout the answer out loud!</li>
+        <li><span>Verify:</span> Tap <b>REVEAL</b> to verify who was right. Award them a point on the leaderboard!</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="game-card">
+    <div style="font-size: 12px; font-weight: 800; color: var(--accent-amber);" id="emojiCategory">Guess the Bollywood Movie / Brand:</div>
+    <div class="emoji-clue" id="emojiClue">🦁 👑</div>
+    <div class="prompt-display" id="emojiAnswer" style="color: var(--primary); display: none;">Answer: The Lion King</div>
+    <div style="display: flex; gap: 8px;">
+      <button class="secondary-btn" id="revealEmojiBtn">REVEAL 👁️</button>
+      <button class="primary-btn" id="nextEmojiBtn">NEXT EMOJI ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- Global Points Leaderboard -->
+<div class="points-board" style="width: min(100%, 640px); margin-top: 14px;">
+  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary);">Live Group Scoreboard</div>
+  <div class="player-point-list" id="pointGrid"></div>
+</div>
+
+<!-- Winner Shayari Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="shayari-card">
-    <div class="victim-avatar" id="modalAvatar">💧</div>
-    <h2 class="victim-name" id="modalVictim">Rohan</h2>
-    <div class="victim-badge" id="modalBadge">Official Jal Mantri</div>
-    
-    <div class="shayari-box">
-      <div class="shayari-line1" id="shayariLine1">Nazar lagi wheel par, dharak raha tha dil,</div>
-      <div class="shayari-line2" id="shayariLine2">Botal uthao dost, aur chup chaap karo fill! 💧🚰</div>
+    <h2 style="margin: 0 0 6px;" id="modalVictim">Rohan</h2>
+    <div style="font-size: 12px; font-weight: 800; color: var(--primary); margin-bottom: 14px;">Designated Jal Mantri</div>
+    <div style="background: rgba(8,12,24,0.6); padding: 16px; border-radius: 14px; border: 1px solid var(--surface-border); margin-bottom: 18px;">
+      <div id="shayariLine1" style="font-weight: 700; margin-bottom: 4px;">Nazar lagi wheel par, dharak raha tha dil,</div>
+      <div id="shayariLine2" style="font-weight: 800; color: var(--primary);">Botal uthao dost, aur chup chaap karo fill! 💧🚰</div>
     </div>
-
-    <div class="modal-btn-row">
-      <button class="btn-modal btn-copy" id="copyBtn">Copy Shayari 📋</button>
-      <button class="btn-modal btn-close" id="closeModalBtn">Duty Par Chale 🏃‍♂️</button>
-    </div>
+    <button class="primary-btn" id="closeModalBtn">Main Jaata Hu 🏃‍♂️</button>
   </div>
 </div>
 
 <script>
-// --- ROSTER & MODERN SLICE PALETTES ---
+// --- ROSTER & SCORE STATE ---
 let roster = ["Pranay", "Rohan", "Vivek", "Gaus"];
 let scores = { "Pranay": 0, "Rohan": 0, "Vivek": 0, "Gaus": 0 };
 
 const PALETTE = [
-  { c1: "#0284c7", c2: "#0f172a", dot: "#38bdf8" }, // Azure Deep
-  { c1: "#6366f1", c2: "#1e1b4b", dot: "#a5b4fc" }, // Indigo Velvet
-  { c1: "#059669", c2: "#064e3b", dot: "#34d399" }, // Emerald Glow
-  { c1: "#d97706", c2: "#451a03", dot: "#fbbf24" }, // Amber Ember
-  { c1: "#e11d48", c2: "#4c0519", dot: "#fb7185" }, // Crimson Rose
-  { c1: "#7c3aed", c2: "#2e1065", dot: "#c084fc" }  // Deep Purple
+  { c1: "#0284c7", c2: "#0f172a" },
+  { c1: "#6366f1", c2: "#1e1b4b" },
+  { c1: "#059669", c2: "#064e3b" },
+  { c1: "#d97706", c2: "#451a03" },
+  { c1: "#e11d48", c2: "#4c0519" }
 ];
 
-// --- CLEAN & WITTY HINGLISH SHAYARIS ---
-const instantShayaris = [
-  {
-    l1: "Nazar lagi wheel par, dharak raha tha dil,",
-    l2: "Botal uthao dost, aur chup chaap karo fill! 💧🚰"
-  },
-  {
-    l1: "Slack par 'In a meeting' ka status hai purana,",
-    l2: "Purifier bula raha hai, botal bhar ke aana! 🏃‍♂️💨"
-  },
-  {
-    l1: "Code tera super hit hai, logic tera chill,",
-    l2: "Thanda paani laane me dikha de apna skill! 💻⚡"
-  },
-  {
-    l1: "Chair se chipak ke baithe the janaab-e-aali,",
-    l2: "Utho botal bharo jaldi, desk pe hai sab khali! 🪑✨"
-  },
-  {
-    l1: "Screen ko ghoorne se pyaas nahi bujhegi bhai,",
-    l2: "Purifier ki ore chalke kismat ki karo bhalai! 🚶‍♂️🧊"
-  },
-  {
-    l1: "Chalta nahi bahaana yahan, na chalegi thakan,",
-    l2: "Thanda paani laake jeeto poori team ka mann! 🚰🙌"
-  },
-  {
-    l1: "Soch rahe the tum ki bachna aasan hoga aaj,",
-    l2: "Wheel ne pehna diya tumhe 'Jal Mantri' ka taaj! 👑🌊"
-  },
-  {
-    l1: "Keyboard par ungliyan naach rahi thin tez,",
-    l2: "RO filter tak chalke jeet lo yeh race! ⌨️🏆"
-  },
-  {
-    l1: "Puri team ki umeedon ka khil gaya gulab,",
-    l2: "Botal bhar ke laao aur bano lajawaab! 🧊🌹"
-  },
-  {
-    l1: "Aasman me chamakte hain sitare hazaar,",
-    l2: "Desk pe paani laane ko hero hai taiyyar! 🌟🚰"
-  }
+// --- CONTENT DATABASES ---
+const shayaris = [
+  { l1: "Nazar lagi wheel par, dharak raha tha dil,", l2: "Botal uthao dost, aur chup chaap karo fill! 💧🚰" },
+  { l1: "Slack par 'In a meeting' ka status hai purana,", l2: "Purifier bula raha hai, botal bhar ke aana! 🏃‍♂️💨" },
+  { l1: "Code tera super hit hai, logic tera chill,", l2: "Thanda paani laane me dikha de apna skill! 💻⚡" },
+  { l1: "Chair se chipak ke baithe the janaab-e-aali,", l2: "Utho botal bharo jaldi, desk pe hai sab khali! 🪑✨" }
 ];
 
-const finaleShayaris = [
-  {
-    l1: "10 rounds ke match me score kiya sabse bhaari,",
-    l2: "Leaderboard pe top karke mili botal bharne ki baari! 🏆🚰"
-  },
-  {
-    l1: "Points table par chadh gaye jaise koi superstar,",
-    l2: "Cooler refill karne ki zimmedari hai ab aap par sarkar! 👑💧"
-  },
-  {
-    l1: "Khel me sabne lagayi thi apni poori jaan,",
-    l2: "Top scorer ban ke chamko ban ke office ki shaan! 🌟🙌"
-  }
+const rapidPrompts = [
+  "Name 3 excuses for being late to a standup meeting!",
+  "Name 3 snacks ordered during office tea breaks!",
+  "Name 3 Bollywood movies featuring rain/water!",
+  "Name 3 things you do when Wi-Fi stops working!",
+  "Name 3 apps you open as soon as you unlock your phone!",
+  "Name 3 things you keep on your work desk!",
+  "Name 3 excuses to leave office 10 minutes early!"
 ];
 
-// --- GAME STATE ---
-let currentMode = "instant";
-const SERIES_MAX_SPINS = 10;
-let currentSpinCount = 0;
+const tabooCards = [
+  { word: "COFFEE MACHINE", forbidden: ["DRINK", "HOT", "MUG", "TEA"] },
+  { word: "PRINTER", forbidden: ["PAPER", "INK", "SCAN", "XEROX"] },
+  { word: "AIR CONDITIONER", forbidden: ["COLD", "REMOTE", "SUMMER", "ROOM"] },
+  { word: "WATER BOTTLE", forbidden: ["PURIFIER", "REFILL", "FILTER", "THIRST"] },
+  { word: "SMARTPHONE", forbidden: ["CALL", "SCREEN", "BATTERY", "ANDROID"] }
+];
 
-// --- DOM REFS ---
-const canvas = document.getElementById("wheelCanvas");
-const ctx = canvas.getContext("2d");
-const fxCanvas = document.getElementById("fxCanvas");
-const fxCtx = fxCanvas.getContext("2d");
-const pointerMech = document.getElementById("pointerMech");
-const spinBtn = document.getElementById("spinBtn");
-const statusText = document.getElementById("statusText");
-const modalOverlay = document.getElementById("modalOverlay");
-const modalVictim = document.getElementById("modalVictim");
-const modalBadge = document.getElementById("modalBadge");
-const modalAvatar = document.getElementById("modalAvatar");
-const shayariLine1 = document.getElementById("shayariLine1");
-const shayariLine2 = document.getElementById("shayariLine2");
-const closeModalBtn = document.getElementById("closeModalBtn");
-const copyBtn = document.getElementById("copyBtn");
-const nameInput = document.getElementById("nameInput");
-const addBtn = document.getElementById("addBtn");
-const tagsList = document.getElementById("tagsList");
-const pointGrid = document.getElementById("pointGrid");
-const stage = document.getElementById("stage");
-const tabInstant = document.getElementById("tabInstant");
-const tabSeries = document.getElementById("tabSeries");
-const seriesHud = document.getElementById("seriesHud");
-const spinCounterPill = document.getElementById("spinCounterPill");
-const resetSeriesBtn = document.getElementById("resetSeriesBtn");
+const emojiCards = [
+  { clue: "🦁 👑", answer: "The Lion King", cat: "Movie" },
+  { clue: "☕ 👀 😴", answer: "Monday Morning Coffee", cat: "Office Mood" },
+  { clue: "3️⃣ 🤡 🎓", answer: "3 Idiots", cat: "Bollywood Movie" },
+  { clue: "🍎 📱 💻", answer: "Apple", cat: "Brand" },
+  { clue: "🍔 👑", answer: "Burger King", cat: "Brand" }
+];
 
-// --- SYNTHETIC WEB AUDIO ENGINE ---
+const imposterWords = ["Taj Mahal", "Samosa", "Water Purifier", "Keyboard", "Netflix", "Metro Train", "Chai", "Cricket"];
+
+// --- WEB AUDIO SYNTHESIS ---
 let audioCtx = null;
-
 function ensureAudio() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') audioCtx.resume();
 }
 
-function playHapticTick(pitch = 560) {
+function playTick(freq = 550) {
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  
   osc.type = "sine";
-  osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
   osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.035);
-
   gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.035);
-
   osc.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start();
   osc.stop(audioCtx.currentTime + 0.035);
 }
 
-function playWinFanfare(isGrand = false) {
+function playWin() {
   if (!audioCtx) return;
-  const freqs = isGrand ? [261.63, 329.63, 392.00, 523.25, 659.25, 783.99] : [329.63, 415.30, 493.88, 659.25];
-  freqs.forEach((freq, i) => {
+  [329.63, 415.30, 493.88, 659.25].forEach((f, i) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = isGrand ? "sawtooth" : "triangle";
-    osc.frequency.value = freq;
-    
+    osc.frequency.value = f;
     const start = audioCtx.currentTime + i * 0.07;
     gain.gain.setValueAtTime(0.2, start);
-    gain.gain.exponentialRampToValueAtTime(0.001, start + (isGrand ? 0.8 : 0.45));
-
+    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(start);
-    osc.stop(start + (isGrand ? 0.8 : 0.45));
+    osc.stop(start + 0.4);
   });
 }
 
-// --- CANVAS HIGH DPI RENDERING ---
-let rotation = 0;
-let isSpinning = false;
-let lastSliceIndex = -1;
-let pinAngleOffset = 0;
-
-function setupCanvasDPI() {
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = 800 * dpr;
-  canvas.height = 800 * dpr;
-  ctx.scale(dpr, dpr);
-}
-
-function drawWheel() {
-  const size = 800;
-  const cx = size / 2;
-  const cy = size / 2;
-  const radius = 340;
-  const numSlices = roster.length;
-  const slice = (Math.PI * 2) / numSlices;
-
-  ctx.clearRect(0, 0, size, size);
-
-  // 1. Dark Base Ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius + 16, 0, Math.PI * 2);
-  ctx.fillStyle = "#0a1122";
-  ctx.fill();
-
-  // 2. Wheel Slices
-  for (let i = 0; i < numSlices; i++) {
-    const startAngle = rotation + i * slice;
-    const endAngle = startAngle + slice;
-    const item = PALETTE[i % PALETTE.length];
-
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, radius, startAngle, endAngle);
-    ctx.closePath();
-
-    const grad = ctx.createRadialGradient(cx, cy, 30, cx, cy, radius);
-    grad.addColorStop(0, item.c1);
-    grad.addColorStop(0.75, item.c2);
-    grad.addColorStop(1, "#050a14");
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    // Divider Line
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // Text Label
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(startAngle + slice / 2);
-    ctx.textAlign = "right";
-    ctx.textBaseline = "middle";
-    
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "900 34px system-ui, -apple-system, sans-serif";
-    ctx.shadowColor = "rgba(0,0,0,0.8)";
-    ctx.shadowBlur = 10;
-    ctx.fillText(roster[i], radius - 55, 0);
-
-    // Accent Dot
-    ctx.beginPath();
-    ctx.arc(radius - 22, 0, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = item.dot;
-    ctx.fill();
-    ctx.restore();
-  }
-
-  // 3. Slate Bezel
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius + 2, 0, Math.PI * 2);
-  ctx.lineWidth = 18;
-  const bezelGrad = ctx.createLinearGradient(0, 0, size, size);
-  bezelGrad.addColorStop(0, "#38bdf8");
-  bezelGrad.addColorStop(0.3, "#0284c7");
-  bezelGrad.addColorStop(0.7, "#6366f1");
-  bezelGrad.addColorStop(1, "#0f172a");
-  ctx.strokeStyle = bezelGrad;
-  ctx.stroke();
-
-  // 4. LED Rivets
-  const rivets = 24;
-  for (let j = 0; j < rivets; j++) {
-    const angle = (j * (Math.PI * 2)) / rivets + pinAngleOffset;
-    const rx = cx + (radius + 2) * Math.cos(angle);
-    const ry = cy + (radius + 2) * Math.sin(angle);
-
-    ctx.beginPath();
-    ctx.arc(rx, ry, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = j % 2 === 0 ? "#38bdf8" : "#ffffff";
-    ctx.shadowColor = "rgba(56, 189, 248, 0.8)";
-    ctx.shadowBlur = 8;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
-
-  // 5. Center Hub
-  ctx.beginPath();
-  ctx.arc(cx, cy, 64, 0, Math.PI * 2);
-  ctx.fillStyle = "#0c1527";
-  ctx.fill();
-  ctx.lineWidth = 6;
-  ctx.strokeStyle = "rgba(56, 189, 248, 0.8)";
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, 52, 0, Math.PI * 2);
-  const hubGrad = ctx.createRadialGradient(cx - 15, cy - 15, 5, cx, cy, 52);
-  hubGrad.addColorStop(0, "rgba(56, 189, 248, 0.35)");
-  hubGrad.addColorStop(1, "rgba(12, 21, 39, 0.95)");
-  ctx.fillStyle = hubGrad;
-  ctx.fill();
-
-  ctx.font = "30px sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("💧", cx, cy + 2);
-}
-
 // --- CONFETTI SYSTEM ---
+const fxCanvas = document.getElementById("fxCanvas");
+const fxCtx = fxCanvas.getContext("2d");
 let particles = [];
-function fireConfetti(isGrand = false) {
+
+function fireConfetti() {
   fxCanvas.width = window.innerWidth;
   fxCanvas.height = window.innerHeight;
   particles = [];
-  const count = isGrand ? 160 : 100;
-  const colors = ["#38bdf8", "#6366f1", "#10b981", "#f59e0b", "#f43f5e", "#ffffff"];
-
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < 90; i++) {
     particles.push({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-      vx: (Math.random() - 0.5) * (isGrand ? 30 : 22),
-      vy: (Math.random() - 0.8) * (isGrand ? 32 : 24),
+      x: window.innerWidth / 2, y: window.innerHeight / 2,
+      vx: (Math.random() - 0.5) * 24, vy: (Math.random() - 0.8) * 26,
       size: Math.random() * 8 + 4,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      alpha: 1,
-      rot: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 14
+      color: ["#38bdf8", "#6366f1", "#10b981", "#f59e0b"][Math.floor(Math.random() * 4)],
+      alpha: 1
     });
   }
-
   function render() {
     fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
     particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += 0.5;
-      p.alpha -= isGrand ? 0.009 : 0.012;
-      p.rot += p.rotSpeed;
-
-      fxCtx.save();
-      fxCtx.globalAlpha = Math.max(0, p.alpha);
-      fxCtx.translate(p.x, p.y);
-      fxCtx.rotate((p.rot * Math.PI) / 180);
+      p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.alpha -= 0.015;
       fxCtx.fillStyle = p.color;
-      fxCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-      fxCtx.restore();
+      fxCtx.globalAlpha = Math.max(0, p.alpha);
+      fxCtx.fillRect(p.x, p.y, p.size, p.size);
     });
-
     particles = particles.filter(p => p.alpha > 0);
     if (particles.length > 0) requestAnimationFrame(render);
   }
   requestAnimationFrame(render);
 }
 
-// --- LEADERBOARD LOGIC ---
-function renderLeaderboard(highlightWinner = null) {
-  pointGrid.innerHTML = "";
-  const maxScore = Math.max(...Object.values(scores), 1);
+// --- RULES TOGGLE FUNCTION ---
+function toggleRules(headerEl) {
+  const content = headerEl.nextElementSibling;
+  const arrow = headerEl.querySelector("span:last-child");
+  const isOpen = content.classList.contains("open");
+  
+  document.querySelectorAll(".rules-content").forEach(c => c.classList.remove("open"));
+  document.querySelectorAll(".rules-header span:last-child").forEach(a => a.textContent = "▼");
 
-  roster.forEach(name => {
-    const card = document.createElement("div");
-    card.className = "player-point-card" + (name === highlightWinner ? " highlight" : "");
-    card.id = `card-${name}`;
-
-    const score = scores[name] || 0;
-    const fillPercent = currentMode === 'series' ? (score / SERIES_MAX_SPINS) * 100 : (score / maxScore) * 100;
-
-    card.innerHTML = `
-      <div class="p-name">${name}</div>
-      <div class="p-score">${score}</div>
-      <div class="p-bar-bg">
-        <div class="p-bar-fill" style="width: ${Math.min(fillPercent, 100)}%;"></div>
-      </div>
-    `;
-    pointGrid.appendChild(card);
-  });
-}
-
-function showFloatingPoint(victim) {
-  const card = document.getElementById(`card-${victim}`);
-  if (card) {
-    const floater = document.createElement("div");
-    floater.className = "point-float";
-    floater.textContent = "+1 Pt 🎯";
-    card.appendChild(floater);
-    setTimeout(() => floater.remove(), 800);
+  if (!isOpen) {
+    content.classList.add("open");
+    arrow.textContent = "▲";
   }
 }
 
-// --- PHYSICS SPIN ENGINE ---
-function spinWheel() {
+// --- NAVIGATION CONTROLLER ---
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".game-container").forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(`game-${btn.dataset.game}`).classList.add("active");
+  });
+});
+
+// --- WHEEL ENGINE ---
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
+const pointerMech = document.getElementById("pointerMech");
+let rotation = 0;
+let isSpinning = false;
+let lastSlice = -1;
+
+function drawWheel() {
+  const size = 800; const cx = 400; const cy = 400; const r = 340;
+  const slice = (Math.PI * 2) / roster.length;
+  ctx.clearRect(0, 0, size, size);
+
+  for (let i = 0; i < roster.length; i++) {
+    const start = rotation + i * slice;
+    const end = start + slice;
+    const color = PALETTE[i % PALETTE.length];
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    ctx.fillStyle = color.c1;
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.2)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + slice / 2);
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#fff";
+    ctx.font = "900 34px system-ui";
+    ctx.fillText(roster[i], r - 55, 0);
+    ctx.restore();
+  }
+
+  // Bezel & Hub
+  ctx.beginPath();
+  ctx.arc(cx, cy, r + 2, 0, Math.PI * 2);
+  ctx.lineWidth = 16;
+  ctx.strokeStyle = "#38bdf8";
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, 54, 0, Math.PI * 2);
+  ctx.fillStyle = "#0c1527";
+  ctx.fill();
+  ctx.font = "30px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("💧", cx, cy + 2);
+}
+
+document.getElementById("spinBtn").addEventListener("click", () => {
   if (isSpinning || roster.length < 2) return;
   ensureAudio();
   isSpinning = true;
-  spinBtn.disabled = true;
 
-  statusText.textContent = "Kismat ghoom rahi hai... 🌀";
+  const winner = Math.floor(Math.random() * roster.length);
+  const slice = (Math.PI * 2) / roster.length;
+  const target = -Math.PI / 2 - (winner + 0.5) * slice;
+  const current = rotation % (Math.PI * 2);
+  const total = (target - current) + (8 * Math.PI * 2) + (target < current ? Math.PI * 2 : 0);
+  const startRot = rotation;
+  const startT = performance.now();
 
-  const winnerIndex = Math.floor(Math.random() * roster.length);
-  const sliceSize = (Math.PI * 2) / roster.length;
-
-  const targetAngle = -Math.PI / 2 - (winnerIndex + 0.5) * sliceSize;
-  const currentNorm = rotation % (Math.PI * 2);
-  const totalRounds = (8 + Math.floor(Math.random() * 3)) * Math.PI * 2;
-  const delta = (targetAngle - currentNorm) + totalRounds + (targetAngle < currentNorm ? Math.PI * 2 : 0);
-
-  const startRotation = rotation;
-  const startTime = performance.now();
-  const duration = 5200;
-
-  function frame(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const easeOut = 1 - Math.pow(1 - progress, 4.6);
-    rotation = startRotation + delta * easeOut;
-    pinAngleOffset += 0.04 * (1 - progress * 0.8);
-
+  function animate(now) {
+    const p = Math.min((now - startT) / 5000, 1);
+    const ease = 1 - Math.pow(1 - p, 4.5);
+    rotation = startRot + total * ease;
     drawWheel();
 
-    const pointerAngle = (rotation + Math.PI / 2) % (Math.PI * 2);
-    const positiveAngle = pointerAngle < 0 ? pointerAngle + Math.PI * 2 : pointerAngle;
-    const currentSlice = Math.floor(positiveAngle / sliceSize);
-
-    if (currentSlice !== lastSliceIndex && progress < 0.985) {
-      lastSliceIndex = currentSlice;
-      const speedFactor = 1 - progress;
-      playHapticTick(460 + speedFactor * 320);
+    const currSlice = Math.floor(((rotation + Math.PI / 2) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) / slice);
+    if (currSlice !== lastSlice && p < 0.98) {
+      lastSlice = currSlice;
+      playTick();
       pointerMech.classList.add("bump");
-      setTimeout(() => pointerMech.classList.remove("bump"), 45);
-
-      if (progress > 0.75) {
-        statusText.textContent = `Lagta hai ${roster[currentSlice]} ki baari aane wali hai... 👀`;
-      }
+      setTimeout(() => pointerMech.classList.remove("bump"), 40);
     }
 
-    if (progress < 1) {
-      requestAnimationFrame(frame);
-    } else {
+    if (p < 1) requestAnimationFrame(animate);
+    else {
       isSpinning = false;
-      spinBtn.disabled = false;
-      const victim = roster[winnerIndex];
-
-      // Update Points
-      scores[victim] = (scores[victim] || 0) + 1;
-      renderLeaderboard(victim);
-      showFloatingPoint(victim);
-
-      // Camera Shake
-      stage.classList.add("shake");
-      setTimeout(() => stage.classList.remove("shake"), 450);
-
-      if (currentMode === "instant") {
-        statusText.textContent = "Jal Mantri mil gaya! 🎯";
-        playWinFanfare(false);
-        fireConfetti(false);
-
-        const shayari = instantShayaris[Math.floor(Math.random() * instantShayaris.length)];
-        modalAvatar.textContent = "💧";
-        modalVictim.textContent = victim;
-        modalBadge.textContent = "Official Jal Mantri";
-        shayariLine1.textContent = shayari.l1;
-        shayariLine2.textContent = shayari.l2;
-        modalOverlay.classList.add("open");
-      } else {
-        currentSpinCount++;
-        spinCounterPill.textContent = `${currentSpinCount} / ${SERIES_MAX_SPINS}`;
-
-        if (currentSpinCount >= SERIES_MAX_SPINS) {
-          let maxPts = -1;
-          let winners = [];
-
-          for (const [pName, pScore] of Object.entries(scores)) {
-            if (pScore > maxPts) {
-              maxPts = pScore;
-              winners = [pName];
-            } else if (pScore === maxPts) {
-              winners.push(pName);
-            }
-          }
-
-          const grandHero = winners[Math.floor(Math.random() * winners.length)];
-          statusText.textContent = "Tournament Khatam! Ultimate Refill Hero mil gaya! 🏆";
-
-          playWinFanfare(true);
-          fireConfetti(true);
-
-          const grandShayari = finaleShayaris[Math.floor(Math.random() * finaleShayaris.length)];
-          modalAvatar.textContent = "👑";
-          modalVictim.textContent = grandHero;
-          modalBadge.textContent = `10-Spins Winner (${maxPts} Points)`;
-          shayariLine1.textContent = grandShayari.l1;
-          shayariLine2.textContent = grandShayari.l2;
-          modalOverlay.classList.add("open");
-
-          currentSpinCount = 0;
-        } else {
-          statusText.textContent = `Round ${currentSpinCount} Complete! ${victim} got +1 Pt! Spin again!`;
-          playWinFanfare(false);
-        }
-      }
+      playWin();
+      fireConfetti();
+      scores[roster[winner]]++;
+      renderLeaderboard();
+      const s = shayaris[Math.floor(Math.random() * shayaris.length)];
+      document.getElementById("modalVictim").textContent = roster[winner];
+      document.getElementById("shayariLine1").textContent = s.l1;
+      document.getElementById("shayariLine2").textContent = s.l2;
+      document.getElementById("modalOverlay").classList.add("open");
     }
   }
+  requestAnimationFrame(animate);
+});
 
-  requestAnimationFrame(frame);
+// --- 5-SECOND RAPID FIRE ---
+let rapidInterval = null;
+document.getElementById("startRapidBtn").addEventListener("click", () => {
+  ensureAudio();
+  clearInterval(rapidInterval);
+  document.getElementById("rapidPrompt").textContent = rapidPrompts[Math.floor(Math.random() * rapidPrompts.length)];
+  let count = 5;
+  const timer = document.getElementById("rapidTimer");
+  timer.textContent = count;
+
+  rapidInterval = setInterval(() => {
+    count--;
+    timer.textContent = count;
+    playTick(count === 0 ? 300 : 700);
+    if (count <= 0) {
+      clearInterval(rapidInterval);
+      timer.textContent = "⏰";
+    }
+  }, 1000);
+});
+
+document.getElementById("passRapidBtn").addEventListener("click", () => {
+  playWin();
+  fireConfetti();
+});
+
+// --- THE IMPOSTER GAME ---
+let currentSecretWord = "";
+let imposterIdx = -1;
+let currentTurn = 0;
+let isRevealed = false;
+
+function initImposterGame() {
+  currentSecretWord = imposterWords[Math.floor(Math.random() * imposterWords.length)];
+  imposterIdx = Math.floor(Math.random() * roster.length);
+  currentTurn = 0;
+  isRevealed = false;
+  updateImposterUI();
 }
 
-// --- TEAM MANAGEMENT ---
+function updateImposterUI() {
+  if (currentTurn >= roster.length) {
+    document.getElementById("imposterTurnText").textContent = "All players have seen! Start the debate and find the imposter!";
+    document.getElementById("secretCardText").textContent = "🗣️ DISCUSS & VOTE!";
+    return;
+  }
+  document.getElementById("imposterTurnText").textContent = `${roster[currentTurn]}: Tap to view role`;
+  document.getElementById("secretCardText").textContent = "🔒 TAP TO REVEAL";
+  isRevealed = false;
+}
+
+document.getElementById("secretCard").addEventListener("click", () => {
+  if (currentTurn >= roster.length) return;
+  ensureAudio();
+  isRevealed = !isRevealed;
+  if (isRevealed) {
+    document.getElementById("secretCardText").textContent = currentTurn === imposterIdx ? "🕵️ YOU ARE THE IMPOSTER!" : `WORD: ${currentSecretWord}`;
+  } else {
+    document.getElementById("secretCardText").textContent = "🔒 TAP TO REVEAL";
+  }
+});
+
+document.getElementById("nextPlayerBtn").addEventListener("click", () => {
+  if (currentTurn < roster.length) {
+    currentTurn++;
+    updateImposterUI();
+  }
+});
+
+document.getElementById("newImposterBtn").addEventListener("click", initImposterGame);
+
+// --- TABOO GAME ---
+function loadTaboo() {
+  const card = tabooCards[Math.floor(Math.random() * tabooCards.length)];
+  document.getElementById("tabooTarget").textContent = card.word;
+  const list = document.getElementById("forbiddenList");
+  list.innerHTML = "";
+  card.forbidden.forEach(w => {
+    const div = document.createElement("div");
+    div.className = "forbidden-item";
+    div.textContent = w;
+    list.appendChild(div);
+  });
+}
+document.getElementById("nextTabooBtn").addEventListener("click", () => {
+  ensureAudio();
+  playTick(600);
+  loadTaboo();
+});
+
+// --- EMOJI MYSTERY ---
+let currEmoji = 0;
+function loadEmoji() {
+  const card = emojiCards[currEmoji % emojiCards.length];
+  document.getElementById("emojiCategory").textContent = `Category: ${card.cat}`;
+  document.getElementById("emojiClue").textContent = card.clue;
+  document.getElementById("emojiAnswer").textContent = `Answer: ${card.answer}`;
+  document.getElementById("emojiAnswer").style.display = "none";
+}
+document.getElementById("revealEmojiBtn").addEventListener("click", () => {
+  document.getElementById("emojiAnswer").style.display = "block";
+  playWin();
+});
+document.getElementById("nextEmojiBtn").addEventListener("click", () => {
+  currEmoji++;
+  loadEmoji();
+});
+
+// --- ROSTER MANAGEMENT ---
 function renderTags() {
-  tagsList.innerHTML = "";
-  roster.forEach((name, index) => {
+  const list = document.getElementById("tagsList");
+  list.innerHTML = "";
+  roster.forEach((name, i) => {
     const tag = document.createElement("div");
     tag.className = "tag";
-    tag.innerHTML = `<span>${name}</span><span class="tag-remove" data-index="${index}">&times;</span>`;
-    tagsList.appendChild(tag);
+    tag.innerHTML = `<span>${name}</span><span class="tag-remove" data-idx="${i}">&times;</span>`;
+    list.appendChild(tag);
   });
   drawWheel();
   renderLeaderboard();
 }
 
-function addName() {
-  const val = nameInput.value.trim();
-  if (val && !roster.includes(val) && roster.length < 12) {
+function renderLeaderboard() {
+  const grid = document.getElementById("pointGrid");
+  grid.innerHTML = "";
+  roster.forEach(n => {
+    const card = document.createElement("div");
+    card.className = "player-point-card";
+    card.innerHTML = `<div style="font-size:12px; font-weight:800;">${n}</div><div class="p-score">${scores[n] || 0}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+document.getElementById("addBtn").addEventListener("click", () => {
+  const input = document.getElementById("nameInput");
+  const val = input.value.trim();
+  if (val && !roster.includes(val)) {
     roster.push(val);
     scores[val] = 0;
-    nameInput.value = "";
+    input.value = "";
     renderTags();
   }
-}
+});
 
-tagsList.addEventListener("click", (e) => {
-  if (e.target.classList.contains("tag-remove")) {
-    if (roster.length <= 2) {
-      alert("Kam se kam 2 log hone chahiye duty ke liye!");
-      return;
-    }
-    const idx = parseInt(e.target.dataset.index, 10);
-    const removed = roster[idx];
+document.getElementById("tagsList").addEventListener("click", e => {
+  if (e.target.classList.contains("tag-remove") && roster.length > 2) {
+    const idx = parseInt(e.target.dataset.idx, 10);
+    delete scores[roster[idx]];
     roster.splice(idx, 1);
-    delete scores[removed];
     renderTags();
   }
 });
 
-addBtn.addEventListener("click", addName);
-nameInput.addEventListener("keydown", (e) => { if (e.key === "Enter") addName(); });
-spinBtn.addEventListener("click", spinWheel);
-
-closeModalBtn.addEventListener("click", () => {
-  modalOverlay.classList.remove("open");
+document.getElementById("closeModalBtn").addEventListener("click", () => {
+  document.getElementById("modalOverlay").classList.remove("open");
 });
 
-copyBtn.addEventListener("click", () => {
-  const text = `🚨 *WATER DUTY PROTOCOL* 🚨\nTarget: ${modalVictim.textContent}\nStatus: ${modalBadge.textContent}\n\n"${shayariLine1.textContent}\n${shayariLine2.textContent}"`;
-  navigator.clipboard.writeText(text).then(() => {
-    copyBtn.textContent = "Copied! 😂";
-    setTimeout(() => { copyBtn.textContent = "Copy Shayari 📋"; }, 2000);
-  });
-});
-
-// Mode Switching
-tabInstant.addEventListener("click", () => {
-  if (isSpinning) return;
-  currentMode = "instant";
-  tabInstant.classList.add("active");
-  tabSeries.classList.remove("active");
-  seriesHud.style.display = "none";
-  document.getElementById("boardTitle").textContent = "Live Scoreboard";
-});
-
-tabSeries.addEventListener("click", () => {
-  if (isSpinning) return;
-  currentMode = "series";
-  tabSeries.classList.add("active");
-  tabInstant.classList.remove("active");
-  seriesHud.style.display = "flex";
-  document.getElementById("boardTitle").textContent = "10-Spins Match Leaderboard";
-  resetSeries();
-});
-
-function resetSeries() {
-  currentSpinCount = 0;
-  spinCounterPill.textContent = `0 / ${SERIES_MAX_SPINS}`;
-  roster.forEach(n => scores[n] = 0);
-  renderLeaderboard();
-  statusText.textContent = "Match Reset! Spin karo!";
-}
-
-resetSeriesBtn.addEventListener("click", resetSeries);
-
-window.addEventListener("resize", () => {
-  fxCanvas.width = window.innerWidth;
-  fxCanvas.height = window.innerHeight;
-});
-
-// Init
-setupCanvasDPI();
+// Initialize Everything
+drawWheel();
 renderTags();
+loadTaboo();
+loadEmoji();
+initImposterGame();
 </script>
 </body>
 </html>
